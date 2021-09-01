@@ -10,7 +10,7 @@ const founders = [
     name: "Jacob",
     position: "Equipment Specialist",
     text: "A man of decisive words, a force to be reckoned with on the felt. Founder Jacob brings a cool to the table that is flet by all opponents, dealers and staff alike. It is not a matter of if he will be victorious... Only when... Kiss your chips goodbye.",
-    image: null
+    image: "/images/founders/jacob.jpeg"
   },
   {
     name: "Carlos",
