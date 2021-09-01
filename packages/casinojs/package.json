@@ -1,0 +1,13 @@
+{
+  "name": "@chamomileclub/casinojs",
+  "version": "1.0.0",
+  "main": "./dist/index.js",
+  "files": ["assets/", "src/", "dist/" ],
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc"
+  },
+  "devDependencies": {
+    "typescript": "^4.4.2"
+  }
+}

@@ -1,34 +1,50 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# The Chamomile Club Monorepo
 
-## Getting Started
+## Packages
 
-First, run the development server:
+### The Chamomile Club App
+Front Facing Website For The Club. Introducing London Hold'Em To The World.
+
+#### Features
+* Displays The Rules Of London Hold'Em and teaches users how to play the original game.
+* Display the hands in Texas Hold'Em
+* Show The Founders and Team Members
+* Users can sign up to pseudo Subscriptions and apply for positions in the Club.
+
+![Landing Page](./images/landing-app.png)
+App Landing Page
+
+### CasinoJS
+Offers SVGs for common casino objects (Cards, Chips etc).
+
+#### Features
+* Currently has SVGs for a full 52 cards deck. Standard Coloured Chips and One Card Back.
+* Can be used with any framework that supports SVG imports
+
+#### Coming Soon
+* Pre-made 3d Manipulations
+* React Components
+* More Styles
+
+<img src="./images/ace-clubs.svg" width="100px">
+<img src="./images/jack-diamonds.svg" width="100px">
+<img src="./images/king-hearts.svg" width="100px">
+<img src="./images/queen-spades.svg" width="100px">
+
+Some of the cards on offer - One away from a straight.
+
+## Setup
+The Monorepo Workspace is governed by Yarn and can everything can easily be installed by running
 
 ```bash
-npm run dev
-# or
-yarn dev
+    yarn install
 ```
+If you want to run commands for the app workspace you can run:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+```bash
+    yarn app <command_name>
+```
+Or if you want to run commands for casinoJS:
+```bash
+    yarn casino <command_name>
+```
