@@ -138,7 +138,7 @@ const ApplicationForm = () => {
           <div className="flex flex-col items-center space-y-2">
             <Error message="Sorry An Error Occurred Please Try Again." />
             <button
-              className="px-5 py-3 bg-primary rounded-md shadow text-white dark:bg-invertedLight"
+              className="px-5 py-3 bg-green-900 rounded-md shadow text-white dark:bg-invertedDark"
               onClick={() => changeRequestState({ error: false })}
               type="button"
             >
