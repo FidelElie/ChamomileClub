@@ -14,19 +14,18 @@ const ImageCard = (props) => {
     <div className="flex flex-col md:flex-row md:space-x-5" key={name}>
       <div className="w-full h-96 rounded-md shadow-lg bg-white flex justify-center overflow-hidden relative md:w-1/3">
         {
-          image ? (
+          image && (
             <Image
               className="w-full h-full object-cover"
               layout="fill"
               src={image}
               alt={name}
             />
-          ) : (
-            <div className="w-full h-full flex items-center justify-center">
-              <ImagePlaceholder className="w-32 h-auto text-gray-500"/>
-            </div>
           )
         }
+        <div className="w-full h-full flex items-center justify-center">
+          <ImagePlaceholder className="w-32 h-auto text-gray-500"/>
+        </div>
       </div>
       <div className="md:w-2/3">
         <SubTitle>{name}</SubTitle>
