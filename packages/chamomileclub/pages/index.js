@@ -8,54 +8,14 @@ import AppLayout from "../components/layouts/App";
 import { Paragraph, SubTitle } from "../components/core/Prose";
 import EmailForm from "../components/pages/Email.form";
 
+import LandingSection from "../components/pages/index/Landing.section";
+
 export default function Home() {
   const featuresSection = useRef();
 
-  const scrollToFeature = () => {
-    featuresSection.current.scrollIntoView({
-      behavior: "smooth"
-    })
-  }
-
   return (
     <AppLayout>
-      <div className="w-full h-screen flex flex-col py-10 box-border relative">
-        <div className="w-full h-full absolute top-0 left-0 z-0 shadow">
-          <div className="bg-black bg-opacity-50 w-full h-full absolute top-0 left-0" />
-          <video
-            loop
-            className="w-full h-full object-cover"
-            autoPlay
-          >
-            <source src="./videos/landing-video.mp4" type="video/mp4" />
-          </video>
-        </div>
-        <div className="container mx-auto flex-grow flex flex-col justify-center px-5 md:max-w-xl lg:max-w-5xl z-10 lg:px-10">
-          <h1 className="text-red-600 text-5xl tracking-tigher font-medium mb-1 md:text-7xl lg:text-8xl">
-            Texas Hold'em
-          </h1>
-          <h2 className="text-3xl text-white mb-3 font-light md:text-5xl">
-            redefined for the
-          </h2>
-          <h2 className="text-white text-4xl uppercase font-light md:text-5xl lg:text-6xl">
-            London Massive
-          </h2>
-        </div>
-        <div className="absolute transform text-center bottom-20 w-full z-10">
-          <h2 className="font-semibold text-lg text-white mb-1 md:text-2xl">
-            Invitation Only
-          </h2>
-          <h3 className="font-extralight text-white md:text-lg">
-            Dates To Be Confirmed
-          </h3>
-          <button
-            onClick={scrollToFeature}
-            className="px-5 py-3 w-min box-border whitespace-nowrap text-white mt-5 rounded-md shadow font-semibold bg-primary dark:bg-inverted"
-          >
-            Learn More
-          </button>
-        </div>
-      </div>
+      <LandingSection featuresSection={featuresSection}/>
       <div
         className="w-full bg-green-800 dark:bg-invertedLight shadow"
         ref={featuresSection}
