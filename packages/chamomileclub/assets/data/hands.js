@@ -35,17 +35,17 @@ import {
 const hands = [
   {
     name: "High Card",
-    description: "The lowest way to win you have none of the other combination, the highest card wins (Ace is the highest card).",
+    description: "The lowest way to win, you have none of the other combinations, so the highest card wins (Ace is the highest card).",
     cards: [AceHearts, EightSpades, SixDiamonds, FourClubs, TwoHearts]
   },
   {
     name: "Pair",
-    description: "Very common two cards of the same kind, for example you have one ace card and another in the river you have a pair",
+    description: "Very common, two cards of the same kind, for example you have one ace card and another in the community so you have a pair.",
     cards: [AceClubs, AceHearts, NineSpades, EightDiamonds, SevenClubs]
   },
   {
     name: "Two Pair",
-    description: "You have two Pairs pretty self explanatory",
+    description: "You have two Pairs pretty self explanatory.",
     cards: [KingDiamonds, KingClubs, QueenHearts, QueenSpades, JackDiamonds]
   },
   {
@@ -70,7 +70,7 @@ const hands = [
   },
   {
     name: "Four of a kind",
-    description: "Low odds but high reward, you have four of the same cards. For example four aces baby!",
+    description: "Low odds but high reward, you have four of the same cards. For example four aces!",
     cards: [AceHearts, AceClubs, AceDiamonds, AceSpades, TwoHearts]
   },
   {

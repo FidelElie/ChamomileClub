@@ -2,14 +2,13 @@
 import openings from "../assets/data/openings";
 
 // ! Components
-import AppLayout from "../components/layouts/App";
 import { PageHeader, Paragraph, SubTitle } from "../components/core/Prose";
 import Accordion from "../components/misc/Accordion";
-import ApplicationForm from "../components/pages/Application.form";
+import ApplicationForm from "../components/pages/jobs/Application.form";
 
 export default function Jobs() {
   return (
-    <AppLayout title="The Chamomile Club | Jobs" navbarFixed>
+    <main>
       <div className="w-full container max-w-4xl mx-auto px-8 pt-28 pb-10 md:px-0">
         <PageHeader
           title="Jobs"
@@ -70,6 +69,6 @@ export default function Jobs() {
           <ApplicationForm />
         </div>
       </div>
-    </AppLayout>
+    </main>
   )
 }

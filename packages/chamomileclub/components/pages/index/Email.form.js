@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 // ! Components
-import { Loading, Success, Error } from "../misc/StateDisplays";
+import { Loading, Success, Error } from "../../misc/StateDisplays";
 
 const initialRequestState = {
   success: false,

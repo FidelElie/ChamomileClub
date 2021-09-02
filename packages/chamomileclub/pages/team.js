@@ -4,13 +4,12 @@ import Link from "next/link";
 import team from "../assets/data/team";
 
 // ! Components
-import AppLayout from "../components/layouts/App";
 import { PageHeader, PageTagline } from "../components/core/Prose";
 import ImageCard from "../components/misc/ImageCard";
 
 export default function Team() {
   return (
-    <AppLayout title="The Chamomile Club | The Team">
+    <main>
       <div className="w-full container max-w-4xl mx-auto px-8 pt-28 pb-10 md:px-0">
         <PageHeader
           title="The Team"
@@ -28,6 +27,6 @@ export default function Team() {
           </Link>.
         </PageTagline>
       </div>
-    </AppLayout>
+    </main>
   )
 }

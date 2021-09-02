@@ -1,5 +1,4 @@
-import AppLayout from "../components/layouts/App";
-
+// ! Library
 import founders from "../assets/data/founders";
 
 // ! Components
@@ -8,7 +7,7 @@ import ImageCard from "../components/misc/ImageCard";
 
 export default function Founders() {
   return (
-    <AppLayout title="The Chamomile Club | The Founders" navbarFixed>
+    <main>
       <div className="w-full container max-w-4xl mx-auto px-8 pt-28 pb-10 md:px-0">
         <PageHeader
           title="Meet The Founders"
@@ -18,6 +17,6 @@ export default function Founders() {
           { founders.map(founder => <ImageCard {...founder} key={founder.name}/>) }
         </div>
       </div>
-    </AppLayout>
+    </main>
   )
 }

@@ -4,9 +4,8 @@ import { useRef } from "react";
 import features from "../assets/data/features";
 
 // ! Components
-import AppLayout from "../components/layouts/App";
 import { Paragraph, SubTitle } from "../components/core/Prose";
-import EmailForm from "../components/pages/Email.form";
+import EmailForm from "../components/pages/index/Email.form";
 
 import LandingSection from "../components/pages/index/Landing.section";
 
@@ -14,7 +13,7 @@ export default function Home() {
   const featuresSection = useRef();
 
   return (
-    <AppLayout>
+    <main>
       <LandingSection featuresSection={featuresSection}/>
       <div
         className="w-full bg-green-800 dark:bg-invertedLight shadow"
@@ -45,6 +44,6 @@ export default function Home() {
             <EmailForm/>
           </div>
       </div>
-    </AppLayout>
+    </main>
   )
 }

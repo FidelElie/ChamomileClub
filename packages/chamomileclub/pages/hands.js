@@ -1,6 +1,3 @@
-import { useState } from "react";
-import AppLayout from "../components/layouts/App";
-
 // ! Assets
 import hands from "../assets/data/hands";
 
@@ -14,7 +11,7 @@ import {
 
 export default function Hands() {
   return (
-    <AppLayout title="The Chamomile Club | The Hands" navbarFixed>
+    <main>
       <div className="w-full container max-w-4xl mx-auto px-8 pt-28 pb-10 md:px-0">
         <div className="mb-10">
           <PageHeading>The Hands</PageHeading>
@@ -39,6 +36,6 @@ export default function Hands() {
           ))
         }
       </div>
-    </AppLayout>
+    </main>
   )
 }

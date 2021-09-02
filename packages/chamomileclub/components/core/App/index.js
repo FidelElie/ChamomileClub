@@ -1,35 +1,31 @@
 import Head from "next/head";
 import PropTypes from "prop-types";
 
+// ! Library
+import { useApp } from "../../../lib/providers/app";
+
 // ! Components
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 
 const AppLayout = (props) => {
-  const { title, navbarFixed, children } = props;
+  const { children } = props;
+
+  const { titleBase, titleSuffix, disableNavbar, disableFooter } = useApp();
 
   return (
     <div className="w-full min-h-screen flex flex-col transition-colors bg-primary dark:bg-inverted shadow-lg">
       <Head>
-        <title>{ title }</title>
+        <title>{ titleBase } | { titleSuffix }</title>
         <link rel="shortcut icon" href="./icon.svg" />
       </Head>
-      <Navbar fixed={navbarFixed}/>
+      { !disableNavbar && <Navbar /> }
       { children }
-      <Footer/>
+      { !disableFooter && <Footer /> }
     </div>
   )
 }
 
-AppLayout.propTypes = {
-  title: PropTypes.string,
-  navbarFixed: PropTypes.bool,
-  children: PropTypes.node.isRequired
-}
-
-AppLayout.defaultProps = {
-  title: "The Chamomile Club | Introducting London Hold'Em",
-  navbarFixed: true
-}
+AppLayout.propTypes = { children: PropTypes.node.isRequired }
 
 export default AppLayout;

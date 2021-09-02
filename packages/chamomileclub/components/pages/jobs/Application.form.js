@@ -1,10 +1,10 @@
 import { useState } from "react";
 
 // ! Libarary
-import openings from "../../assets/data/openings";
+import openings from "../../../assets/data/openings";
 
 // ! Components
-import { Loading, Success, Error } from "../misc/StateDisplays";
+import { Loading, Success, Error } from "../../misc/StateDisplays";
 
 const openingsNames = openings.map(opening => opening.name);
 const initialFormState = {
