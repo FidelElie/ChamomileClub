@@ -1,6 +1,9 @@
 // ! Assets
 import hands from "../assets/data/hands";
 
+// ! Library
+import { useTheme } from "../lib/providers/theme";
+
 // ! Components
 import {
   PageHeading,
@@ -10,12 +13,23 @@ import {
 } from "../components/core/Prose";
 
 export default function Hands() {
+  const theme = useTheme()[0];
+
   return (
     <main>
       <div className="w-full container max-w-4xl mx-auto px-8 pt-28 pb-10 md:px-0">
-        <div className="mb-10">
+        <div>
           <PageHeading>The Hands</PageHeading>
           <PageTagline>Like Normal Texas Hold'em, All In One Place</PageTagline>
+          <div className="my-6">
+            <a
+              className="block w-min whitespace-nowrap px-5 py-4 rounded-md text-white bg-green-900 text-xl shadow-lg font-semibold tracking-tighter dark:bg-invertedDark"
+              href={`/docs/the-hands${theme === "dark" ? "-dark" : ""}.pdf`}
+              download="The Hands.pdf"
+            >
+              Print The PDF
+            </a>
+          </div>
         </div>
         {
           hands.map(hand => (

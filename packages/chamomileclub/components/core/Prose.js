@@ -1,7 +1,7 @@
 import { joinClasses } from "../../lib/utilities"
 
 const PageHeading = ({ children }) => (
-  <h1 className="text-6xl tracking-tighter text-white mb-1 md:text-8xl">
+  <h1 className="text-6xl tracking-tighter font-heading text-white mb-1 md:text-8xl">
     { children }
   </h1>
 )
@@ -20,7 +20,7 @@ const PageHeader = ({ title, tagline }) => (
 )
 
 const SubTitle = ({ children }) => (
-  <h2 className="text-4xl tracking-tighter text-white mt-4 mb-2">
+  <h2 className="text-4xl tracking-tighter font-heading text-white mt-4 mb-2">
     { children }
   </h2>
 )
@@ -34,7 +34,7 @@ const SubSubTitle = ({ children, topMargin }) => (
 )
 
 const Paragraph = ({ children }) => (
-  <p className="text-gray-200 mb-2">{ children }</p>
+  <p className="text-gray-100 mb-2 font-light">{ children }</p>
 )
 
 const UnorderedList = ({ id, items }) => (
