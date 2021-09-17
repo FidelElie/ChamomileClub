@@ -1,3 +1,5 @@
+import PropTypes from "prop-types";
+
 import { joinClasses } from "../../lib/utilities"
 
 const PageHeading = ({ children }) => (
@@ -26,7 +28,7 @@ const SubTitle = ({ children }) => (
 )
 
 const SubSubTitle = ({ children, topMargin }) => (
-  <h3 className={joinClasses("text-2xl tracking-tighter text-red-600 mb-1", {
+  <h3 className={joinClasses("text-3xl tracking-tighter text-red-600 mb-1", {
     "mt-5": topMargin
   })}>
     { children }
@@ -34,16 +36,39 @@ const SubSubTitle = ({ children, topMargin }) => (
 )
 
 const Paragraph = ({ children }) => (
-  <p className="text-gray-100 mb-2 font-light">{ children }</p>
+  <p className="text-gray-100 text-xl mb-2 font-light">{ children }</p>
 )
 
-const UnorderedList = ({ id, items }) => (
-  <ul className="list-disc ml-5" id={id}>
-    {
-      items.map((item, index) => <li key={`${item}-${index}`}>{ item }</li>)
-    }
-  </ul>
-)
+const List = (props) => {
+  const { id, items, ordered } = props;
+
+  const ListElement = ordered ? "ol" : "ul"
+
+  return (
+    <ListElement className={joinClasses("space-y-3 ml-10", {
+      "list-disc": !ordered,
+      "list-decimal": ordered
+    })} id={id}>
+      {
+        items.map(
+          (item, index) =>
+            <li className="text-xl text-white font-light" key={`${item}-${index}`}>
+              { item }
+            </li>
+        )
+      }
+    </ListElement>
+  )
+}
+
+List.propTypes = {
+  id: PropTypes.string.isRequired,
+  items: PropTypes.array.isRequired,
+  ordered: PropTypes.bool
+}
+List.defaultProps = {
+  ordered: false
+}
 
 export {
   PageHeading,
@@ -51,6 +76,6 @@ export {
   PageHeader,
   SubTitle,
   SubSubTitle,
-  UnorderedList,
+  List,
   Paragraph
 }

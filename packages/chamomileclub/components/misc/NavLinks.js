@@ -5,12 +5,12 @@ import PropTypes from "prop-types";
 import { joinClasses } from "../../lib/utilities";
 
 const links = [
-  { name: "Home", href: "/" },
-  { navbarName: "The Rules", footerName: "Rules", href: "/rules" },
-  { navbarName: "The Hands", footerName: "Hands", href: "/hands" },
-  { navbarName: "The Founders", footerName: "Founders", href: "/founders" },
-  { navbarName: "The Team", footerName: "Team", href: "/team" },
-  { name: "Jobs", href: "/jobs", footerOnly: true }
+  { name: "Home", href: "/", navbarOnly: true },
+  { name: "Rules", footerName: "Rules", href: "/rules" },
+  { name: "Hands", footerName: "Hands", href: "/hands" },
+  { name: "Founders", footerName: "Founders", href: "/founders" },
+  { name: "Team", footerName: "Team", href: "/team" },
+  { name: "Jobs", href: "/jobs" }
 ]
 
 const NavLinks = (props) => {

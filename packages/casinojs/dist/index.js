@@ -10,4 +10,4 @@ var __assign = (this && this.__assign) || function () {
     };
     return __assign.apply(this, arguments);
 };
-module.exports = __assign(__assign(__assign({}, require("./chips")), require("./backs")), require("./cards"));
+module.exports = __assign(__assign(__assign(__assign({}, require("./chips")), require("./backs")), require("./cards")), require("./die"));

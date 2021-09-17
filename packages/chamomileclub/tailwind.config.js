@@ -1,5 +1,3 @@
-const colors = require('tailwindcss/colors');
-
 module.exports = {
   purge: ["./pages/**/*.{js,ts,jsx,tsx}", "./components/**/*.{js,ts,jsx,tsx}"],
   darkMode: "class",
@@ -14,8 +12,15 @@ module.exports = {
       }
     },
   },
+  plugins: [
+    require("tailwind-scrollbar"),
+    require("@tailwindcss/forms")
+  ],
   variants: {
-    extend: {},
+    scrollbar: ["dark", "rounded"],
+    extend: {
+      opacity: ["disabled"],
+    },
   },
-  plugins: [],
+
 }

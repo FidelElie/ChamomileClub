@@ -10,18 +10,12 @@
   font-display: swap
 }
 
-@font-face {
-  font-family: "Rockwell";
-  src: url("/fonts/rockwell.ttf");
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
+body {
+  @apply scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-white overflow-y-auto;
 }
 
 * { @apply transition-colors; }
 
 .font-heading { font-family: "Behaus 93", sans-serif; }
-
-.font-primary { font-family: "Rockwell", sans-serif; }
 
 .button { @apply px-4 py-2 rounded-md; }

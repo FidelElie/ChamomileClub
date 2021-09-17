@@ -3,7 +3,7 @@ import { GreenChip, BlueChip, RedChip, BlackChip } from "@chamomileclub/casinojs
 const features = [
   {
     title: "New Tricks",
-    description: "Play with extra rules that really push the lovely game of poker into a more modern and youthful setting.",
+    description: "Play with extra rules that really push the lovely game of Poker into a more modern and youthful setting.",
     Chip: GreenChip
   },
   {

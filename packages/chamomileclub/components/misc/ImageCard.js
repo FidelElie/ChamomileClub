@@ -2,8 +2,7 @@
 import PropTypes from "prop-types";
 
 // ! Assets
-import MehIcon from "../../assets/images/meh.svg";
-import UserIcon from "../../assets/images/user.svg";
+import PlaceHolderIcon from "../../assets/images/user.svg";
 import LoaderIcon from "../../assets/images/loader.svg";
 
 // ! Library
@@ -15,17 +14,14 @@ import { SubTitle, SubSubTitle, Paragraph } from "../core/Prose";
 
 const ImageCard = (props) => {
   const { name, position, text, image } = props;
-  const { mediaRef, mediaLoading, mediaError } = useMedia(image);
-
-  const noImagePresent = mediaLoading && !image;
+  const { mediaRef, mediaLoading, mediaError, noMediaPresent } = useMedia(image);
 
   return (
     <div className="flex flex-col md:flex-row md:space-x-5" key={name}>
       <div className="w-full h-96 rounded-md shadow-lg bg-white flex justify-center overflow-hidden relative md:w-1/3">
         <div className="w-full h-full z-10">
-          { mediaError && <ImageError/> }
+          { (mediaError || noMediaPresent) && <NoImagePlaceholder/> }
           { mediaLoading && <ImageLoading/> }
-          { noImagePresent && <NoImagePlaceholder/> }
         </div>
         {
           !mediaError && (
@@ -55,16 +51,9 @@ const ImageLoading = () => (
   </div>
 )
 
-const ImageError = () => (
-  <div className="w-full h-full flex flex-col items-center justify-center bg-white">
-    <MehIcon className="w-24 h-auto text-gray-500 mb-5" />
-    <span className="font-light text-gray-500">Sorry We Couldn't Find The Image</span>
-  </div>
-)
-
 const NoImagePlaceholder = () => (
   <div className="w-full h-full flex items-center justify-center bg-white">
-    <UserIcon className="w-32 h-auto text-gray-500" />
+    <PlaceHolderIcon className="w-32 h-auto text-gray-500" />
   </div>
 )
 

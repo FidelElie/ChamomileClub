@@ -44,7 +44,13 @@ const useMedia = (src) => {
     setMediaLoaded(!(mediaLoading && mediaError));
   }, [mediaLoading, mediaError]);
 
-  return { mediaRef, mediaLoaded, mediaLoading, mediaError }
+  return {
+    mediaRef,
+    mediaLoaded,
+    mediaLoading,
+    mediaError,
+    noMediaPresent: mediaLoaded && !src
+  }
 }
 
 export default useMedia;
