@@ -33,7 +33,7 @@ const Navbar = props => {
         {
           navigationToggled && (
             <div className="flex justify-between space-x-2">
-              <div className="flex py-2 space-x-4">
+              <div className="flex flex-col space-y-3 py-2 md:space-y-0 md:space-x-4 md:flex-row">
                 <NavLinks
                   id="navbar-links"
                   mode="navbar"
