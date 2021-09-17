@@ -23,7 +23,7 @@ import {
 } from "../components/core/Prose";
 import SlideshowPreFlop from "../components/pages/rules/SlideshowPreFlop";
 import SlideshowFlop from "../components/pages/rules/SlideshowFlop";
-import SlideshowTurnRiver from "../components/pages/rules/SlideShowTurnRiver";
+import SlideshowTurnRiver from "../components/pages/rules/SlideshowTurnRiver";
 import SlideshowResults from "../components/pages/rules/SlideshowResults";
 import BlindCalculator from "../components/pages/rules/BlindCalculator";
 
