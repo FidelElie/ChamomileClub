@@ -1,4 +1,4 @@
-import CardSlideshow from "../../misc/CardSlideShow";
+import CardSlideshow from "../../misc/CardSlideshow";
 
 import {
 	ThreeSpades,
