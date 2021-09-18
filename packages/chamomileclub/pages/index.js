@@ -14,7 +14,7 @@ export default function Home() {
   const featuresSection = useRef();
 
   return (
-    <AppLayout disableContainer>
+    <AppLayout>
       <LandingSection featuresSection={featuresSection}/>
       <div
         className="w-full bg-green-800 dark:bg-invertedLight shadow"

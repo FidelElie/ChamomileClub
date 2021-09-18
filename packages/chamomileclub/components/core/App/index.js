@@ -13,7 +13,6 @@ const AppLayout = (props) => {
     title,
     disableNavbar,
     disableFooter,
-    disableContainer,
     children
   } = props;
 
@@ -25,11 +24,7 @@ const AppLayout = (props) => {
       </Head>
       { !disableNavbar && <Navbar /> }
       <main className="flex-grow">
-        <div className={joinClasses({
-          "w-full container max-w-4xl mx-auto px-8 pt-28 pb-10": !disableContainer,
-        })}>
-          { children }
-        </div>
+        { children }
       </main>
       { !disableFooter && <Footer /> }
     </div>
@@ -40,7 +35,6 @@ AppLayout.propTypes = {
   title: PropTypes.string,
   disableNavbar: PropTypes.bool,
   disableFooter: PropTypes.bool,
-  disableContainer: PropTypes.bool,
   children: PropTypes.node.isRequired
 }
 
@@ -48,7 +42,6 @@ AppLayout.defaultProps = {
   title: "The Chamomile Club | Introducing London Hold'em",
   disableNavbar: false,
   disableFooter: false,
-  disableContainer: false
 }
 
 export default AppLayout;
