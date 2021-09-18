@@ -16,11 +16,11 @@ const Navbar = props => {
   const [navigationToggled, setNavigationToggled] = useState(false);
 
   return (
-    <nav className={joinClasses("w-full transition-colors" , {
+    <nav className={joinClasses("w-screen transition-colors" , {
       "fixed z-20": fixed,
       "bg-green-900 dark:bg-invertedDark shadow-lg": navigationToggled
       })}>
-      <div className="px-8 w-full flex flex-col py-4 space-y-2 container mx-auto">
+      <div className="px-8 w-full flex flex-col py-4 box-border space-y-2 container mx-auto">
         <div className="flex items-center justify-between space-x-3">
           <AceSpades
             className={joinClasses("w-min h-16 transform transition-transform shadow-lg rounded-md border border-transparent cursor-pointer hover:border-red-500", {
