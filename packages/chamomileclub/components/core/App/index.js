@@ -18,7 +18,7 @@ const AppLayout = (props) => {
   } = props;
 
   return (
-    <div className="w-screen min-h-screen flex flex-col transition-colors shadow-lg bg-primary dark:bg-inverted">
+    <div className="w-screen min-h-screen flex flex-col relative bg-primary dark:bg-inverted">
       <Head>
         <title>{ title }</title>
         <link rel="shortcut icon" href="./icon.svg" />
@@ -26,7 +26,7 @@ const AppLayout = (props) => {
       { !disableNavbar && <Navbar /> }
       <main className="flex-grow">
         <div className={joinClasses({
-          "w-full container max-w-4xl mx-auto px-8 pt-28 pb-10": !disableContainer
+          "w-full container max-w-4xl mx-auto px-8 pt-28 pb-10": !disableContainer,
         })}>
           { children }
         </div>

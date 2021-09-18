@@ -17,7 +17,6 @@ module.exports = {
     require("@tailwindcss/forms")
   ],
   variants: {
-    scrollbar: ["dark", "rounded"],
     extend: {
       opacity: ["disabled"],
     },
