@@ -74,13 +74,13 @@ const EmailForm = () => {
           requestState.requested && <LoaderIcon className="w-6 h-6 animate-spin opacity-75 mr-3 text-white" />
         }
         <div className="flex items-center text-white text-xl font-light relative">
-          <span className={joinClasses("transition-opacity absolute whitespace-nowrap", {
+          <span className={joinClasses("transition-opacity absolute", {
             "opacity-0": !requestState.success,
             "opacity-100": requestState.success
           })}>
             Thank You For Subscribing.
           </span>
-          <span className={joinClasses("transition-opacity absolute whitespace-nowrap", {
+          <span className={joinClasses("transition-opacity absolute", {
             "opacity-0": !requestState.error,
             "opacity-100": requestState.error
           })}>
