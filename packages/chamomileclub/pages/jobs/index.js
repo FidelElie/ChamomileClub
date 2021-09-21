@@ -15,7 +15,7 @@ export default function Jobs() {
           tagline="Are you interested in joining the movement? See our open positions below."
         />
         <SubTitle>Positions</SubTitle>
-        <div className="mt-5 mb-10 flex flex-wrap w-full space-y-4 md:space-y-0">
+        <div className="mt-5 mb-10 flex flex-wrap w-full">
           { openings.map(opening => <JobDisplay opening={opening} key={opening._id}/>) }
         </div>
         <SubTitle>Information</SubTitle>

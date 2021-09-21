@@ -44,7 +44,7 @@ const LandingSection = (props) => {
           "opacity-0": mediaLoading,
           "opacity-100": !mediaLoading
         })}>
-          <div className="container mx-auto flex-grow flex flex-col justify-center px-5 md:max-w-xl lg:max-w-5xl z-10 lg:px-10">
+          <div className="container mx-auto flex-grow flex flex-col justify-center px-5 text-center md:text-left md:max-w-xl lg:max-w-5xl z-10 lg:px-10">
             <h1 className="text-red-600 text-5xl tracking-tigher font-medium mb-1 font-heading md:text-7xl lg:text-8xl">
               Texas Hold'em
             </h1>

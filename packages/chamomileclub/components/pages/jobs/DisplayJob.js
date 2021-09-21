@@ -13,7 +13,6 @@ const JobDisplay = (props) => {
 	const { opening } = props;
 	const {
 		mediaRef,
-		mediaLoaded,
 		mediaLoading,
 		mediaError,
 		noMediaPresent
@@ -21,7 +20,7 @@ const JobDisplay = (props) => {
 
 	return (
 		<Link href={`/jobs/${opening._id}`}>
-			<a className="p-5 flex flex-col box-border w-full group md:w-1/2">
+			<a className="px-0 py-5 flex flex-col box-border w-full group md:w-1/2 md:p-5">
 				<span className="flex flex-col shadow-lg relative bg-green-900  dark:bg-invertedDark">
 					<span className="block w-full h-64 relative">
 						{ (mediaError || noMediaPresent) && <NoImagePlaceholder/> }
@@ -39,7 +38,7 @@ const JobDisplay = (props) => {
 							)
 						}
 						{
-							(mediaLoaded && !mediaError) && (
+							(!mediaLoading && !mediaError) && (
 								<span className="flex items-center h-full p-5 box-border absolute transition-opacity bg-black bg-opacity-0 group-hover:bg-opacity-75">
 									<span className="text-white text-lg transition-opacity opacity-0 group-hover:opacity-100">{ opening.description }</span>
 								</span>
