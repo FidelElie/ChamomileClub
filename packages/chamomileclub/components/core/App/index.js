@@ -17,7 +17,7 @@ const AppLayout = (props) => {
   } = props;
 
   return (
-    <div className="w-screen min-h-screen flex flex-col relative bg-primary dark:bg-inverted">
+    <div className="w-full min-h-screen flex flex-col relative bg-primary dark:bg-inverted">
       <Head>
         <title>{ title }</title>
         <link rel="shortcut icon" href="./icon.svg" />
