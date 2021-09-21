@@ -40,9 +40,8 @@ export default function Home() {
         <div className="mx-auto container flex flex-col px-8 items-center md:space-x-8 md:max-w-3xl md:px-12 md:flex-row lg:max-w-6xl">
             <div className="flex flex-col flex-grow mb-5 w-full md:w-1/2 md:mb-0">
               <span className="text-secondary text-4xl font-medium font-heading mb-2 md:text-5xl lg:text-6xl">Interested In The Movement?</span>
-              <span className="text-2xl text-white tracking-tighter font-light">Sign up below to get the latest updates on <span className="text-3xl font-heading">The Chamomile Club</span>.</span>
+              <span className="text-2xl text-white tracking-tighter font-light">Check back to see the latest on <span className="text-3xl font-heading">The Chamomile Club</span>.</span>
             </div>
-            <EmailForm/>
           </div>
       </div>
     </AppLayout>
