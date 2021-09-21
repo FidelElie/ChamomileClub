@@ -133,8 +133,8 @@ const ApplicationForm = (props) => {
           onChange={event => changeData("question2", event.target.value)}
         />
       </div>
-      <div className="flex flex-col items-center md:space-x-3 md:flex-row">
-        <button className="px-5 py-3 shadow text-white flex items-center bg-green-900 dark:bg-invertedDark" type="submit" disabled={submissionOccuring}>
+      <div className="flex flex-col md:items-center md:space-x-3 md:flex-row">
+        <button className="px-5 py-3 w-min whitespace-nowrap shadow text-white flex items-center bg-green-900 dark:bg-invertedDark" type="submit" disabled={submissionOccuring}>
           Apply
         </button>
         {

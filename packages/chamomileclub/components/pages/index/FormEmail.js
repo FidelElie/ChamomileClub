@@ -66,8 +66,8 @@ const EmailForm = () => {
         onChange={event => setEmail(event.target.value)}
         required
       />
-      <div className="flex flex-col items-center md:space-x-3 md:flex-row">
-        <button className="px-5 py-3 shadow text-white flex items-center bg-green-900 dark:bg-invertedDark disabled:opacity-50" type="submit" disabled={submissionOccuring}>
+      <div className="flex flex-col md:items-center md:space-x-3 md:flex-row">
+        <button className="px-5 py-3 shadow text-white flex items-center bg-green-900 w-min whitespace-nowrap dark:bg-invertedDark disabled:opacity-50" type="submit" disabled={submissionOccuring}>
           Subscribe
         </button>
         {
