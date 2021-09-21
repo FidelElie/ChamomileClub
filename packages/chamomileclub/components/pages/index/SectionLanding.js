@@ -40,7 +40,7 @@ const LandingSection = (props) => {
             }
             { mediaLoading && <VideoLoading mediaLoading={mediaLoading}/> }
         </div>
-        <div className={joinClasses("w-full h-full flex flex-col justify-center items-center bg-black bg-opacity-50 z-10 transition-opacity duration-300 delay-300", {
+        <div className={joinClasses("w-full h-full flex-col flex justify-center items-center bg-black bg-opacity-50 z-10 transition-opacity duration-300 delay-300 sm:flex-row md:flex-col", {
           "opacity-0": mediaLoading,
           "opacity-100": !mediaLoading
         })}>
@@ -55,7 +55,7 @@ const LandingSection = (props) => {
               London Massive
             </h2>
           </div>
-          <div className="pb-10 md:absolute transform text-center bottom-20 w-full z-10 md:pb-0">
+          <div className="absolute sm:static md:absolute transform text-center bottom-16 w-full z-10 md:pb-0">
             <h2 className="font-semibold text-xl text-white mb-1 font-heading tracking-widest uppercase md:text-2xl">
               Invitation Only
             </h2>

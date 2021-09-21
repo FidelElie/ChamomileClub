@@ -25,8 +25,8 @@ export default function Home() {
             {
               features.map((feature, index) => (
                 <div className="flex items-center space-x-4" key={`$Feature-${index}`}>
-                  <feature.Chip className="h-auto rounded-full shadow-lg w-1/5"/>
-                  <div className="space-y-2 w-4/5">
+                  <feature.Chip className="h-auto rounded-full shadow-lg sm:w-1/6 md:w-1/5"/>
+                  <div className="space-y-2 w-5/6 md:w-4/5">
                     <SubTitle>{ feature.title }</SubTitle>
                     <Paragraph>{ feature.description }</Paragraph>
                   </div>

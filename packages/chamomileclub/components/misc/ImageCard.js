@@ -17,8 +17,8 @@ const ImageCard = (props) => {
   const { mediaRef, mediaLoading, mediaError, noMediaPresent } = useMedia(image);
 
   return (
-    <div className="flex flex-col md:flex-row md:space-x-5" key={name}>
-      <div className="w-full h-96 rounded-md shadow-lg bg-white flex justify-center overflow-hidden relative md:w-1/3">
+    <div className="flex flex-col sm:flex-row sm:space-x-5" key={name}>
+      <div className="w-full h-96 rounded-md shadow-lg bg-white flex justify-center overflow-hidden relative sm:w-1/3">
         <div className="w-full h-full z-10">
           { (mediaError || noMediaPresent) && <NoImagePlaceholder/> }
           { mediaLoading && <ImageLoading/> }
@@ -36,7 +36,7 @@ const ImageCard = (props) => {
           )
         }
       </div>
-      <div className="md:w-2/3">
+      <div className="sm:w-2/3">
         <SubTitle>{name}</SubTitle>
         <SubSubTitle>{position}</SubSubTitle>
         <Paragraph>{text}</Paragraph>
