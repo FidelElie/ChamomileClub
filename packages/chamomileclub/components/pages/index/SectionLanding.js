@@ -1,12 +1,13 @@
 // ! Assets
 import LoaderIcon from "../../../assets/images/loader.svg";
+import ArrowDownIcon from "../../../assets/images/arrow-down.svg";
 
 //! Library
 import useMedia from "../../../lib/hooks/useMedia";
 import { joinClasses } from "../../../lib/utilities";
 
 const LandingSection = (props) => {
-  const { featuresSection } = props;
+  const { aboutSection } = props;
   const {
     mediaRef,
     mediaLoaded,
@@ -14,9 +15,9 @@ const LandingSection = (props) => {
     mediaError
   } = useMedia("./videos/landing-video.mp4");
 
-  const scrollToFeature = () => {
-    if (featuresSection.current) {
-      featuresSection.current.scrollIntoView({ behavior: "smooth" });
+  const scrollToAbout = () => {
+    if (aboutSection.current) {
+      aboutSection.current.scrollIntoView({ behavior: "smooth" });
     }
   }
 
@@ -40,11 +41,11 @@ const LandingSection = (props) => {
             }
             { mediaLoading && <VideoLoading mediaLoading={mediaLoading}/> }
         </div>
-        <div className={joinClasses("w-full h-full flex-col flex justify-center items-center bg-black bg-opacity-50 z-10 transition-opacity duration-300 delay-300 sm:flex-row md:flex-col", {
+        <div className={joinClasses("w-full h-full flex-col flex justify-center items-center bg-black bg-opacity-50 z-10 transition-opacity duration-300 delay-300 lg:flex-col", {
           "opacity-0": mediaLoading,
           "opacity-100": !mediaLoading
         })}>
-          <div className="container mx-auto flex-grow flex flex-col justify-center px-5 text-center md:text-left md:max-w-xl lg:max-w-5xl z-10 lg:px-10">
+          <div className="container mx-auto flex-grow flex flex-col justify-center px-5 text-center md:max-w-xl lg:max-w-5xl z-10 lg:px-10">
             <h1 className="text-red-600 text-5xl tracking-tigher font-medium mb-1 font-heading md:text-7xl lg:text-8xl">
               Texas Hold'em
             </h1>
@@ -54,20 +55,12 @@ const LandingSection = (props) => {
             <h2 className="text-white text-4xl uppercase font-light font-heading md:text-5xl lg:text-6xl">
               London Massive
             </h2>
-          </div>
-          <div className="absolute sm:static md:absolute transform text-center bottom-16 w-full z-10 md:pb-0">
-            <h2 className="font-semibold text-xl text-white mb-1 font-heading tracking-widest uppercase md:text-2xl">
-              Invitation Only
-            </h2>
-            <h3 className="font-light text-white md:text-lg">
-              Dates To Be Confirmed
-            </h3>
-            <button
-              onClick={scrollToFeature}
-              className="px-5 py-3 w-min box-border whitespace-nowrap text-white mt-5 shadow font-semibold bg-primary dark:bg-inverted"
-            >
-              Learn More
-            </button>
+            <div className="w-full pt-10">
+                <ArrowDownIcon
+                  className="h-4 w-4 text-white mx-auto cursor-pointer md:h-6 md:w-6"
+                  onClick={scrollToAbout}
+                />
+            </div>
           </div>
         </div>
       </div>

@@ -8,7 +8,7 @@ const features = [
   },
   {
     title: "A Package Deal",
-    description: "With Poker, comes food, drinks and laughter. Enjoy a great game among friends.",
+    description: "With poker, comes food, drinks and laughter. Enjoy a great game among friends.",
     Chip: BlueChip
   },
   {
