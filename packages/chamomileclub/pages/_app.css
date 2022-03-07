@@ -14,7 +14,7 @@ body {
   @apply scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-white overflow-y-auto;
 }
 
-* { @apply transition-colors; }
+/* * { @apply transition-colors; } */
 
 .font-heading { font-family: "Behaus 93", sans-serif; }
 

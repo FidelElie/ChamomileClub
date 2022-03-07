@@ -8,6 +8,8 @@
   "workspaces": ["packages/*"],
   "scripts": {
       "app": "yarn workspace @chamomileclub/app",
+      "storybook": "yarn workspace @chamomileclub/app run storybook",
+      "test": "yarn workspace @chamomileclub/app jest --watch",
       "casino": "yarn workspace @chamomileclub/casinojs"
   }
 }
