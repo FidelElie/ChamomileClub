@@ -5,7 +5,7 @@ import "./_app.css";
 // ! Library
 import ThemeProvider, { useTheme } from "../lib/providers/theme";
 
-function TheChamomileClub({ Component, pageProps }: AppProps) {
+const TheChamomileClub = ({ Component, pageProps }: AppProps) => {
   return (
     <ThemeProvider>
       <AppContainer>
