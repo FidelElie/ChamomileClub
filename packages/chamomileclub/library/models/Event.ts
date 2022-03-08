@@ -1,10 +1,12 @@
-import mongoose from "mongoose";
+import { Schema, model } from "mongoose";
 
-const EventSchema = new mongoose.Schema({
+import type { Event } from "../types";
+
+const EventSchema = new Schema<Event>({
 	name: { type: String },
-	type: { type: String },
+	type: { type: String, required: true },
 	users: [{
-		user: { type: mongoose.Types.ObjectId, ref: "User" },
+		user: { type: Schema.Types.ObjectId, ref: "User" },
 		status: { type: String },
 		notes: { type: String }
 	}],
@@ -16,14 +18,14 @@ const EventSchema = new mongoose.Schema({
  		currency: { type: Boolean, default: "GBP" }
 	},
 	history: [{
-		body: { type: String },
 		type: { type: String },
-		user: { type: mongoose.Types.ObjectId, ref: "User" },
+		user: { type: Schema.Types.ObjectId, ref: "User" },
 		message: { type: String },
 		date: { type: Date }
 	}],
-	polls: [{ type: mongoose.Types.ObjectId, ref: "Poll" }],
-	summary: { type: mongoose.Types.ObjectId, ref: "EventSummary" }
+	comments: [{ type: Schema.Types.ObjectId, ref: "Comment" }],
+	polls: [{ type: Schema.Types.ObjectId, ref: "Poll" }],
+	summary: { type: Schema.Types.ObjectId, ref: "EventSummary" }
 });
 
-export default mongoose.models.Event || mongoose.model("Event", EventSchema);
+export default model("Event", EventSchema);

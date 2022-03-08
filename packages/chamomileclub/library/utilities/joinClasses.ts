@@ -1,5 +1,5 @@
 type baseType = string | number | undefined | null;
-type objectType = { [key: string]: undefined | null | boolean };
+type objectType = { [key: string]: string | number | undefined | null | boolean };
 type classesType = (baseType | objectType)[];
 
 const joinClasses = (...classes: classesType) => classes.map(_class => {
@@ -19,6 +19,8 @@ const joinClasses = (...classes: classesType) => classes.map(_class => {
 		else {
 			throw new TypeError(`Invalid Type of ${typeof _class} supplied to joinClasses`);
 		}
-	}).join(" ").trim();
+	})
+	.join(" ")
+	.trim();
 
 export default joinClasses;

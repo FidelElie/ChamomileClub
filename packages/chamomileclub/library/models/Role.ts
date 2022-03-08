@@ -1,9 +1,12 @@
-import mongoose from "mongoose";
+import { Schema, model } from "mongoose";
 
-const RoleSchema = new mongoose.Schema({
+import type { Role } from "../types";
+
+const RoleSchema = new Schema<Role>({
 	name: { type: String, trim: true, required: true },
 	alias: { type: String, trim: true, required: true, uppercase: true },
-	permissions: [{ type: mongoose.Types.ObjectId, ref: "Permission" }]
+	primary: { type: Boolean },
+	permissions: [{ type: Schema.Types.ObjectId, ref: "Permission" }]
 });
 
-export default mongoose.models.Role || mongoose.model("Role", RoleSchema);
+export default model("Role", RoleSchema);

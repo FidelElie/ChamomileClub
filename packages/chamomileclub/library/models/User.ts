@@ -1,9 +1,11 @@
-import mongoose from "mongoose";
+import { Schema, model } from "mongoose";
+
+import type { User } from "../types";
 
 const SCHEMA_OPTIONS = { timestamps: true }
 
-const UserSchema = new mongoose.Schema({
-	title: { type: String, trim: true },
+const UserSchema = new Schema<User>({
+	title: { type: String, trim: true, default: null },
 	forename: { type: String, index: true, trim: true, required: true },
 	surname: { type: String, index: true, required: true },
 	middleNames: { type: String, trim: true },
@@ -11,7 +13,8 @@ const UserSchema = new mongoose.Schema({
 	description: { type: String, default: null },
 	email: { type: String, trim: true, lowercase: true, required: true, unique: true, index: true },
 	photo: { type: String, trim: true },
-	roles: [{ type: mongoose.Types.ObjectId, ref: "Role" }]
+	primaryRole: { type: Schema.Types.ObjectId, ref: "Role" },
+	otherRoles: [{ type: Schema.Types.ObjectId, ref: "Role" }]
 }, SCHEMA_OPTIONS);
 
 UserSchema.virtual("fullname", function() {
@@ -24,4 +27,4 @@ UserSchema.virtual("fullname", function() {
 	.join(" ");
 });
 
-export default mongoose.models.User || mongoose.model("User", UserSchema);
+export default model("User", UserSchema);

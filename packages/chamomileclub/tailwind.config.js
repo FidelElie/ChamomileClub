@@ -1,5 +1,5 @@
 module.exports = {
-  purge: ["./pages/**/*.{js,ts,jsx,tsx}", "./components/**/*.{js,ts,jsx,tsx}"],
+  content: ["./pages/**/*.{js,ts,jsx,tsx}", "./components/**/*.{js,ts,jsx,tsx}"],
   darkMode: "class",
   theme: {
     extend: {
@@ -13,13 +13,8 @@ module.exports = {
     },
   },
   plugins: [
-    require("tailwind-scrollbar"),
-    require("@tailwindcss/forms")
-  ],
-  variants: {
-    extend: {
-      opacity: ["disabled"],
-    },
-  },
-
+    require("@tailwindcss/forms"),
+    require("@tailwindcss/typography"),
+    require('@tailwindcss/line-clamp')
+  ]
 }

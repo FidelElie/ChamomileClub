@@ -2,20 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
-@font-face {
-  font-family: "Behaus 93";
-  src: url("/fonts/behaus93.ttf");
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap
+body { @apply overflow-y-auto; }
+
+.TextField {
+  @apply flex flex-col w-full;
 }
-
-body {
-  @apply scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-white overflow-y-auto;
+.TextField input {
+  @apply flex-grow box-border px-5 py-3 focus:outline-none shadow rounded-md border-gray-200;
 }
-
-/* * { @apply transition-colors; } */
-
-.font-heading { font-family: "Behaus 93", sans-serif; }
-
-.button { @apply px-4 py-2 rounded-md; }

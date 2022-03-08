@@ -1,9 +1,11 @@
-import mongoose from "mongoose";
+import { Schema, model } from "mongoose";
 
-const PermissionSchema = new mongoose.Schema({
+import type { Permission } from "../types";
+
+const PermissionSchema = new Schema<Permission>({
 	name: { type: String, required: true },
 	code: { type: String, required: true, index: true },
 	description: { type: String }
 });
 
-export default mongoose.models.Permission || mongoose.model("Permission", PermissionSchema);
+export default model("Permission", PermissionSchema);
