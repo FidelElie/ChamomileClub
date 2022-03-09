@@ -84,13 +84,23 @@ interface User {
 	title: "Mr" | "Mrs" | "Ms" | "Miss" | null,
 	forename: string,
 	surname: string,
-	middleNames: string,
+	middleNames?: string,
 	position: string | null,
 	description?: string | null,
 	email: string,
+	strategies: {
+		password?: string,
+		code?: string
+	},
+	status: {
+		invited?: boolean,
+		confirmed?: boolean,
+		active?: boolean
+	},
 	photo?: string,
 	primaryRole: Types.ObjectId,
-	otherRoles: Types.ObjectId[]
+	otherRoles: Types.ObjectId[],
+	fullname?: string // Virtual
 }
 
 export type {

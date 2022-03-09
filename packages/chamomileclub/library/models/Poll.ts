@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
 import type { Poll } from "../types";
 
@@ -25,4 +25,4 @@ PollSchema.virtual("expired", function() {
 	return (new Date()) >= this.expiryDate;
 });
 
-export default model("Poll", PollSchema);
+export default mongoose.models.Poll || mongoose.model("Poll", PollSchema);;

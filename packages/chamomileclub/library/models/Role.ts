@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
 import type { Role } from "../types";
 
@@ -9,4 +9,4 @@ const RoleSchema = new Schema<Role>({
 	permissions: [{ type: Schema.Types.ObjectId, ref: "Permission" }]
 });
 
-export default model("Role", RoleSchema);
+export default mongoose.models.Role || mongoose.model("Role", RoleSchema);

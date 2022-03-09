@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
 import type { Permission } from "../types";
 
@@ -8,4 +8,4 @@ const PermissionSchema = new Schema<Permission>({
 	description: { type: String }
 });
 
-export default model("Permission", PermissionSchema);
+export default mongoose.models.Permission || mongoose.model("Poll", PermissionSchema);;

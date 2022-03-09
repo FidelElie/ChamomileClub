@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
 import type { Comment } from "../types";
 
@@ -19,4 +19,4 @@ CommentSchema.virtual("edited", function() {
 	return this.createdAt !== this.updatedAt;
 });
 
-export default model("Comment", CommentSchema);
+export default mongoose.models.Comment || mongoose.model("Comment", CommentSchema);;

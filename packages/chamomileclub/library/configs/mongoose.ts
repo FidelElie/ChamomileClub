@@ -1,27 +1,21 @@
 import mongoose from "mongoose";
 
-const { MONGO_URI } = process.env;
+import APP_CONFIG from "./app";
 
-if (!MONGO_URI) {
-	throw new Error("Please define the MONGO_URI environment variable");
-}
-
-let cached = global.mongoose
+let cached = global.mongoose;
 
 if (!cached) {
 	cached = global.mongoose = { conn: null, promise: null }
 }
 
-async function mongooseConnection() {
-	if (cached.conn) {
-		return cached.conn
-	}
+async function dbConnect() {
+	if (cached.conn) { return cached.conn; }
 
 	if (!cached.promise) {
-		cached.promise = await mongoose.connect(MONGO_URI, { bufferCommands: false });
+		cached.promise = await mongoose.connect(APP_CONFIG.mongoURI, { bufferCommands: false });
 	}
-	cached.conn = await cached.promise
-	return cached.conn
+	cached.conn = await cached.promise;
+	return cached.conn;
 }
 
-export default mongooseConnection;
+export default dbConnect;

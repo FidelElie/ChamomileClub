@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
 import type { Event } from "../types";
 
@@ -28,4 +28,4 @@ const EventSchema = new Schema<Event>({
 	summary: { type: Schema.Types.ObjectId, ref: "EventSummary" }
 });
 
-export default model("Event", EventSchema);
+export default mongoose.models.Event || mongoose.model("Event", EventSchema);;
