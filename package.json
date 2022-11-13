@@ -5,9 +5,16 @@
   "author": "Fidel Elie",
   "license": "MIT",
   "private": true,
-  "workspaces": ["packages/*"],
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
   "scripts": {
-      "app": "yarn workspace @chamomileclub/app",
-      "casino": "yarn workspace @chamomileclub/casinojs"
+    "web": "yarn workspace @chamomileclub/website",
+    "app": "yarn workspace @chamomileclub/app",
+    "casino": "yarn workspace @chamomileclub/casinojs"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.2.4"
   }
 }

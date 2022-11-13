@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+	font-family: "PollerOne";
+	src: url("/fonts/PollerOne-Regular.ttf");
+	font-style: normal;
+	font-weight: 400;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: "NotCourierSans";
+	src: url("/fonts/NotCourier-sans-Bold.ttf");
+	font-style: normal;
+	font-weight: 400;
+	font-display: swap;
+}
