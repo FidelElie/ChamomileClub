@@ -10,13 +10,18 @@ const Form = (props: FormProps) => {
 		children
 	} = props;
 
+	const handleSubmission: JSX.DOMAttributes<HTMLFormElement>["onSubmit"] = (event) => {
+		event.preventDefault();
+		if (onSubmit) { onSubmit(); }
+	}
+
 	return (
 		<form
 			class={classNames(
 				_class
 			)}
 			action={action}
-			onSubmit={onSubmit}
+			onSubmit={handleSubmission}
 		>
 			{ children }
 		</form>

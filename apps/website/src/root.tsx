@@ -13,6 +13,8 @@ import {
 } from "solid-start";
 import "./root.css";
 
+import { DevtoolsOverlay } from '@solid-devtools/overlay'
+
 import AuthProvider from "./library/providers/Auth.provider";
 
 export default function Root() {
@@ -30,6 +32,7 @@ export default function Root() {
               <Routes>
                   <FileRoutes />
               </Routes>
+              <DevtoolsOverlay/>
             </AuthProvider>
           </ErrorBoundary>
         </Suspense>

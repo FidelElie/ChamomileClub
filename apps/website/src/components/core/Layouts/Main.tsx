@@ -19,7 +19,7 @@ const Main = (props: MainProps) => {
 			</Show>
 			<div class="flex">
 				<Show when={!!aside}>{aside}</Show>
-				<div class="flex flex-col">
+				<div class="flex flex-col flex-grow">
 					<Show when={!!header}>{header}</Show>
 					<main class="min-h-screen">
 						{children}

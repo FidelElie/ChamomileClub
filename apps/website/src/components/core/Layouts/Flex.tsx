@@ -38,6 +38,7 @@ const Flex = (props: FlexProps) => {
 
 	return (
 		<Dynamic component={as} class={classNames(
+			"flex",
 			align && ALIGN_ITEMS[align],
 			justify && JUSTIFY_CONTENT[justify],
 			direction && FlEX_DIRECTIONS[direction],

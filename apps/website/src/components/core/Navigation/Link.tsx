@@ -1,6 +1,8 @@
 import { A } from "solid-start";
 import type { ComponentProps, JSX } from "solid-js";
 
+import classNames from "classnames";
+
 const Link = (props: LinkProps) => {
 	const {
 		class: _class,
@@ -9,7 +11,13 @@ const Link = (props: LinkProps) => {
 	} = props;
 
 	return (
-		<A {...linkProps} class={_class}>
+		<A
+			class={classNames(
+				"text-cream",
+				 _class
+			)}
+			{...linkProps}
+		>
 			{ children }
 		</A>
 	)

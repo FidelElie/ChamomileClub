@@ -8,8 +8,10 @@ const TextField = (props: TextFieldProps) => {
 		name,
 		ref,
 		value,
+		placeholder,
 		onChange,
-		disabled
+		disabled,
+		type
 	} = props;
 
 	const dispatchOnChange = (value: string) => {
@@ -18,16 +20,18 @@ const TextField = (props: TextFieldProps) => {
 
 	return (
 		<div
-			class={classnames(_class)}
+			class={classnames("flex bg-cream", _class)}
 			aria-disabled={disabled}
 		>
-			<label for={id}>{ label }</label>
+			<label class="sr-only" for={id}>{ label }</label>
 			<input
 				id={id}
 				name={name}
-				value={value}
+				class="flex-grow p-2 font-copy uppercase font-light tracking-tighter"
+				value={value || ""}
 				aria-disabled={disabled}
-				ref={ref}
+				placeholder={placeholder}
+				type={type}
 				onChange={event => dispatchOnChange(event.currentTarget.value)}
 				{...(ref ? { ref } : {})}
 			/>
@@ -40,10 +44,12 @@ interface TextFieldProps {
 	id: string,
 	label: string,
 	value?: string,
+	placeholder?: string,
 	onChange?: (value: string) => void,
 	name?: string,
-	ref: HTMLInputElement,
-	disabled?: boolean
+	ref?: HTMLInputElement,
+	disabled?: boolean,
+	type?: "password" | "email" | "text"
 }
 
 export default TextField;

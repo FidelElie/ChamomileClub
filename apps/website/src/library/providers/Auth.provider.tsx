@@ -1,4 +1,11 @@
-import { createContext, createSignal, onCleanup, onMount, type JSX } from "solid-js";
+import {
+	createContext,
+	useContext,
+	createSignal,
+	onCleanup,
+	onMount,
+	type JSX
+} from "solid-js";
 import { onAuthStateChanged } from "firebase/auth";
 
 import { auth } from "../firebase/index";
@@ -14,20 +21,18 @@ const AuthProvider = (props: AuthProviderProps) => {
 	const [loading, setLoading] = createSignal(true);
 
 	onMount(() => {
-		unsubscribeAuthListener = onAuthStateChanged(auth, async (user) => {
+		unsubscribeAuthListener = onAuthStateChanged(auth, async (loggedUser) => {
 			try {
-				setUser(user ? user : null);
+				setUser(loggedUser ? loggedUser : null);
 			} catch (error) {
-
+				console.error(error);
 			} finally {
 				setLoading(false);
 			}
 		});
 	});
 
-	onCleanup(() => {
-		unsubscribeAuthListener();
-	});
+	onCleanup(() => { unsubscribeAuthListener(); });
 
 	return (
 		<AuthContext.Provider value={{ user: user(), loading: loading() }}>
@@ -36,7 +41,9 @@ const AuthProvider = (props: AuthProviderProps) => {
 	)
 }
 
+const useAuth = () => useContext(AuthContext);
+
 interface AuthProviderProps { children: JSX.Element }
 
 export default AuthProvider;
-export type { AuthProviderProps }
+export { useAuth, type AuthProviderProps }

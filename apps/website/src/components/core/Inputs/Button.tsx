@@ -7,14 +7,16 @@ const Button = (props: ButtonProps) => {
 		class: _class,
 		onClick,
 		type,
+		disabled,
 		children
 	} = props;
 
 	return (
 		<button
-			class={classNames(_class)}
+			class={classNames("font-copy uppercase", _class)}
 			onClick={onClick}
 			type={type}
+			disabled={disabled}
 		>
 			{ children }
 		</button>
@@ -26,7 +28,8 @@ const SubmitButton = (props: Omit<ButtonProps, "type">) => <Button {...props} ty
 interface ButtonProps {
 	class?: string,
 	type?: "button" | "submit",
-	onClick: JSX.EventHandler<HTMLButtonElement, Event>,
+	onClick?: JSX.EventHandler<HTMLButtonElement, Event>,
+	disabled?: boolean,
 	children: JSX.Element
 }
 
