@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    /* Language and Environment */
+    "target": "es2016",
+    "experimentalDecorators": true,
+
+    /* Modules */
+    "module": "commonjs",
+    "rootDir": "./",
+    "moduleResolution": "node",
+    "baseUrl": "./",
+    "paths": {},
+
+    /* Interop Constraints */
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+
+    /* Type Checking */
+    "strict": true,
+    "skipLibCheck": true
+  }
+}
