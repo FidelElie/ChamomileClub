@@ -7,7 +7,6 @@
   "private": true,
   "scripts": {
       "app": "pnpm --filter @chamomileclub/app",
-      "server": "pnpm --filter @chamomileclub/server",
       "casino": "pnpm --filter @chamomileclub/casinojs"
   }
 }
