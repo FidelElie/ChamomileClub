@@ -39,10 +39,11 @@ const NavLinks = (props) => {
       {
         links.map(link => {
           return determineValidLink(link) && (
-            <Link href={link.href} key={`${id}-${link.href}`}>
-              <a className={joinClasses({ [linkStyle]: linkStyle })}>
-                { determineLinkName(link) }
-              </a>
+            <Link
+              href={link.href} key={`${id}-${link.href}`}
+              className={joinClasses({ [linkStyle]: linkStyle })}
+            >
+              { determineLinkName(link) }
             </Link>
           )
         })

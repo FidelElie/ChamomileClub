@@ -20,10 +20,11 @@ export default function Home() {
       <div className="py-20 px-8 mx-auto flex flex-col justify-center md:py-32 lg:py-52 container md:max-w-3xl text-center space-y-5 lg:max-w-6xl" ref={aboutSection}>
         <h2 className="text-secondary tracking-tight text-4xl font-medium font-heading mb-3 lg:mb-10 md:text-5xl lg:text-6xl">Welcome To The Chamomile Club</h2>
         <span className="text-2xl text-white tracking-tighter font-light">Taking poker to the next level. The invite only club has enjoyed many nights of casino chips, food and laughter. Founded by four friends in August 2021, <span className=" text-3xl font-heading">The Chamomile Club</span> was created to provide it's members with the greatest of food, learning and competition. Whether you're new to the game or a returning champ, the Founders have made it thier mission to give you the experience of the best poker nights around.</span>
-        <Link href="/founders">
-          <a className="underline text-white text-2xl font-light tracking-tighter w-min whitespace-nowrap mx-auto">
-            Meet the Founders
-          </a>
+        <Link
+          href="/founders"
+          className="underline text-white text-2xl font-light tracking-tighter w-min whitespace-nowrap mx-auto"
+        >
+          Meet the Founders
         </Link>
       </div>
       <div className="w-full bg-green-800 dark:bg-invertedLight shadow">

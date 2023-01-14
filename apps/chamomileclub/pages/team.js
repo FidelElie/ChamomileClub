@@ -21,9 +21,7 @@ export default function Team() {
         </div>
         <PageTagline>
           <span>Want to be a part of the team? Check our job openings </span>
-          <Link href="/jobs">
-            <a className="underline">here</a>
-          </Link>.
+          <Link href="/jobs" className="underline">here</Link>.
         </PageTagline>
       </div>
     </AppLayout>

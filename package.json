@@ -1,12 +1,11 @@
 {
   "name": "chamomileclub",
   "version": "1.0.0",
-  "main": "index.js",
   "author": "Fidel Elie",
   "license": "MIT",
   "private": true,
   "scripts": {
-      "app": "pnpm --filter @chamomileclub/app",
-      "casino": "pnpm --filter @chamomileclub/casinojs"
+    "app": "pnpm --filter @chamomileclub/app",
+    "casino": "pnpm --filter @chamomileclub/casinojs"
   }
 }
