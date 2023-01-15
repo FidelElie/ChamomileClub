@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@chamomileclub/casinojs": "workspace:*",
+    "@chamomileclub/api": "workspace:*",
     "next": "13.1.2",
     "nodemailer": "^6.6.3",
     "prop-types": "^15.7.2",

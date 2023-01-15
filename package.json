@@ -6,6 +6,15 @@
   "private": true,
   "scripts": {
     "app": "pnpm --filter @chamomileclub/app",
-    "casino": "pnpm --filter @chamomileclub/casinojs"
+    "app:server": "pnpm --filter @chamomileclub/server",
+    "app:pwa": "pnpm --filter @chamomileclub/pwa",
+    "package:api": "pnpm --filter @chamomileclub/api",
+    "package:database": "pnpm --filter @chamomileclub/database",
+    "package:casino": "pnpm --filter @chamomileclub/casinojs",
+    "run:server": "concurrently \"pnpm package:database dev\" \"pnpm app:server dev\"",
+    "run:pwa": "concurrently \"pnpm run:server\" \"pnpm app:pwa dev\""
+  },
+  "dependencies": {
+    "concurrently": "^7.6.0"
   }
 }

@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "isolatedModules": true,
+    "moduleResolution": "node",
+    "preserveWatchOutput": true,
+    "skipLibCheck": true,
+    "noEmit": true,
+    "strict": true,
+    "rootDir": ".",
+    "baseUrl": ".",
+    "module": "ESNext",
+    "allowJs": false,
+    "jsxImportSource": "react",
+    "jsx": "react-jsx"
+  },
+  "exclude": [
+    "node_modules"
+  ]
+}
