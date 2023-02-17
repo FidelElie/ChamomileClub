@@ -5,7 +5,7 @@
   "author": "Fidel Elie",
   "license": "MIT",
   "private": true,
-  "workspaces": ["packages/*"],
+  "workspaces": ["packages/*", "apps/*"],
   "scripts": {
       "app": "yarn workspace @chamomileclub/app",
       "casino": "yarn workspace @chamomileclub/casinojs"
