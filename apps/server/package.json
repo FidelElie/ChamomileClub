@@ -3,20 +3,33 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev -p 8080",
     "build": "next build",
     "start": "next start"
   },
   "dependencies": {
     "@thechamomileclub/database": "workspace:^1.0.0",
+    "morgan": "^1.10.0",
     "next": "13.1.6",
+    "next-api-decorators": "^2.0.1",
+    "path-to-regexp": "^6.2.1",
+    "picocolors": "^1.0.0",
     "react": "18.2.0",
     "react-dom": "18.2.0"
   },
   "devDependencies": {
+    "@types/morgan": "^1.9.4",
     "@types/node": "18.14.0",
     "@types/react": "18.0.28",
     "@types/react-dom": "18.0.11",
     "typescript": "4.9.5"
+  },
+  "pnpm": {
+    "peerDependencyRules": {
+      "ignoreMissing": [
+        "@babel/plugin-proposal-decorators",
+        "babel-plugin-parameter-decorator"
+      ]
+    }
   }
 }

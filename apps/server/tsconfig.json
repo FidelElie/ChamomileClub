@@ -16,8 +16,13 @@
     "incremental": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./*"]
-    }
+      "@/routes/*": ["./routes/*"],
+      "@/middlewares/*": ["library/middlewares/*"],
+      "@/library/*": ["./library/*"],
+      "@/core/*": ["library/core/*"]
+    },
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules"]
