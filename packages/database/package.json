@@ -15,12 +15,5 @@
   "devDependencies": {
     "@xata.io/cli": "^0.11.8",
     "typescript": "^4.9.5"
-  },
-  "pnpm": {
-    "peerDependencyRules": {
-      "ignoreMissing": [
-        "@xata.io/cli"
-      ]
-    }
   }
 }

@@ -9,5 +9,14 @@
   "scripts": {
       "app": "yarn workspace @chamomileclub/app",
       "casino": "yarn workspace @chamomileclub/casinojs"
+  },
+  "pnpm": {
+    "peerDependencyRules": {
+      "ignoreMissing": [
+        "@babel/plugin-proposal-decorators",
+        "babel-plugin-parameter-decorator",
+        "@xata.io/cli"
+      ]
+    }
   }
 }
