@@ -2,7 +2,7 @@ import { createServerRouter } from "./library/core";
 
 import AuthController from "./routes/auth.controller";
 
-import { morganMiddleware } from "@/middlewares/morgan.middleware";
+import { morganMiddleware } from "./middlewares/morgan.middleware";
 
 const controllers = [
 	AuthController

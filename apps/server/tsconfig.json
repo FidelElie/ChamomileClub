@@ -17,9 +17,8 @@
     "baseUrl": ".",
     "paths": {
       "@/routes/*": ["./routes/*"],
-      "@/middlewares/*": ["library/middlewares/*"],
-      "@/library/*": ["./library/*"],
-      "@/core/*": ["library/core/*"]
+      "@/middlewares/*": ["./middlewares/*"],
+      "@/library/*": ["./library/*"]
     },
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true
