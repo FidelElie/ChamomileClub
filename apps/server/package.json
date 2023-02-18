@@ -8,7 +8,7 @@
     "start": "next start"
   },
   "dependencies": {
-    "@thechamomileclub/database": "workspace:^1.0.0",
+    "@thechamomileclub/database": "*",
     "jsonwebtoken": "^9.0.0",
     "morgan": "^1.10.0",
     "next": "13.1.6",
