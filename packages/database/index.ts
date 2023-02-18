@@ -6,12 +6,55 @@ import type {
   XataRecord,
 } from "@xata.io/client";
 
-const tables = [] as const;
+const tables = [
+  {
+    name: "User",
+    columns: [
+      { name: "forename", type: "string", notNull: true, defaultValue: "" },
+      { name: "description", type: "text" },
+      { name: "created_at", type: "datetime" },
+      { name: "email", type: "email", unique: true },
+      { name: "updated_at", type: "datetime" },
+      { name: "position", type: "multiple" },
+      { name: "active", type: "bool", notNull: true, defaultValue: "false" },
+      { name: "deleted", type: "bool", notNull: true, defaultValue: "false" },
+      { name: "surname", type: "string" },
+      { name: "nickname", type: "string" },
+    ],
+  },
+  {
+    name: "Role",
+    columns: [
+      { name: "name", type: "string", notNull: true, defaultValue: "" },
+      { name: "description", type: "text", notNull: true, defaultValue: "" },
+    ],
+  },
+  {
+    name: "UserRole",
+    columns: [
+      { name: "user", type: "link", link: { table: "User" }, unique: true },
+      { name: "role", type: "link", link: { table: "Role" }, unique: true },
+    ],
+  },
+] as const;
 
 export type SchemaTables = typeof tables;
 export type InferredTypes = SchemaInference<SchemaTables>;
 
-export type DatabaseSchema = {};
+export type User = InferredTypes["User"];
+export type UserRecord = User & XataRecord;
+
+export type Role = InferredTypes["Role"];
+export type RoleRecord = Role & XataRecord;
+
+export type UserRole = InferredTypes["UserRole"];
+export type UserRoleRecord = UserRole & XataRecord;
+
+export type DatabaseSchema = {
+  User: UserRecord;
+  Role: RoleRecord;
+  UserRole: UserRoleRecord;
+};
 
 const DatabaseClient = buildClient();
 
