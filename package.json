@@ -7,8 +7,8 @@
   "private": true,
   "workspaces": ["packages/*", "apps/*"],
   "scripts": {
-      "app": "yarn workspace @chamomileclub/app",
-      "casino": "yarn workspace @chamomileclub/casinojs"
+      "@server": "pnpm --filter @thechamomileclub/server",
+      "@database": "pnpm --filter @thechamomileclub/database"
   },
   "pnpm": {
     "peerDependencyRules": {

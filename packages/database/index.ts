@@ -36,6 +36,15 @@ const tables = [
       { name: "role", type: "link", link: { table: "Role" }, unique: true },
     ],
   },
+  {
+    name: "Key",
+    columns: [
+      { name: "challenge", type: "string" },
+      { name: "created_at", type: "datetime" },
+      { name: "token", type: "string", notNull: true, defaultValue: "" },
+      { name: "user", type: "link", link: { table: "User" } },
+    ],
+  },
 ] as const;
 
 export type SchemaTables = typeof tables;
@@ -50,10 +59,14 @@ export type RoleRecord = Role & XataRecord;
 export type UserRole = InferredTypes["UserRole"];
 export type UserRoleRecord = UserRole & XataRecord;
 
+export type Key = InferredTypes["Key"];
+export type KeyRecord = Key & XataRecord;
+
 export type DatabaseSchema = {
   User: UserRecord;
   Role: RoleRecord;
   UserRole: UserRoleRecord;
+  Key: KeyRecord;
 };
 
 const DatabaseClient = buildClient();
