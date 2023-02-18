@@ -18,7 +18,8 @@
     "paths": {
       "@/routes/*": ["./routes/*"],
       "@/middlewares/*": ["./middlewares/*"],
-      "@/library/*": ["./library/*"]
+      "@/library/*": ["./library/*"],
+      "@/services": ["./services/index.ts"]
     },
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true
