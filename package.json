@@ -1,12 +1,16 @@
 {
-  "name": "thechamomileclub",
-  "version": "1.0.0",
-  "author": "Fidel Elie",
-  "license": "MIT",
-  "private": true,
-  "workspaces": ["packages/*", "apps/*"],
-  "scripts": {
-      "@server": "yarn workspace @thechamomileclub/server",
-      "@database": "yarn workspace @thechamomileclub/database"
-  }
+    "name": "thechamomileclub",
+    "version": "1.0.0",
+    "author": "Fidel Elie",
+    "license": "MIT",
+    "private": true,
+    "workspaces": [
+        "packages/*",
+        "apps/*"
+    ],
+    "scripts": {
+        "@server": "yarn workspace @thechamomileclub/server",
+        "@api": "yarn workspace @thechamomileclub/api",
+        "@database": "yarn workspace @thechamomileclub/database"
+    }
 }

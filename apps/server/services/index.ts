@@ -1,7 +1,4 @@
-import AuthServiceClass from "./auth.service";
-
-const APP_SECRET = process.env.APP_SECRET || "development";
-
-export const AuthService = new AuthServiceClass(APP_SECRET);
-
-
+export { default as AuthService } from "./Auth.service";
+export { default as EmailService } from "./Email.service";
+export { default as KeyService } from "./Key.service";
+export { default as UserService } from "./User.service";

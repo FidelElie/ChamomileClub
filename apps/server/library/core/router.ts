@@ -1,20 +1,20 @@
+import type { NextApiRequest, NextApiResponse } from "next";
 import { createHandler } from "next-api-decorators";
-import type { RouterOptions } from "./types";
 
+import type { RouterOptions } from "./types";
 import { CONTROLLER_TOKEN } from "./decorators";
-import { NextApiRequest, NextApiResponse } from "next";
 
 const routerOptions: Required<RouterOptions> = {
 	controllers: [],
-	middlewares: []
+	middlewares: [],
 }
 
 export const createServerRouter = (options: RouterOptions) => {
+	const mergeOptions = Object.assign({}, routerOptions, options ?? {});
+
+	const { controllers, middlewares } = mergeOptions;
+
 	return () => {
-		const mergeOptions = Object.assign({}, routerOptions, options ?? {});
-
-		const { controllers, middlewares } = mergeOptions;
-
 		if (!controllers.length) {
 			throw new Error("At least one controller is required to create server router");
 		}

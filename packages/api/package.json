@@ -1,0 +1,17 @@
+{
+  "name": "@thechamomileclub/api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.ts",
+  "types": "index.ts",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "typescript": "^4.9.5"
+  },
+  "dependencies": {
+    "@thechamomileclub/database": "*",
+    "zod": "^3.20.6"
+  }
+}

@@ -1,26 +1,34 @@
 import JWT, { type VerifyOptions, type SignOptions } from "jsonwebtoken";
 
+import { Key } from "@thechamomileclub/database";
+
+import { APP_SECRET } from "../config";
+
 export default class AuthService {
-	secretKey: string
+	generateAuthLink(accessKey: Pick<Key, "challenge" | "id">) {
+		const isDevelopment = process.env.NODE_ENV === "development";
 
-	constructor(secretKey: string) {
-		this.secretKey = secretKey;
+		const host = isDevelopment ? "http://localhost:3000" : "https://app.thechamomileclub.com";
 
-		if (!secretKey) { throw new Error("Missing value for secretKey.") }
+		return `${host}/login?id=${accessKey.id}&code=${accessKey.challenge}`;
 	}
 
 	signToken(payload: string | object | Buffer, config?: SignOptions) {
-		return JWT.sign(payload, this.secretKey, config);
+		return JWT.sign(payload, APP_SECRET, config);
 	}
 
 	verifyToken = <T extends string | JWT.Jwt | JWT.JwtPayload>(
 		token: string,
-		config?: VerifyOptions
+		config: VerifyOptions & { error?: Error } = {}
 	) => {
+		const { error: errorToThrow, ...jwtOptions } = config;
+
 		try {
-			const decodedToken = JWT.verify(token, this.secretKey, config);
+			const decodedToken = JWT.verify(token, APP_SECRET, jwtOptions);
 			return { decoded: decodedToken as T, error: null }
 		} catch (error) {
+			if (errorToThrow) { throw errorToThrow; }
+
 			return { decoded: null, error }
 		}
 	}

@@ -4,7 +4,8 @@ const nextConfig = {
   swcMinify: true,
   poweredByHeader: false,
   transpilePackages: [
-    "@thechamomileclub/database"
+    "@thechamomileclub/database",
+    "@thechamomileclub/api"
   ]
 }
 
