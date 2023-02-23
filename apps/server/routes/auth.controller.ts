@@ -12,7 +12,7 @@ import {
 
 import { Controller, ValidatedBody, ValidatedQuery } from "@/library/core";
 
-import { AuthService, EmailService, KeyService, UserService } from "@/services";
+import { AuthService, KeyService, UserService } from "@/services";
 
 import AuthControllerService from "./auth.controller.service";
 
@@ -27,9 +27,8 @@ export default class AuthController {
 		const userService = new UserService(client);
 		const keyService = new KeyService(client);
 		const authService = new AuthService();
-		const emailService = new EmailService();
 
-		const deps = { client, userService, authService, keyService, emailService };
+		const deps = { client, userService, authService, keyService };
 
 		this.authControllerService = new AuthControllerService(deps);
 	}

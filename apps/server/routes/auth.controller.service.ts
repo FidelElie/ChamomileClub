@@ -23,8 +23,7 @@ export interface ControllerServiceDependants {
 	client: XataClient,
 	userService: UserService,
 	authService: AuthService,
-	keyService: KeyService,
-	emailService: EmailService
+	keyService: KeyService
 }
 
 export default class AuthControllerService {
@@ -65,20 +64,6 @@ export default class AuthControllerService {
 		const accessKey = await this.deps.keyService.generateKey({ challenge, user: user.id, token });
 
 		const magicLink = this.deps.authService.generateAuthLink(accessKey);
-
-		const { error } = await this.deps.emailService.sendMagicLink({
-			to: { email: verifiedUser.email!, name: verifiedUser.forename },
-			model: {
-				link: magicLink,
-				name: verifiedUser.forename,
-				email: verifiedUser.email!
-			}
-		});
-
-		if (error) {
-			await this.deps.keyService.deleteInvalidatedKey(accessKey.id);
-			throw new InternalServerErrorException();
-		}
 
 		return verifiedUser;
 	}
