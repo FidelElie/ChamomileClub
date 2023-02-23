@@ -3,10 +3,10 @@ import {
 	BadRequestException,
 	UnprocessableEntityException
 } from "next-api-decorators";
-import type { ZodSchema } from "zod";
+import { z, ZodSchema } from "zod";
 
-export const ValidatedBody = <T extends ZodSchema>(schema: T): () => ParameterDecorator => {
-	return createParamDecorator<T>(req => {
+export const ValidatedBody = (schema: ZodSchema = z.any()): () => ParameterDecorator => {
+	return createParamDecorator(req => {
 		const { body } = req;
 
 		if (!body) {
@@ -16,6 +16,7 @@ export const ValidatedBody = <T extends ZodSchema>(schema: T): () => ParameterDe
 		try {
 			return schema.parse(body);
 		} catch (error) {
+			console.log(error);
 			throw new BadRequestException("Invalid body passed to endpoint");
 		}
 	})

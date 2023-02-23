@@ -45,13 +45,13 @@ export default class AuthControllerService {
 
 		const user = await (
 			userPayload ?
-				this.userService.updateUserById(id, userPayload) :
+				this.userService.updateUserById(id, { ...userPayload, active: true }) :
 				this.userService.getUserById(id)
 		);
 
 		if (!user) { throw new InternalServerErrorException("User was not found"); }
 
-		const payload = { id: user.id, email: user.email }
+		const payload = { id: user.id, email: user.email, roles: user.roles }
 
 		const accessToken = this.authService.signToken(payload, { expiresIn: "5m" });
 
@@ -94,7 +94,7 @@ export default class AuthControllerService {
 
 		const { decoded } = this.authService.verifyToken<{id: string, email: string}>(
 			key.token,
-			{ error: new ForbiddenException("Access key has expired")}
+			{ error: new ForbiddenException("Access key has expired") }
 		)
 
 		const user = await this.userService.getUserById(decoded!.id);

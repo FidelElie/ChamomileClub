@@ -10,7 +10,7 @@ export class KeyService {
 	async generateKey(payload: { challenge: string, token: string, user: string }) {
 		return await this.databaseService.client.db.Key.create({
 			...payload,
-			created_at: new Date().toUTCString()
+			created_at: this.databaseService.getServerTimestamp()
 		})
 	}
 

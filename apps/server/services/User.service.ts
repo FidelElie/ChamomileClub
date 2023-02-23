@@ -1,6 +1,8 @@
 import { NotFoundException } from "next-api-decorators";
 import { autoInjectable } from "tsyringe";
 
+import { CreateUsersBody } from "@thechamomileclub/api";
+
 import { DatabaseService } from "./Database.service";
 
 @autoInjectable()
@@ -24,12 +26,28 @@ export class UserService {
 	}
 
 	async updateUserById(id: string, payload: {}) {
-		const updatedUser = this.databaseService.client.db.User.update(id, {
+		const updatedUser = await this.databaseService.client.db.User.update(id, {
 			...payload,
-			updated_at: new Date().toUTCString()
+			updated_at: this.databaseService.getServerTimestamp()
 		});
 
 		return updatedUser;
+	}
+
+	async createUser(payload: CreateUsersBody[number]) {
+		return await this.databaseService.client.db.User.create({
+			...payload,
+			created_at: this.databaseService.getServerTimestamp()
+		});
+	}
+
+	async createUsers(payload: CreateUsersBody) {
+		const currentTimestamp = this.databaseService.getServerTimestamp();
+
+		return await this.databaseService.client.db.User.create(payload.map(userPayload => ({
+			...userPayload,
+			created_at: currentTimestamp
+		})));
 	}
 
 	private userNotFound(message = "User not found") {

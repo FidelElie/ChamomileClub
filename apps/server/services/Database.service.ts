@@ -5,4 +5,6 @@ import type { XataClient } from "@thechamomileclub/database";
 @singleton()
 export class DatabaseService {
 	constructor(readonly client: XataClient) {}
+
+	getServerTimestamp = () => { return new Date() }
 }

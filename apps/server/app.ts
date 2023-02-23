@@ -9,7 +9,10 @@ import { createServerRouter } from "@/library/router";
 import type { ApiRequestWithUser } from "@/library/types/api.types";
 import emailClient from "@/library/ses.client";
 
-import * as controllers from "./routes";
+import {
+	AuthController,
+	UsersController
+} from "./routes";
 
 import { morganMiddleware, createIdentificationMiddleware } from "@/library/middlewares";
 
@@ -40,12 +43,14 @@ container.register<EmailService>(
 
 const authServiceInstance = container.resolve(AuthService);
 
+const controllers = [
+	AuthController,
+	UsersController
+]
+
 const middlewares = [
 	createIdentificationMiddleware(authServiceInstance),
 	morganMiddleware
 ]
 
-export default createServerRouter<ApiRequestWithUser>({
-	controllers: Object.values(controllers),
-	middlewares
-});
+export default createServerRouter<ApiRequestWithUser>({ controllers, middlewares });

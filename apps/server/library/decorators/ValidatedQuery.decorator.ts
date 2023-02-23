@@ -8,6 +8,7 @@ export const ValidatedQuery = <T extends ZodSchema>(schema: T): () => ParameterD
 		try {
 			return schema.parse(query);
 		} catch (error) {
+			console.log(error);
 			throw new BadRequestException("Invalid query passed to endpoint");
 		}
 	});

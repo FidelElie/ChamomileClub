@@ -11,8 +11,7 @@ export const AuthenticateBodySchema = z.object({
 		forename: true,
 		surname: true,
 		email: true,
-		nickname: true,
-		description: true
+		nickname: true
 	}).optional()
 });
 
@@ -48,7 +47,8 @@ export const VerifyLoginResponseSchema = z.object({
 		surname: true,
 		email: true,
 		nickname: true,
-		description: true
+		description: true,
+		position: true
 	})
 });
 

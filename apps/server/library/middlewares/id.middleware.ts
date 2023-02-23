@@ -1,3 +1,5 @@
+import { parseCookies } from "nookies";
+
 import type { ApiRequestWithUser, UserClaims } from "@/library/types/api.types";
 import type { Middleware } from "@/library/types/router.types";
 
@@ -5,20 +7,18 @@ import { AuthService } from "@/services";
 
 type CreateIdentificationMiddleware = (authService: AuthService) => Middleware<ApiRequestWithUser>
 
-export const createIdentificationMiddleware: CreateIdentificationMiddleware = (
-	authService
- ) => {
+export const createIdentificationMiddleware: CreateIdentificationMiddleware = (authService) => {
 	return (req, _, next) => {
+		const cookies = parseCookies({ req });
+
 		req.user = null;
 
-		const authorizationHeader = req.headers["authorization"];
+		const accessToken = cookies["access-token"];
 
-		if (authorizationHeader) {
-			const token = authorizationHeader.split(" ").at(-1);
-
-			if (token) {
+		if (accessToken) {
+			if (accessToken) {
 				authService.verifyToken<UserClaims>(
-					token,
+					accessToken,
 					{ onSuccess: (decoded) => { req.user = decoded; } }
 				);
 			}
