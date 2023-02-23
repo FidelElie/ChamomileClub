@@ -8,6 +8,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "@aws-sdk/client-ses": "^3.276.0",
     "@thechamomileclub/database": "*",
     "jsonwebtoken": "^9.0.0",
     "morgan": "^1.10.0",

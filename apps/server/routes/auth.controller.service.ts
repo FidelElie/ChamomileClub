@@ -18,14 +18,15 @@ import {
 	VerifyLoginResponseSchema
 } from "@thechamomileclub/api";
 
-import { AuthService, KeyService, UserService } from "@/services";
+import { AuthService, EmailService, KeyService, UserService } from "@/services";
 
 @autoInjectable()
 export default class AuthControllerService {
 	constructor(
 		private readonly authService: AuthService,
 		private readonly userService: UserService,
-		private readonly keyService: KeyService
+		private readonly keyService: KeyService,
+		private readonly emailService: EmailService
 	) { }
 
 	async getCurrentUser(payload: { id: string, email: string } | null): Promise<User | null> {
@@ -64,11 +65,24 @@ export default class AuthControllerService {
 
 		const challenge = this.authService.generateRandomString(25);
 
-		const token = this.authService.signToken({ id: user.id, email }, { expiresIn: 5 * 60 });
+		const token = this.authService.signToken({ id: user.id, email }, { expiresIn: "10m" });
 
 		const accessKey = await this.keyService.generateKey({ challenge, user: user.id, token });
 
 		const magicLink = this.authService.generateAuthLink(accessKey);
+
+		const { error } = await this.emailService.sendMagicLink({
+			to: { name: verifiedUser.forename, email: verifiedUser.email },
+			model: {
+				name: verifiedUser.forename,
+				link: magicLink
+			}
+		});
+
+		if (error) {
+			await this.keyService.deleteInvalidatedKey(accessKey.id);
+			throw new InternalServerErrorException("Error sending email");
+		}
 
 		return verifiedUser;
 	}

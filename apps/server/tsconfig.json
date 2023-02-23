@@ -17,9 +17,10 @@
     "baseUrl": ".",
     "paths": {
       "@/routes/*": ["./routes/*"],
-      "@/middlewares/*": ["./middlewares/*"],
       "@/library/*": ["./library/*"],
-      "@/services": ["./services/index.ts"]
+      "@/services/*": ["./services/*"],
+      "@/emails/*": ["./emails/*"],
+      "@/*": ["./*"]
     },
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true

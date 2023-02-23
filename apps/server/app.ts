@@ -3,20 +3,21 @@ import { container } from "tsyringe";
 
 import { getXataClient } from "@thechamomileclub/database";
 
-import { APP_SECRET } from "config";
+import { AppConfig } from "@/library/app.config";
 
-import { createServerRouter } from "./library/router";
-import type { ApiRequestWithUser } from "./library/types/api.types";
+import { createServerRouter } from "@/library/router";
+import type { ApiRequestWithUser } from "@/library/types/api.types";
+import emailClient from "@/library/ses.client";
 
 import * as controllers from "./routes";
 
-import { morganMiddleware, createIdentificationMiddleware } from "./middlewares";
+import { morganMiddleware, createIdentificationMiddleware } from "@/library/middlewares";
 
-import { AuthService, DatabaseService } from "./services";
+import { AuthService, DatabaseService, EmailService } from "@/services";
 
 container.register<AuthService>(
 	AuthService,
-	{ useValue: new AuthService(APP_SECRET, process.env.NODE_ENV!) }
+	{ useValue: new AuthService(AppConfig.secret, process.env.NODE_ENV!) }
 );
 
 container.register<DatabaseService>(
@@ -26,7 +27,18 @@ container.register<DatabaseService>(
 	}
 );
 
-const authServiceInstance = container.resolve(AuthService)
+container.register<EmailService>(
+	EmailService,
+	{
+		useValue: new EmailService(
+			emailClient,
+			{
+				sender: { name: AppConfig.emails.senderName, email: AppConfig.emails.senderEmail }
+			},
+		) }
+)
+
+const authServiceInstance = container.resolve(AuthService);
 
 const middlewares = [
 	createIdentificationMiddleware(authServiceInstance),
