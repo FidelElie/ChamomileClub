@@ -18,13 +18,12 @@ import {
 	VerifyLoginResponseSchema
 } from "@thechamomileclub/api";
 
-import { AuthHelpers } from "@/library/utilities";
-
-import { KeyService, UserService } from "@/services";
+import { AuthService, KeyService, UserService } from "@/services";
 
 @autoInjectable()
 export default class AuthControllerService {
 	constructor(
+		private readonly authService: AuthService,
 		private readonly userService: UserService,
 		private readonly keyService: KeyService
 	) { }
@@ -53,7 +52,7 @@ export default class AuthControllerService {
 
 		const payload = { id: user.id, email: user.email }
 
-		const accessToken = AuthHelpers.signToken(payload, { expiresIn: "5m" });
+		const accessToken = this.authService.signToken(payload, { expiresIn: "5m" });
 
 		return AuthenticateResponseSchema.parse({ token: accessToken });
 	}
@@ -63,13 +62,13 @@ export default class AuthControllerService {
 
 		const verifiedUser = StartLoginResponseSchema.parse(user);
 
-		const challenge = AuthHelpers.generateRandomString(25);
+		const challenge = this.authService.generateRandomString(25);
 
-		const token = AuthHelpers.signToken({ id: user.id, email }, { expiresIn: 5 * 60 });
+		const token = this.authService.signToken({ id: user.id, email }, { expiresIn: 5 * 60 });
 
 		const accessKey = await this.keyService.generateKey({ challenge, user: user.id, token });
 
-		const magicLink = AuthHelpers.generateAuthLink(accessKey);
+		const magicLink = this.authService.generateAuthLink(accessKey);
 
 		return verifiedUser;
 	}
@@ -79,7 +78,7 @@ export default class AuthControllerService {
 
 		const key = await this.keyService.getKeyAndValidate(id, code);
 
-		const { decoded } = AuthHelpers.verifyToken<{id: string, email: string}>(
+		const { decoded } = this.authService.verifyToken<{id: string, email: string}>(
 			key.token,
 			{ error: new ForbiddenException("Access key has expired")}
 		)

@@ -1,21 +1,28 @@
+import { singleton } from "tsyringe";
 import JWT, { type VerifyOptions, type SignOptions } from "jsonwebtoken";
 
-import { Key } from "@thechamomileclub/database";
+import type { Key } from "@thechamomileclub/database";
 
-import { APP_SECRET } from "config";
+@singleton()
+export class AuthService {
+	constructor(
+		private readonly secret: string,
+		private readonly environment: "development" | "production" | "test"
+	) {}
 
-export const AuthHelpers = {
-	generateAuthLink: (accessKey: Pick<Key, "challenge" | "id">) => {
-		const isDevelopment = process.env.NODE_ENV === "development";
+	generateAuthLink = (accessKey: Pick<Key, "challenge" | "id">) => {
+		const isDevelopment = this.environment === "development";
 
 		const host = isDevelopment ? "http://localhost:3000" : "https://app.thechamomileclub.com";
 
 		return `${host}/login?id=${accessKey.id}&code=${accessKey.challenge}`;
-	},
-	signToken: (payload: string | object | Buffer, config?: SignOptions) => {
-		return JWT.sign(payload, APP_SECRET, config);
-	},
-	verifyToken: <T extends string | JWT.Jwt | JWT.JwtPayload>(
+	}
+
+	signToken = (payload: string | object | Buffer, config?: SignOptions) => {
+		return JWT.sign(payload, this.secret, config);
+	}
+
+	verifyToken = <T extends string | JWT.Jwt | JWT.JwtPayload>(
 		token: string,
 		config: VerifyOptions & { error?: Error, onSuccess?: (decoded: T) => void } = {}
 	) => {
@@ -26,7 +33,7 @@ export const AuthHelpers = {
 		} = config;
 
 		try {
-			const decodedToken = JWT.verify(token, APP_SECRET, jwtOptions) as T;
+			const decodedToken = JWT.verify(token, this.secret, jwtOptions) as T;
 
 			if (onSuccess) { onSuccess(decodedToken); }
 
@@ -36,8 +43,9 @@ export const AuthHelpers = {
 
 			return { decoded: null, error }
 		}
-	},
-	generateRandomString: (length: number) => {
+	}
+
+	generateRandomString = (length: number) => {
 		if (typeof length !== "number") { throw new TypeError("length should be a integer"); }
 
 		const alphabet = [

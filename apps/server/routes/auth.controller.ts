@@ -10,7 +10,8 @@ import {
 	type VerifyLoginQuery,
 } from "@thechamomileclub/api";
 
-import { Controller, ValidatedBody, ValidatedQuery } from "@/library/core";
+import { Controller, User, ValidatedBody, ValidatedQuery } from "@/library/decorators";
+import type { UserClaims } from "@/library/types/api.types";
 
 import AuthControllerService from "./auth.controller.service";
 
@@ -22,8 +23,8 @@ export default class AuthController {
 	constructor(private readonly authControllerService: AuthControllerService) {}
 
 	@Get(baseUrl)
-	async getCurrentUser() {
-		return await this.authControllerService.getCurrentUser();
+	async getCurrentUser(@User() user: UserClaims | null) {
+		return await this.authControllerService.getCurrentUser(user);
 	}
 
 	@Post(baseUrl)

@@ -1,22 +1,29 @@
-import { AuthHelpers } from "@/library/utilities";
 import type { ApiRequestWithUser, UserClaims } from "@/library/types/api.types";
 import type { Middleware } from "@/library/types/router.types";
 
-export const identificationMiddleware: Middleware<ApiRequestWithUser> = (req, _, next) => {
-	req.user = null;
+import { AuthService } from "@/services";
 
-	const authorizationHeader = req.headers["authorization"];
+type CreateIdentificationMiddleware = (authService: AuthService) => Middleware<ApiRequestWithUser>
 
-	if (authorizationHeader) {
-		const token = authorizationHeader.split(" ").at(-1);
+export const createIdentificationMiddleware: CreateIdentificationMiddleware = (
+	authService
+ ) => {
+	return (req, _, next) => {
+		req.user = null;
 
-		if (token) {
-			AuthHelpers.verifyToken<UserClaims>(
-				token,
-				{ onSuccess: (decoded) => { req.user = decoded; } }
-			);
+		const authorizationHeader = req.headers["authorization"];
+
+		if (authorizationHeader) {
+			const token = authorizationHeader.split(" ").at(-1);
+
+			if (token) {
+				authService.verifyToken<UserClaims>(
+					token,
+					{ onSuccess: (decoded) => { req.user = decoded; } }
+				);
+			}
 		}
-	}
 
-	next();
+		next();
+	}
 }
