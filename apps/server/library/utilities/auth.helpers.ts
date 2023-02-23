@@ -2,22 +2,20 @@ import JWT, { type VerifyOptions, type SignOptions } from "jsonwebtoken";
 
 import { Key } from "@thechamomileclub/database";
 
-import { APP_SECRET } from "../config";
+import { APP_SECRET } from "config";
 
-export default class AuthService {
-	generateAuthLink(accessKey: Pick<Key, "challenge" | "id">) {
+export const AuthHelpers = {
+	generateAuthLink: (accessKey: Pick<Key, "challenge" | "id">) => {
 		const isDevelopment = process.env.NODE_ENV === "development";
 
 		const host = isDevelopment ? "http://localhost:3000" : "https://app.thechamomileclub.com";
 
 		return `${host}/login?id=${accessKey.id}&code=${accessKey.challenge}`;
-	}
-
-	signToken(payload: string | object | Buffer, config?: SignOptions) {
+	},
+	signToken: (payload: string | object | Buffer, config?: SignOptions) => {
 		return JWT.sign(payload, APP_SECRET, config);
-	}
-
-	verifyToken = <T extends string | JWT.Jwt | JWT.JwtPayload>(
+	},
+	verifyToken: <T extends string | JWT.Jwt | JWT.JwtPayload>(
 		token: string,
 		config: VerifyOptions & { error?: Error } = {}
 	) => {
@@ -31,9 +29,8 @@ export default class AuthService {
 
 			return { decoded: null, error }
 		}
-	}
-
-	generateRandomString = (length: number) => {
+	},
+	generateRandomString: (length: number) => {
 		if (typeof length !== "number") { throw new TypeError("length should be a integer"); }
 
 		const alphabet = [

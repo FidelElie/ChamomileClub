@@ -1,18 +1,21 @@
-import type { XataClient } from "@thechamomileclub/database";
 import { ForbiddenException } from "next-api-decorators";
+import { autoInjectable } from "tsyringe";
 
-export default class KeyService {
-	constructor(private readonly client: XataClient) { }
+import { DatabaseService } from "./Database.service";
+
+@autoInjectable()
+export class KeyService {
+	constructor(private readonly databaseService: DatabaseService) { }
 
 	async generateKey(payload: { challenge: string, token: string, user: string }) {
-		return await this.client.db.Key.create({
+		return await this.databaseService.client.db.Key.create({
 			...payload,
 			created_at: new Date().toUTCString()
 		})
 	}
 
 	async getKeyAndValidate(id: string, challenge: string) {
-		const key = await this.client.db.Key.filter({ id, challenge }).getFirst();
+		const key = await this.databaseService.client.db.Key.filter({ id, challenge }).getFirst();
 
 		if (!key) { throw new ForbiddenException("Valid Access key was not found"); }
 
@@ -20,6 +23,6 @@ export default class KeyService {
 	}
 
 	async deleteInvalidatedKey(keyId: string) {
-		return await this.client.db.Key.delete(keyId);
+		return await this.databaseService.client.db.Key.delete(keyId);
 	}
 }

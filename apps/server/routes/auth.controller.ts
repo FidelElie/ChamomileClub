@@ -1,6 +1,6 @@
 import { Get, Post } from "next-api-decorators";
+import { autoInjectable } from "tsyringe";
 
-import { getXataClient, XataClient } from "@thechamomileclub/database";
 import {
 	AuthenticateBodySchema,
 	type AuthenticateBody,
@@ -12,26 +12,14 @@ import {
 
 import { Controller, ValidatedBody, ValidatedQuery } from "@/library/core";
 
-import { AuthService, KeyService, UserService } from "@/services";
-
 import AuthControllerService from "./auth.controller.service";
 
 const baseUrl = "/auth";
 
+@autoInjectable()
 @Controller(baseUrl)
 export default class AuthController {
-	authControllerService: AuthControllerService;
-
-	constructor(injectClient: XataClient) {
-		const client = injectClient || getXataClient();
-		const userService = new UserService(client);
-		const keyService = new KeyService(client);
-		const authService = new AuthService();
-
-		const deps = { client, userService, authService, keyService };
-
-		this.authControllerService = new AuthControllerService(deps);
-	}
+	constructor(private readonly authControllerService: AuthControllerService) {}
 
 	@Get(baseUrl)
 	async getCurrentUser() {

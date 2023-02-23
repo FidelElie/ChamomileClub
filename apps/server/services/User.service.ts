@@ -1,12 +1,14 @@
 import { NotFoundException } from "next-api-decorators";
+import { autoInjectable } from "tsyringe";
 
-import type { XataClient } from "@thechamomileclub/database";
+import { DatabaseService } from "./Database.service";
 
-export default class UserService {
-	constructor(private readonly client: XataClient) { }
+@autoInjectable()
+export class UserService {
+	constructor(private readonly databaseService: DatabaseService) { }
 
 	async getUserByEmail(email: string, error?: Error) {
-		const user = await this.client.db.User.filter({ email }).getFirst();
+		const user = await this.databaseService.client.db.User.filter({ email }).getFirst();
 
 		if (!user) { throw (error ? error : this.userNotFound()); }
 
@@ -14,7 +16,7 @@ export default class UserService {
 	}
 
 	async getUserById(id: string, error?: Error) {
-		const user = await this.client.db.User.filter({ id }).getFirst();
+		const user = await this.databaseService.client.db.User.filter({ id }).getFirst();
 
 		if (!user) { throw (error ? error : this.userNotFound()) }
 
@@ -22,7 +24,7 @@ export default class UserService {
 	}
 
 	async updateUserById(id: string, payload: {}) {
-		const updatedUser = this.client.db.User.update(id, {
+		const updatedUser = this.databaseService.client.db.User.update(id, {
 			...payload,
 			updated_at: new Date().toUTCString()
 		});
