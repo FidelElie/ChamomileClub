@@ -1,22 +1,22 @@
-import { getXataClient, type User, type XataClient } from "@thechamomileclub/database";
+import { AuthHelpers } from "@/library/utilities";
+import type { ApiRequestWithUser, UserClaims } from "@/library/types/api.types";
+import type { Middleware } from "@/library/types/router.types";
 
-import type { NextApiRequest, NextApiResponse } from "next";
-import type { NextFunction } from "next-api-decorators";
+export const identificationMiddleware: Middleware<ApiRequestWithUser> = (req, _, next) => {
+	req.user = null;
 
-type ExtendedNextApiRequest = NextApiRequest & { user: null | User }
+	const authorizationHeader = req.headers["authorization"];
 
-export const identificationMiddleware = (injectClient?: XataClient) => {
-	return async (req: ExtendedNextApiRequest, _: NextApiResponse, next: NextFunction) => {
-		const client = injectClient ? injectClient : getXataClient();
+	if (authorizationHeader) {
+		const token = authorizationHeader.split(" ").at(-1);
 
-		req.user = null;
-
-		const authorizationHeader = req.headers["authorization"];
-
-		if (authorizationHeader) {
-
+		if (token) {
+			AuthHelpers.verifyToken<UserClaims>(
+				token,
+				{ onSuccess: (decoded) => { req.user = decoded; } }
+			);
 		}
-
-		next();
 	}
+
+	next();
 }

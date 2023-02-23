@@ -5,32 +5,38 @@ import {
 } from "next-api-decorators";
 import { autoInjectable } from "tsyringe";
 
+import type { User } from "@thechamomileclub/database";
 import {
-	AuthenticateBody,
-	AuthenticateResponse,
+	type AuthenticateBody,
+	type AuthenticateResponse,
 	AuthenticateResponseSchema,
-	StartLoginBody,
-	StartLoginResponse,
+	type StartLoginBody,
+	type StartLoginResponse,
 	StartLoginResponseSchema,
-	VerifyLoginQuery,
-	VerifyLoginResponse,
+	type VerifyLoginQuery,
+	type VerifyLoginResponse,
 	VerifyLoginResponseSchema
 } from "@thechamomileclub/api";
 
 import { AuthHelpers } from "@/library/utilities";
 
-import { KeyService, UserService, DatabaseService } from "@/services";
+import { KeyService, UserService } from "@/services";
 
 @autoInjectable()
 export default class AuthControllerService {
 	constructor(
-		private readonly databaseService: DatabaseService,
 		private readonly userService: UserService,
 		private readonly keyService: KeyService
 	) { }
 
-	async getCurrentUser() {
-		return await this.databaseService.client.db.User.getAll();
+	async getCurrentUser(payload: { id: string, email: string } | null): Promise<User | null> {
+		if (!payload) { return null; }
+
+		const { id } = payload;
+
+		const user = this.userService.getUserById(id);
+
+		return user;
 	}
 
 	async authenticateUser(body: AuthenticateBody): Promise<AuthenticateResponse> {

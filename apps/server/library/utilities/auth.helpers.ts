@@ -17,13 +17,20 @@ export const AuthHelpers = {
 	},
 	verifyToken: <T extends string | JWT.Jwt | JWT.JwtPayload>(
 		token: string,
-		config: VerifyOptions & { error?: Error } = {}
+		config: VerifyOptions & { error?: Error, onSuccess?: (decoded: T) => void } = {}
 	) => {
-		const { error: errorToThrow, ...jwtOptions } = config;
+		const {
+			error: errorToThrow,
+			onSuccess,
+			...jwtOptions
+		} = config;
 
 		try {
-			const decodedToken = JWT.verify(token, APP_SECRET, jwtOptions);
-			return { decoded: decodedToken as T, error: null }
+			const decodedToken = JWT.verify(token, APP_SECRET, jwtOptions) as T;
+
+			if (onSuccess) { onSuccess(decodedToken); }
+
+			return { decoded: decodedToken, error: null }
 		} catch (error) {
 			if (errorToThrow) { throw errorToThrow; }
 

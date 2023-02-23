@@ -1,20 +1,19 @@
 import "reflect-metadata";
-import { createServerRouter } from "./library/core";
 import { container } from "tsyringe";
 
 import { getXataClient } from "@thechamomileclub/database";
 
-import AuthController from "./routes/auth.controller";
+import { createServerRouter } from "./library/router";
+import type { ApiRequestWithUser } from "./library/types/api.types";
 
-import { morganMiddleware } from "./middlewares/morgan.middleware";
+import * as controllers from "./routes";
+
+import { morganMiddleware, identificationMiddleware } from "./middlewares";
 
 import { DatabaseService } from "./services";
 
-const controllers = [
-	AuthController
-]
-
 const middlewares = [
+	identificationMiddleware,
 	morganMiddleware
 ]
 
@@ -23,7 +22,7 @@ container.register<DatabaseService>(
 	{ useValue: new DatabaseService(getXataClient())
 });
 
-export default createServerRouter({
-	controllers,
+export default createServerRouter<ApiRequestWithUser>({
+	controllers: Object.values(controllers),
 	middlewares
 });

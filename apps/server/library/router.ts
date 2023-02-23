@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { createHandler } from "next-api-decorators";
 
-import type { RouterOptions } from "./types";
+import type { RouterOptions } from "./types/router.types";
 import { CONTROLLER_TOKEN } from "./decorators";
 
 const routerOptions: Required<RouterOptions> = {
@@ -9,7 +9,10 @@ const routerOptions: Required<RouterOptions> = {
 	middlewares: [],
 }
 
-export const createServerRouter = (options: RouterOptions) => {
+export const createServerRouter = <
+	NextRequest extends NextApiRequest = NextApiRequest,
+	NextResponse extends NextApiResponse = NextApiResponse
+>(options: RouterOptions<NextRequest, NextResponse>) => {
 	const mergeOptions = Object.assign({}, routerOptions, options ?? {});
 
 	const { controllers, middlewares } = mergeOptions;
@@ -29,7 +32,7 @@ export const createServerRouter = (options: RouterOptions) => {
 			return { basePath: normalisedPath, handler }
 		});
 
-		return async (req: NextApiRequest, res: NextApiResponse) => {
+		return async (req: NextRequest, res: NextResponse) => {
 			const { url } = req;
 
 			middlewares.forEach(async middleware => { await middleware(req, res, () => {}); });

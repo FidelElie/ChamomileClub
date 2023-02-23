@@ -4,8 +4,9 @@ import {
 	createParamDecorator,
 	UnprocessableEntityException
 } from "next-api-decorators";
-
 import type { ZodSchema } from "zod";
+
+import type { ApiRequestWithUser } from "./types/api.types";
 
 export const CONTROLLER_TOKEN = Symbol('instant:next:controllers');
 
@@ -47,3 +48,9 @@ export const ValidatedQuery = <T extends ZodSchema>(schema: T): () => ParameterD
 		}
 	});
 }
+
+export const User = createParamDecorator((req) => {
+	const request = req as ApiRequestWithUser;
+
+	return request.user;
+});
