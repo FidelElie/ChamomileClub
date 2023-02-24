@@ -8,7 +8,8 @@ export const CreateUsersBodySchema = z.array(UserSchema.pick({
 	email: true,
 	nickname: true,
 	description: true,
-	roles: true
+	roles: true,
+	active: true
 }));
 
 export type CreateUsersBody = z.infer<typeof CreateUsersBodySchema>;

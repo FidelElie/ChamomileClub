@@ -24,7 +24,7 @@ export default class UsersController {
 	}
 
 	@Post(baseUrl)
-	// @AuthGuard("founder")()
+	@AuthGuard("founder")()
 	async createUsers(@ValidatedBody(CreateUsersBodySchema)() body: CreateUsersBody) {
 		return await this.userControllerService.createUsers(body);
 	}

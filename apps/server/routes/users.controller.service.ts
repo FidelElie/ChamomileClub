@@ -45,7 +45,8 @@ export default class UserControllerService {
 				model: {
 					name: user.forename,
 					link: invitationLink,
-					roles: user.roles
+					roles: user.roles,
+					active: user.active
 				}
 			});
 		})
