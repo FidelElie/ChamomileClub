@@ -16,7 +16,7 @@
     "incremental": true,
     "baseUrl": ".",
     "paths": {
-      "@/routes/*": ["./routes/*"],
+      "@/routes/*": ["controllers/*"],
       "@/library/*": ["./library/*"],
       "@/services/*": ["./services/*"],
       "@/emails/*": ["./emails/*"],

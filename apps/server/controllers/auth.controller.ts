@@ -1,4 +1,6 @@
 import {
+	Get,
+	Post,
 	BadRequestException,
 	ForbiddenException,
 	InternalServerErrorException
@@ -6,23 +8,27 @@ import {
 import { autoInjectable } from "tsyringe";
 
 import {
+	AuthenticateBodySchema,
 	type AuthenticateBody,
-	type AuthenticateResponse,
-	AuthenticateResponseSchema,
+	StartLoginBodySchema,
 	type StartLoginBody,
-	type StartLoginResponse,
+	VerifyLoginQuerySchema,
 	type VerifyLoginQuery,
-	type VerifyLoginResponse,
+	UserSchemaType,
+	AuthenticateResponseSchema,
 	VerifyLoginResponseSchema,
-	UserSchemaType
 } from "@thechamomileclub/api";
 
+import { Controller, User, ValidatedBody, ValidatedQuery } from "@/library/decorators";
 import type { UserClaims } from "@/library/types/api.types";
 
 import { AuthService, EmailService, KeyService, UserService } from "@/services";
 
+const baseUrl = "/auth";
+
 @autoInjectable()
-export default class AuthControllerService {
+@Controller(baseUrl)
+export default class AuthController {
 	constructor(
 		private readonly authService: AuthService,
 		private readonly userService: UserService,
@@ -30,17 +36,19 @@ export default class AuthControllerService {
 		private readonly emailService: EmailService
 	) { }
 
-	async getCurrentUser(payload: UserClaims | null): Promise<UserSchemaType | null> {
-		if (!payload) { return null; }
+	@Get(baseUrl)
+	async getCurrentUser(@User() user: UserClaims | null): Promise<UserSchemaType | null > {
+		if (!user) { return null; }
 
-		const { id } = payload;
+		const { id } = user;
 
-		const user = this.userService.getUserById(id);
+		const userInformation = this.userService.getUserById(id);
 
-		return user;
+		return userInformation;
 	}
 
-	async authenticateUser(body: AuthenticateBody): Promise<AuthenticateResponse> {
+	@Post(baseUrl)
+	async authenticate(@ValidatedBody(AuthenticateBodySchema)() body: AuthenticateBody) {
 		const { id, code, user: userPayload } = body;
 		await this.keyService.getKeyAndValidate(id, code);
 
@@ -59,7 +67,8 @@ export default class AuthControllerService {
 		return AuthenticateResponseSchema.parse({ token: accessToken });
 	}
 
-	async sendLoginRequest({ email }: StartLoginBody): Promise<StartLoginResponse> {
+	@Post(`${baseUrl}/login`)
+	async startLoginRequest(@ValidatedBody(StartLoginBodySchema)() { email }: StartLoginBody) {
 		const user = await this.userService.getUserByEmail(email);
 
 		const challenge = this.authService.encryptString(this.authService.generateRandomString(25));
@@ -86,12 +95,15 @@ export default class AuthControllerService {
 		return null;
 	}
 
-	async verifyLogin({ id, code }: VerifyLoginQuery) : Promise<VerifyLoginResponse> {
-		if(!id || !code) { throw new BadRequestException("Missing id and code combination"); }
+	@Get(`${baseUrl}/login`)
+	async verifyLoginAttempt(@ValidatedQuery(VerifyLoginQuerySchema)() query: VerifyLoginQuery) {
+		const { id, code } = query;
+
+		if (!id || !code) { throw new BadRequestException("Missing id and code combination"); }
 
 		const key = await this.keyService.getKeyAndValidate(id, this.authService.decryptString(code));
 
-		const { decoded } = this.authService.verifyToken<{id: string, email: string}>(
+		const { decoded } = this.authService.verifyToken<{ id: string, email: string }>(
 			key.token,
 			{ error: new ForbiddenException("Access key has expired") }
 		)

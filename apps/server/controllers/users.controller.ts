@@ -1,27 +1,38 @@
+import { Get, Post } from "next-api-decorators";
 import { autoInjectable } from "tsyringe";
 
 import {
+	CreateUsersBodySchema,
 	UserSchema,
 	type CreateUsersBody
 } from "@thechamomileclub/api";
 
+import { Controller, AuthGuard, ValidatedBody } from "@/library/decorators";
+
 import { UserService, EmailService, KeyService, AuthService } from "../services";
 
+const baseUrl = "/users";
+
 @autoInjectable()
-export default class UserControllerService {
+@Controller(baseUrl)
+export default class UsersController {
 	constructor(
 		private readonly userService: UserService,
 		private readonly authService: AuthService,
 		private readonly keyService: KeyService,
 		private readonly emailService: EmailService
-	) {}
+	) { }
 
-	async getAppUsers() {
-		return []
+	@Get(baseUrl)
+	@AuthGuard("founder")()
+	async getUsers() {
+		return [];
 	}
 
-	async createUsers(entries: CreateUsersBody) {
-		const newUsers = await this.userService.createUsers(entries);
+	@Post(baseUrl)
+	@AuthGuard("founder")()
+	async createUsers(@ValidatedBody(CreateUsersBodySchema)() body: CreateUsersBody) {
+		const newUsers = await this.userService.createUsers(body);
 
 		newUsers.forEach(async databaseUser => {
 			const user = UserSchema.parse(databaseUser);
