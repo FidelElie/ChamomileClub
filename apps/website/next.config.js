@@ -1,3 +1,4 @@
+/** @type {import('next').NextConfig} */
 module.exports = {
   reactStrictMode: true,
   webpack(config) {
@@ -8,5 +9,8 @@ module.exports = {
       loader: require.resolve('@svgr/webpack')
     })
     return config
-  }
+  },
+  transpileModules: [
+    "@thechamomileclub/casinojs"
+  ]
 }

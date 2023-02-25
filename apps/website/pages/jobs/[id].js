@@ -25,10 +25,11 @@ export default function JobListing() {
 							<div className="h-72 relative mb-10">
 								<img src={correspondingOpening.image} className="w-full h-full object-cover" alt={correspondingOpening.name}/>
 								<div className="bg-black bg-opacity-10 absolute top-0 left-0 w-full h-full"/>
-								<Link href="/jobs">
-									<a className="block w-min whitespace-nowrap px-4 py-5 mb-5 text-white shadow-lg bg-green-800 dark:bg-invertedLight absolute top-5 left-5">
-										Back To Jobs
-									</a>
+								<Link
+									href="/jobs"
+									className="block w-min whitespace-nowrap px-4 py-5 mb-5 text-white shadow-lg bg-green-800 dark:bg-invertedLight absolute top-5 left-5"
+								>
+									Back To Jobs
 								</Link>
 							</div>
 							<PageHeader
@@ -51,10 +52,11 @@ export default function JobListing() {
 					) : (
 						<>
 							<Paragraph>We Couldn't Find This Job Listing</Paragraph>
-							<Link href="/jobs">
-								<a className="block w-min whitespace-nowrap px-4 py-5 mt-5 text-white shadow-lg bg-green-800 dark:bg-invertedLight">
+								<Link
+									href="/jobs"
+									className="block w-min whitespace-nowrap px-4 py-5 mt-5 text-white shadow-lg bg-green-800 dark:bg-invertedLight"
+								>
 									Back To Jobs
-								</a>
 							</Link>
 						</>
 					)

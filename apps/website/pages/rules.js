@@ -143,7 +143,7 @@ export default function Rules() {
             <SlideshowPreFlop/>
           </div>
           <InformationBanner>
-            <span className="uppercase font-medium">Note:</span> Knowing the hands is a great step towards winning rounds and chips. Check out each of the hands <Link href="/hands"><a className="underline">here</a></Link>.
+            <span className="uppercase font-medium">Note:</span> Knowing the hands is a great step towards winning rounds and chips. Check out each of the hands <Link href="/hands" className="underline">here</Link>.
           </InformationBanner>
           <SubSubTitle topMargin>Stage Two  - The Flop</SubSubTitle>
           <Paragraph>
