@@ -5,18 +5,19 @@ import {
 } from "next-api-decorators";
 import { autoInjectable } from "tsyringe";
 
-import type { User } from "@thechamomileclub/database";
 import {
 	type AuthenticateBody,
 	type AuthenticateResponse,
 	AuthenticateResponseSchema,
 	type StartLoginBody,
 	type StartLoginResponse,
-	StartLoginResponseSchema,
 	type VerifyLoginQuery,
 	type VerifyLoginResponse,
-	VerifyLoginResponseSchema
+	VerifyLoginResponseSchema,
+	UserSchemaType
 } from "@thechamomileclub/api";
+
+import { UserClaims } from "@/library/types/api.types";
 
 import { AuthService, EmailService, KeyService, UserService } from "@/services";
 
@@ -29,7 +30,7 @@ export default class AuthControllerService {
 		private readonly emailService: EmailService
 	) { }
 
-	async getCurrentUser(payload: { id: string, email: string } | null): Promise<User | null> {
+	async getCurrentUser(payload: UserClaims | null): Promise<UserSchemaType | null> {
 		if (!payload) { return null; }
 
 		const { id } = payload;
@@ -61,8 +62,6 @@ export default class AuthControllerService {
 	async sendLoginRequest({ email }: StartLoginBody): Promise<StartLoginResponse> {
 		const user = await this.userService.getUserByEmail(email);
 
-		const verifiedUser = StartLoginResponseSchema.parse(user);
-
 		const challenge = this.authService.generateRandomString(25);
 
 		const token = this.authService.signToken({ id: user.id, email }, { expiresIn: "10m" });
@@ -72,9 +71,9 @@ export default class AuthControllerService {
 		const magicLink = this.authService.generateAuthLink(accessKey);
 
 		const { error } = await this.emailService.sendMagicLink({
-			to: { name: verifiedUser.forename, email: verifiedUser.email },
+			to: { name: user.forename, email: user.email },
 			model: {
-				name: verifiedUser.forename,
+				name: user.forename,
 				link: magicLink
 			}
 		});
@@ -84,7 +83,7 @@ export default class AuthControllerService {
 			throw new InternalServerErrorException("Error sending email");
 		}
 
-		return verifiedUser;
+		return null;
 	}
 
 	async verifyLogin({ id, code }: VerifyLoginQuery) : Promise<VerifyLoginResponse> {

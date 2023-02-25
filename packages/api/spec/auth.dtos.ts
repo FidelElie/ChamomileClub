@@ -1,5 +1,9 @@
 import { z } from "zod";
-import { UserSchema, type UserSchemaType } from "../schemas";
+import { UserSchema } from "../schemas";
+
+export const GetCurrentUserResponseSchema = UserSchema.nullable();
+
+export type GetCurrentUserResponse = z.infer<typeof GetCurrentUserResponseSchema>
 
 /**
  *
@@ -28,9 +32,9 @@ export const StartLoginBodySchema = z.object({ email: z.string() });
 
 export type StartLoginBody = z.infer<typeof StartLoginBodySchema>;
 
-export const StartLoginResponseSchema = UserSchema;
+export const StartLoginResponseSchema = z.null();
 
-export type StartLoginResponse = UserSchemaType;
+export type StartLoginResponse = z.infer<typeof StartLoginResponseSchema>;
 
 /**
  *

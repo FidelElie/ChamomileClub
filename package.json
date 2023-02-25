@@ -10,9 +10,13 @@
     ],
     "scripts": {
         "@webapp": "yarn workspace @thechamomileclub/webapp",
-        "@website": "yanr workspace @thechamomileclub/website",
+        "@website": "yarn workspace @thechamomileclub/website",
         "@server": "yarn workspace @thechamomileclub/server",
         "@api": "yarn workspace @thechamomileclub/api",
-        "@database": "yarn workspace @thechamomileclub/database"
+        "@database": "yarn workspace @thechamomileclub/database",
+        "@webapp:dev": "concurrently \"yarn @webapp dev\" \"yarn @server dev\""
+    },
+    "devDependencies": {
+        "concurrently": "^7.6.0"
     }
 }

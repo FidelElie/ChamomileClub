@@ -1,6 +1,8 @@
 import { z } from "zod";
 
-import { Roles } from "@thechamomileclub/database";
+export const RolesSchema = z.enum(["admin", "founder", "editor", "team", "member", "prospect"]);
+
+export type RolesSchemaType = z.infer<typeof RolesSchema>;
 
 export const UserSchema = z.object({
 	id: z.string(),
@@ -14,7 +16,9 @@ export const UserSchema = z.object({
 	position: z.string().nullable(),
 	active: z.boolean().optional(),
 	deleted: z.boolean().optional(),
-	roles: z.array(z.enum(Roles))
+	roles: z.array(RolesSchema)
 });
 
 export type UserSchemaType = z.infer<typeof UserSchema>;
+
+

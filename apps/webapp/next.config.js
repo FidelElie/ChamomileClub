@@ -4,15 +4,7 @@ const nextConfig = {
   swcMinify: true,
   transpilePackages: [
     "@athechamomileclub/api"
-  ],
-  rewrites : () => {
-    return [
-      {
-        source: "/api",
-        destination: process.env.NODE_ENV === "development" ? "http://localhost:3000" : "https://api.thechamomileclub.com"
-      }
-    ]
-  }
+  ]
 }
 
 module.exports = nextConfig
