@@ -9,8 +9,7 @@ const links = [
   { name: "Rules", footerName: "Rules", href: "/rules" },
   { name: "Hands", footerName: "Hands", href: "/hands" },
   { name: "Founders", footerName: "Founders", href: "/founders" },
-  { name: "Team", footerName: "Team", href: "/team" },
-  { name: "Jobs", href: "/jobs" }
+  { name: "Team", footerName: "Team", href: "/team" }
 ]
 
 const NavLinks = (props) => {
