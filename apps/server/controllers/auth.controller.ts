@@ -21,6 +21,7 @@ import {
 
 import { Controller, User, ValidatedBody, ValidatedQuery } from "@/library/decorators";
 import type { UserClaims } from "@/library/types/api.types";
+import { validateSchema } from "@/library/utilities";
 
 import { AuthService, EmailService, KeyService, UserService } from "@/services";
 
@@ -64,14 +65,14 @@ export default class AuthController {
 
 		const accessToken = this.authService.signToken(payload, { expiresIn: "5m" });
 
-		return AuthenticateResponseSchema.parse({ token: accessToken });
+		return validateSchema({ token: accessToken }, AuthenticateResponseSchema);
 	}
 
 	@Post(`${baseUrl}/login`)
 	async startLoginRequest(@ValidatedBody(StartLoginBodySchema)() { email }: StartLoginBody) {
 		const user = await this.userService.getUserByEmail(email);
 
-		const challenge = this.authService.encryptString(this.authService.generateRandomString(25));
+		const challenge = this.authService.generateRandomString(25);
 
 		const token = this.authService.signToken({ id: user.id, email }, { expiresIn: "10m" });
 
@@ -101,7 +102,7 @@ export default class AuthController {
 
 		if (!id || !code) { throw new BadRequestException("Missing id and code combination"); }
 
-		const key = await this.keyService.getKeyAndValidate(id, this.authService.decryptString(code));
+		const key = await this.keyService.getKeyAndValidate(id, code);
 
 		const { decoded } = this.authService.verifyToken<{ id: string, email: string }>(
 			key.token,
@@ -110,7 +111,7 @@ export default class AuthController {
 
 		const user = await this.userService.getUserById(decoded!.id);
 
-		return VerifyLoginResponseSchema.parse({
+		return validateSchema({
 			id: user.id,
 			state: user.active ? "login" : "registration",
 			user: {
@@ -120,6 +121,6 @@ export default class AuthController {
 				nickname: user.nickname,
 				description: user.description
 			}
-		});
+		}, VerifyLoginResponseSchema)
 	}
 }

@@ -5,7 +5,7 @@ export const KeySchema = z.object({
 	challenge: z.string(),
 	created_at: z.date(),
 	token: z.string(),
-	user: z.string()
+	user: z.object({ id: z.string() })
 });
 
 export type KeySchemaType = z.infer<typeof KeySchema>;

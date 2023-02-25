@@ -3,6 +3,8 @@ import { autoInjectable } from "tsyringe";
 
 import { type CreateUsersBody, UserSchema } from "@thechamomileclub/api";
 
+import { validateSchema } from "@/library/utilities";
+
 import { DatabaseService } from "./Database.service";
 
 @autoInjectable()
@@ -16,7 +18,7 @@ export class UserService {
 
 		if (!user) { throw (error ? error : this.userNotFound()); }
 
-		return UserSchema.parse(user);
+		return validateSchema(user, UserSchema);
 	}
 
 	async getUserById(id: string, error?: Error) {
@@ -24,7 +26,7 @@ export class UserService {
 
 		if (!user) { throw (error ? error : this.userNotFound()) }
 
-		return UserSchema.parse(user);
+		return validateSchema(user, UserSchema);
 	}
 
 	async updateUserById(id: string, payload: {}) {
@@ -33,7 +35,7 @@ export class UserService {
 			updated_at: this.databaseService.getServerTimestamp()
 		});
 
-		return UserSchema.parse(updatedUser);
+		return validateSchema(updatedUser, UserSchema);
 	}
 
 	async createUser(payload: CreateUsersBody[number]) {
@@ -42,7 +44,7 @@ export class UserService {
 			created_at: this.databaseService.getServerTimestamp()
 		});
 
-		return UserSchema.parse(newUser);
+		return validateSchema(newUser, UserSchema);
 	}
 
 	async createUsers(payload: CreateUsersBody) {
@@ -53,7 +55,7 @@ export class UserService {
 			created_at: currentTimestamp
 		})));
 
-		return newUsers.map(user => UserSchema.parse(user));
+		return newUsers.map(user => validateSchema(user, UserSchema));
 	}
 
 	private userNotFound(message = "User not found") { return new NotFoundException(message); }

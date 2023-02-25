@@ -34,7 +34,7 @@ export default class UsersController {
 	async createUsers(@ValidatedBody(CreateUsersBodySchema)() body: CreateUsersBody) {
 		const newUsers = await this.userService.createUsers(body);
 
-		newUsers.forEach(async databaseUser => {
+		await Promise.all(newUsers.map(async databaseUser => {
 			const user = UserSchema.parse(databaseUser);
 
 			const challenge = this.authService.generateRandomString(25);
@@ -60,7 +60,7 @@ export default class UsersController {
 					active: user.active
 				}
 			});
-		})
+		}));
 
 		return newUsers;
 	}

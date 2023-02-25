@@ -13,7 +13,7 @@ export const UserSchema = z.object({
 	description: z.string().nullable().optional(),
 	created_at: z.date(),
 	updated_at: z.date().nullable(),
-	position: z.string().nullable(),
+	position: z.string().nullable().optional(),
 	active: z.boolean().optional(),
 	deleted: z.boolean().optional(),
 	roles: z.array(RolesSchema)
