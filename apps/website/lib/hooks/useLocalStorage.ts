@@ -11,11 +11,11 @@ const useLocalStorage = <T = JSONParsable>(key: string, initialValue: JSONParsab
 
 			setStorageValue(savedStorageValue ? JSON.parse(savedStorageValue) : initialValue);
 		}
-	}, []);
+	}, [initialValue, key]);
 
 	useEffect(() => {
 		if (storageValue !== undefined) { localStorage.setItem(key, JSON.stringify(storageValue)); }
-	}, [storageValue]);
+	}, [storageValue, key]);
 
 	return [storageValue as T, editStorageValue] as const;
 }

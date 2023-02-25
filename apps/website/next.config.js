@@ -10,7 +10,7 @@ module.exports = {
     })
     return config
   },
-  transpileModules: [
+  transpilePackages: [
     "@thechamomileclub/casinojs"
   ]
 }
