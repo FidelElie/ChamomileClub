@@ -1,7 +1,7 @@
 import { createContext, useContext, useState, type ReactNode } from "react";
 import { QueryClientProvider, type QueryClient } from "@tanstack/react-query";
 
-import { useGetCurrentUser, GetCurrentUser } from "./spec";
+import { useGetCurrentUser, GetCurrentUserResponse } from "./spec";
 
 const initialContext: AuthContextType = { user: null, initialising: true }
 
@@ -49,6 +49,6 @@ export interface ApiProvider {
 }
 
 interface AuthContextType {
-	user: GetCurrentUser,
+	user: GetCurrentUserResponse,
 	initialising: boolean,
 }
