@@ -9,6 +9,8 @@
         "apps/*"
     ],
     "scripts": {
+        "@webapp": "yarn workspace @thechamomileclub/webapp",
+        "@website": "yanr workspace @thechamomileclub/website",
         "@server": "yarn workspace @thechamomileclub/server",
         "@api": "yarn workspace @thechamomileclub/api",
         "@database": "yarn workspace @thechamomileclub/database"
