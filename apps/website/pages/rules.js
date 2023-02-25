@@ -10,7 +10,7 @@ import {
   RedChip,
   BlackChip,
 } from "@chamomileclub/casinojs";
-import { useTheme } from "../lib/providers/theme";
+import { useTheme } from "../lib/providers/theme/Theme.provider";
 
 // ! Components
 import AppLayout from "../components/core/App";

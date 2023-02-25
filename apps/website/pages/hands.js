@@ -2,7 +2,7 @@
 import hands from "../assets/data/hands";
 
 // ! Library
-import { useTheme } from "../lib/providers/theme";
+import { useTheme } from "../lib/providers/Theme.provider";
 
 // ! Components
 import AppLayout from "../components/core/App";
