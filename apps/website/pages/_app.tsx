@@ -1,25 +1,13 @@
 import './_app.css';
 
 // ! Library
-import ThemeProvider, { useTheme } from '../lib/providers/theme';
+import ThemeProvider from '../lib/providers/Theme.provider';
 
 function MyApp({ Component, pageProps }) {
   return (
     <ThemeProvider>
-      <AppContainer>
-        <Component {...pageProps} />
-      </AppContainer>
+      <Component {...pageProps} />
     </ThemeProvider>
-  )
-}
-
-const AppContainer = props => {
-  const { children } = props;
-  const theme = useTheme()[0];
-  return (
-    <div className={theme}>
-      { children }
-    </div>
   )
 }
 

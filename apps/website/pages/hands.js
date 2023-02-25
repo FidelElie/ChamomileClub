@@ -13,7 +13,7 @@ import {
 } from "../components/core/Prose";
 
 export default function Hands() {
-  const theme = useTheme()[0];
+  const { theme } = useTheme();
 
   return (
     <AppLayout title="The Chamomile Club | The Hands">

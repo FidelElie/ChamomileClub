@@ -48,7 +48,7 @@ export default function Rules() {
     { ref: glossaryReference, text: "Glossary" }
   ]
 
-  const theme = useTheme()[0]
+  const { theme }= useTheme();
 
   const scrollToReference = (reference) => {
     if (reference) {
