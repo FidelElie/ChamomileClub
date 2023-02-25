@@ -1,7 +1,8 @@
 import { singleton } from "tsyringe";
 import JWT, { type VerifyOptions, type SignOptions } from "jsonwebtoken";
+import { AES } from "crypto-js";
 
-import type { Key } from "@thechamomileclub/database";
+import type { KeySchemaType } from "@thechamomileclub/api";
 
 @singleton()
 export class AuthService {
@@ -10,7 +11,7 @@ export class AuthService {
 		private readonly environment: "development" | "production" | "test"
 	) {}
 
-	generateAuthLink = (accessKey: Pick<Key, "challenge" | "id">) => {
+	generateAuthLink = (accessKey: Pick<KeySchemaType, "challenge" | "id">) => {
 		const isDevelopment = this.environment === "development";
 
 		const host = isDevelopment ? "http://localhost:3000" : "https://app.thechamomileclub.com";
@@ -44,6 +45,10 @@ export class AuthService {
 			return { decoded: null, error }
 		}
 	}
+
+	encryptString = (input: string) => { return AES.encrypt(input, this.secret).toString(); }
+
+	decryptString = (input: string) => { return AES.decrypt(input, this.secret).toString(); }
 
 	generateRandomString = (length: number) => {
 		if (typeof length !== "number") { throw new TypeError("length should be a integer"); }

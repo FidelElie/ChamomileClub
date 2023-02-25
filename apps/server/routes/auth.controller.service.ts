@@ -17,7 +17,7 @@ import {
 	UserSchemaType
 } from "@thechamomileclub/api";
 
-import { UserClaims } from "@/library/types/api.types";
+import type { UserClaims } from "@/library/types/api.types";
 
 import { AuthService, EmailService, KeyService, UserService } from "@/services";
 
@@ -62,7 +62,7 @@ export default class AuthControllerService {
 	async sendLoginRequest({ email }: StartLoginBody): Promise<StartLoginResponse> {
 		const user = await this.userService.getUserByEmail(email);
 
-		const challenge = this.authService.generateRandomString(25);
+		const challenge = this.authService.encryptString(this.authService.generateRandomString(25));
 
 		const token = this.authService.signToken({ id: user.id, email }, { expiresIn: "10m" });
 
@@ -89,7 +89,7 @@ export default class AuthControllerService {
 	async verifyLogin({ id, code }: VerifyLoginQuery) : Promise<VerifyLoginResponse> {
 		if(!id || !code) { throw new BadRequestException("Missing id and code combination"); }
 
-		const key = await this.keyService.getKeyAndValidate(id, code);
+		const key = await this.keyService.getKeyAndValidate(id, this.authService.decryptString(code));
 
 		const { decoded } = this.authService.verifyToken<{id: string, email: string}>(
 			key.token,

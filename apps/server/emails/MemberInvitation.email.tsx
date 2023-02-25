@@ -1,7 +1,6 @@
-import type { RoleNames } from "@thechamomileclub/database";
+import type { RolesSchemaType } from "@thechamomileclub/api";
 
 import { EmailLayout, Section, Heading, ButtonLink, Link, Copy } from "./components";
-
 
 export const MemberInvitationEmail = (props: MemberInvitationEmailProps) => {
 	const { name, link, roles, active = false } = props;
@@ -35,6 +34,6 @@ export const MemberInvitationEmail = (props: MemberInvitationEmailProps) => {
 export interface MemberInvitationEmailProps {
 	name: string,
 	link: string,
-	roles: RoleNames[],
+	roles: RolesSchemaType[],
 	active?: boolean
 }

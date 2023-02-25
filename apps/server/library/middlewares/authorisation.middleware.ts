@@ -1,10 +1,10 @@
-import type { RoleNames } from "@thechamomileclub/database";
+import type { RolesSchemaType } from "@thechamomileclub/api";
 import { ForbiddenException, UnauthorizedException } from "next-api-decorators";
 
 import { ApiRequestWithUser } from "../types/api.types";
 import { Middleware } from "../types/router.types";
 
-type CreateAuthorisationMiddleware = (role?: RoleNames) => Middleware<ApiRequestWithUser>;
+type CreateAuthorisationMiddleware = (role?: RolesSchemaType) => Middleware<ApiRequestWithUser>;
 
 export const createAuthorizationMiddleware: CreateAuthorisationMiddleware = (role) => {
 	return (req, _, next) => {
@@ -40,9 +40,9 @@ export const createAuthorizationMiddleware: CreateAuthorisationMiddleware = (rol
 }
 
 const ensureAuthorizationHierarchy = (
-	userRole: RoleNames[],
-	roleLevel: RoleNames,
-	higher?: RoleNames[]
+	userRole: RolesSchemaType[],
+	roleLevel: RolesSchemaType,
+	higher?: RolesSchemaType[]
 ) => {
 	const userHasRole = userRole.includes(roleLevel);
 	const userHasHigherOrderRole = higher ? higher.some(role => userRole.includes(role)) : false;

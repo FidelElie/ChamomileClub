@@ -1,11 +1,11 @@
-import { RoleNames } from "@thechamomileclub/database";
+import { RolesSchemaType } from "@thechamomileclub/api";
 
 import type { NextApiRequest } from "next";
 
 export type UserClaims = {
 	id: string,
 	email: string,
-	roles: RoleNames[]
+	roles: RolesSchemaType[]
 }
 
 export type ApiRequestWithUser = NextApiRequest & {
