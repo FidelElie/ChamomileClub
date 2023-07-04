@@ -1,20 +1,29 @@
 import { createContext, useContext, useState, type ReactNode } from "react";
-import { QueryClientProvider, type QueryClient } from "@tanstack/react-query";
+import { QueryClientProvider, Hydrate, type QueryClient, useQueryClient } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 import { useGetCurrentUser, GetCurrentUserResponse } from "./spec";
 
-const initialContext: AuthContextType = { user: null, initialising: true }
+const initialContext: AuthContextType = {
+	user: null,
+	initialising: true,
+	login: () => {},
+	logout: () => {}
+}
 
 const AuthContext = createContext(initialContext);
 
 export const ApiProvider = (props: ApiProvider) => {
-	const { client, children } = props;
+	const { client, dehydratedState, children } = props;
 
 	return (
 		<QueryClientProvider client={client}>
-			<AuthProvider>
-				{ children }
-			</AuthProvider>
+			<Hydrate state={dehydratedState}>
+				<AuthProvider>
+					{ children }
+					<ReactQueryDevtools position="bottom-right"/>
+				</AuthProvider>
+			</Hydrate>
 		</QueryClientProvider>
 	)
 }
@@ -23,13 +32,25 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
 	const [user, setUser] = useState(initialContext.user);
 	const [initialising, setInitialising] = useState(initialContext.initialising);
 
+	const queryClient = useQueryClient();
+
 	useGetCurrentUser({
 		onSuccess: (data) => { setUser(data) },
 		onSettled: () => { setInitialising(false); }
 	});
 
+	const login = (token: string) => {
+		document.cookie = `access-token=${token}; path="/";`;
+		queryClient.invalidateQueries(["user"]);
+	}
+
+	const logout = () => {
+		document.cookie = `access-token=null; path="/"; maxAge=0`;
+		queryClient.invalidateQueries(["user"]);
+	}
+
 	return (
-		<AuthContext.Provider value={{ user, initialising }}>
+		<AuthContext.Provider value={{ user, initialising, login, logout }}>
 			{ children }
 		</AuthContext.Provider>
 	)
@@ -45,10 +66,13 @@ export const useAuth = () => {
 
 export interface ApiProvider {
 	client: QueryClient,
+	dehydratedState?: unknown,
 	children: ReactNode
 }
 
 interface AuthContextType {
 	user: GetCurrentUserResponse,
 	initialising: boolean,
+	login: (token: string) => void,
+	logout: () => void
 }

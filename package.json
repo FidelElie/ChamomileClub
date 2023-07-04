@@ -8,15 +8,25 @@
         "packages/*",
         "apps/*"
     ],
+    "packageManager": "yarn@1.22.19^",
     "scripts": {
-        "@webapp": "yarn workspace @thechamomileclub/webapp",
+        "dev": "turbo dev",
+        "build": "turbo build",
+        "lint": "turbo lint",
+        "clean": "ts-node ./scripts/clean.ts",
         "@website": "yarn workspace @thechamomileclub/website",
         "@server": "yarn workspace @thechamomileclub/server",
+        "@mobile": "yarn workspace @thechamomileclub/mobile",
         "@api": "yarn workspace @thechamomileclub/api",
         "@database": "yarn workspace @thechamomileclub/database",
-        "@webapp:dev": "concurrently \"yarn @webapp dev\" \"yarn @server dev\""
+        "@webapp:dev": "yarn dev --filter=./apps/website --filter=./apps/server",
+        "@mobile:dev": "yarn dev --filter=./apps/mobile --filter=./apps/server"
     },
     "devDependencies": {
-        "concurrently": "^7.6.0"
+        "concurrently": "^7.6.0",
+        "commander": "^11.0.0",
+        "rimraf": "^5.0.1",
+        "ts-node": "^10.9.1",
+        "turbo": "^1.10.7"
     }
 }

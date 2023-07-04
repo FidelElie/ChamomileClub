@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@tanstack/react-query": "^4.24.10",
+    "@tanstack/react-query-devtools": "^4.24.10",
     "@thechamomileclub/database": "*",
     "zod": "^3.20.6"
   },

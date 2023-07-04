@@ -51,12 +51,12 @@ export default class AuthController {
 	@Post(baseUrl)
 	async authenticate(@ValidatedBody(AuthenticateBodySchema)() body: AuthenticateBody) {
 		const { id, code, user: userPayload } = body;
-		await this.keyService.getKeyAndValidate(id, code);
+		const key = await this.keyService.getKeyAndValidate(id, code);
 
 		const user = await (
 			userPayload ?
-				this.userService.updateUserById(id, { ...userPayload, active: true }) :
-				this.userService.getUserById(id)
+				this.userService.updateUserById(key.user.id, { ...userPayload, active: true }) :
+				this.userService.getUserById(key.user.id)
 		);
 
 		if (!user) { throw new InternalServerErrorException("User was not found"); }

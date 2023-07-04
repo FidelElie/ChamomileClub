@@ -14,10 +14,23 @@ out/
 
 # production
 build/
+dist/
 
 # misc
 .DS_Store
 *.pem
+
+# mobile
+.expo
+npm-debug.*
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+*.orig.*
+web-build/
+.metro-health-check*
 
 # debug
 npm-debug.log*
@@ -33,3 +46,5 @@ yarn-error.log*
 
 # vercel
 .vercel
+
+.turbo

@@ -13,9 +13,9 @@ export class AuthService {
 	generateAuthLink = (accessKey: Pick<KeySchemaType, "challenge" | "id">) => {
 		const isDevelopment = this.environment === "development";
 
-		const host = isDevelopment ? "http://localhost:3001" : "https://app.thechamomileclub.com";
+		const host = isDevelopment ? "http://localhost:3001" : "https://thechamomileclub.com";
 
-		return `${host}/login?id=${accessKey.id}&code=${accessKey.challenge}`;
+		return `${host}/auth?id=${accessKey.id}&code=${accessKey.challenge}`;
 	}
 
 	signToken = (payload: string | object | Buffer, config?: SignOptions) => {
