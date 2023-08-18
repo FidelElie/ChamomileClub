@@ -1,4 +1,4 @@
-const tailwindConfig = require("@chamomileclub/tailwind/tailwind.config");
+const tailwindConfig = require("@thechamomileclub/tailwind/tailwind.config");
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {

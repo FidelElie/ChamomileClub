@@ -1,5 +1,5 @@
 {
-  "name": "@chamomileclub/mobile",
+  "name": "@thechamomileclub/mobile",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
@@ -21,7 +21,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
-    "@chamomileclub/tailwind": "1.0.0",
+    "@thechamomileclub/tailwind": "1.0.0",
     "@types/react": "~18.2.14",
     "tailwindcss": "3.3.2",
     "typescript": "^5.1.3"
