@@ -10,9 +10,9 @@
     ],
     "packageManager": "yarn@1.22.19^",
     "scripts": {
-        "dev": "turbo dev",
-        "build": "turbo build",
-        "lint": "turbo lint",
+        "dev": "turbo run dev",
+        "build": "turbo run build",
+        "lint": "turbo run lint",
         "clean": "ts-node ./scripts/clean.ts",
         "@website": "yarn workspace @thechamomileclub/website",
         "@server": "yarn workspace @thechamomileclub/server",
