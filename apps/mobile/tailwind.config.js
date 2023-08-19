@@ -10,8 +10,11 @@ module.exports = {
     "./library/**/*.{js,ts,jsx,tsx}"
   ],
   theme: {
-    extend: {},
+    fontFamily: {
+      heading: ["Poller-One"],
+      body: ["Not-Courier"]
+    }
   },
-  plugins: [],
+  plugins: []
 }
 
