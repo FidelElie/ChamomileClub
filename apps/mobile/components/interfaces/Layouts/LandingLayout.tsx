@@ -33,7 +33,7 @@ export const LandingLayout = (props: LandingLayoutProps) => {
 					shouldPlay
 					isLooping
 				/>
-				<View className="absolute w-full h-full bg-midnight opacity-90" />
+				<View className="absolute w-full h-full bg-midnight opacity-75" />
 			</View>
 			<Show if={!mergedLogoOptions.flow}>
 				<SafeAreaView className="absolute top-0">

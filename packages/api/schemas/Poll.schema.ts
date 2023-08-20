@@ -1,15 +1,14 @@
-import { Output, merge, object, string, withDefault, boolean } from "valibot";
+import { z } from "zod";
 
 import { BaseSchema } from "./Base.schema";
 
-export const PollSchema = merge([
-	BaseSchema,
-	object({
-			event: object({ id: string() }),
-			createdBy: object({ id: string() }),
-			expiresAt: object({ id: string() }),
-			multipleVotesPerUser: withDefault(boolean(), false),
+export const PollSchema = BaseSchema.merge(
+	z.object({
+		event: z.object({ id: z.string() }),
+		createdBy: z.object({ id: z.string() }),
+		expiresAt: z.coerce.date().transform(date => date.toISOString()),
+		multipleVotesPerUser: z.boolean().default(false)
 	})
-]);
+);
 
-export type PollSchema = Output<typeof PollSchema>;
+export type PollSchema = z.infer<typeof PollSchema>;

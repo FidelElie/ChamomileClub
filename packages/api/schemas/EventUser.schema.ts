@@ -1,13 +1,12 @@
-import { Output, merge, object, string } from "valibot";
+import { z } from "zod";
 
 import { BaseSchema } from "./Base.schema";
 
-export const EventUserSchema = merge([
-	BaseSchema,
-	object({
-		user: object({ id: string() }),
-		event: object({ id: string() }),
+export const EventUserSchema = BaseSchema.merge(
+	z.object({
+		user: z.object({ id: z.string() }),
+		event: z.object({ id: z.string() })
 	})
-]);
+)
 
-export type EventUserSchema = Output<typeof EventUserSchema>;
+export type EventUserSchema = z.infer<typeof EventUserSchema>;

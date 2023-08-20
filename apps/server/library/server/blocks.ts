@@ -32,6 +32,8 @@ export const Controller = <
 					res.status(404).end("Not Found");
 				},
 				onError: (error: any, _, res) => {
+					console.error(error);
+
 					res.status(error.statusCode || 500).end(error.message);
 				}
 			});

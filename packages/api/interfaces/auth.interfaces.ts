@@ -1,11 +1,17 @@
-import { email, object, string } from "valibot";
+import { z } from "zod";
+
+import { UserSchema } from "../schemas";
+
+export const GetCurrentUserInterfaces = {
+	response: z.union([UserSchema, z.literal(null)])
+}
 
 export const StartAuthProcessInterfaces = {
-	body: object({ email: string([email()]) }),
-	response: object({ keyId: string() })
+	body: z.object({ email: z.string().email() }),
+	response: z.object({ keyId: z.string(), forename: z.string() })
 }
 
 export const ValidateLoginCodeInterfaces = {
-	body: object({ keyId: string(), code: string() }),
-	response: object({ sessionId: string() })
+	body: z.object({ keyId: z.string(), code: z.string() }),
+	response: z.object({ sessionId: z.string() })
 }

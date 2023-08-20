@@ -15,6 +15,8 @@ import {
 import NotCourierFont from "@/assets/fonts/NotCourier-sans-Bold.ttf";
 import PollerOne from "@/assets/fonts/PollerOne-Regular.ttf";
 
+import { AuthProvider } from "@/library/providers";
+
 import RootLayout from "./_layout";
 
 SplashScreen.preventAutoHideAsync();
@@ -35,8 +37,6 @@ export default function App() {
 		}
 	}, [fontsLoaded, fontError]);
 
-
-
 	onlineManager.setEventListener(setOnline => {
 		return NetInfo.addEventListener(state => setOnline(!!state.isConnected))
 	});
@@ -53,9 +53,11 @@ export default function App() {
 
 	return (
 		<QueryClientProvider client={queryClient}>
-			<NavigationContainer>
-				<RootLayout onLayoutRootView={onLayoutRootView} />
-			</NavigationContainer>
+			<AuthProvider>
+				<NavigationContainer>
+					<RootLayout onLayoutRootView={onLayoutRootView} />
+				</NavigationContainer>
+			</AuthProvider>
 		</QueryClientProvider>
 	);
 }

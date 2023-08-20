@@ -1,14 +1,14 @@
-import { Output, merge, object, string } from "valibot";
+import { z } from "zod";
 
 import { BaseSchema } from "./Base.schema";
 
-export const KeySchema = merge([
-	BaseSchema,
-	object({
-		token: string(),
-		code: string(),
-		user: object({ id: string() })
+export const KeySchema = BaseSchema.merge(
+	z.object({
+		id: z.string(),
+		token: z.string(),
+		code: z.string(),
+		user: z.object({ id: z.string() })
 	})
-]);
+);
 
-export type KeySchema = Output<typeof KeySchema>;
+export type KeySchema = z.infer<typeof KeySchema>;

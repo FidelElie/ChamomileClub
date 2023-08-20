@@ -1,4 +1,4 @@
-export * from "valibot";
+export { z } from "zod";
 export { default as axios } from "axios";
 export * from "@tanstack/react-query";
 

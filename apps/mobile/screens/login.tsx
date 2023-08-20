@@ -22,9 +22,9 @@ const LoginScreen = () => {
 
 	const handleSubmission = async () => {
 		try {
-			// const response = await startAuthProcess.mutateAsync({ email: email.toLowerCase() });
+			const response = await startAuthProcess.mutateAsync({ email: email.toLowerCase() });
 
-			navigation.navigate("OTP", { keyId: "" });
+			navigation.navigate("OTP", { keyId: response.keyId });
 		} catch (error: any) {
 			if (!error.response) { console.error(error); }
 

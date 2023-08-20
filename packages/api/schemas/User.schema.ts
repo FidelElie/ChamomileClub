@@ -1,35 +1,22 @@
-import {
-	email,
-	object,
-	string,
-	optional,
-	boolean,
-	merge,
-	withDefault,
-	nullable,
-	enumType,
-	Output,
-	array
-} from "valibot";
+import { z } from "zod";
 
 import { BaseSchema } from "./Base.schema";
 
-export const RolesEnum = enumType(["admin", "founder", "editor", "team", "member", "prospect"]);
+export const RolesEnum = z.enum(["admin", "founder", "editor", "team", "member", "prospect"]);
 
-export type RolesEnum = Output<typeof RolesEnum>;
+export type RolesEnum = z.infer<typeof RolesEnum>;
 
-export const UserSchema = merge([
-	BaseSchema,
-	object({
-		email: string([email()]),
-		forename: string(),
-		surname: optional(nullable(string())),
-		nickname: optional(nullable(string())),
-		active: withDefault(boolean(), false),
-		position: optional(nullable(string())),
-		description: optional(nullable(string())),
-		roles: array(RolesEnum)
+export const UserSchema = BaseSchema.merge(
+	z.object({
+		email: z.string().email(),
+		forename: z.string(),
+		surname: z.string().nullish(),
+		nickname: z.string().nullish(),
+		active: z.boolean().default(false),
+		position: z.string().nullish(),
+		description: z.string().nullish(),
+		roles: z.array(RolesEnum)
 	})
-]);
+)
 
-export type UserSchema = Output<typeof UserSchema>;
+export type UserSchema = z.infer<typeof UserSchema>;

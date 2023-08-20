@@ -1,15 +1,12 @@
-import { Output, coerce, merge, nullable, object, optional, string } from "valibot";
+import { z } from "zod";
 
 import { BaseSchema } from "./Base.schema";
 
-export const SessionSchema = merge([
-	BaseSchema,
-	object({
-		user: object({ id: string() }),
-		deletedAt: optional(
-			nullable(coerce(string(), (input) => (new Date(input as any)).toISOString()))
-		)
+export const SessionSchema = BaseSchema.merge(
+	z.object({
+		user: z.object({ id: z.string() }),
+		deletedAt: z.coerce.date().transform(date => date.toISOString()).nullish()
 	})
-]);
+)
 
-export type SessionSchema = Output<typeof SessionSchema>;
+export type SessionSchema = z.infer<typeof SessionSchema>;

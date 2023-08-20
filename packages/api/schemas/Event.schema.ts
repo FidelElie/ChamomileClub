@@ -1,4 +1,4 @@
-import { Output, coerce, enumType, merge, nullable, object, optional, string } from "valibot";
+import { z } from "zod";
 
 import { BaseSchema } from "./Base.schema";
 
@@ -8,20 +8,17 @@ export const EventStatuses = {
 	CANCELLED: "CANCELLED"
 } as const;
 
-export const EventStatusEnum = enumType(["SCHEDULED", "PENDING", "CANCELLED"]);
+export const EventStatusEnum = z.enum(["SCHEDULED", "PENDING", "CANCELLED"]);
 
-export type EventStatusEnum = Output<typeof EventStatusEnum>;
+export type EventStatusEnum = z.infer<typeof EventStatusEnum>;
 
-export const EventSchema = merge([
-	BaseSchema,
-	object({
-		name: optional(nullable(string())),
-		owner: object({ id: string() }),
-		date: optional(
-			nullable(coerce(string(), (input) => (new Date(input as any)).toISOString()))
-		),
+export const EventSchema = BaseSchema.merge(
+	z.object({
+		name: z.string().nullish(),
+		owner: z.object({ id: z.string() }),
+		date: z.coerce.date().transform(date => date.toISOString()),
 		status: EventStatusEnum
 	})
-]);
+)
 
-export type EventSchema = Output<typeof EventSchema>;
+export type EventSchema = z.infer<typeof EventSchema>;
