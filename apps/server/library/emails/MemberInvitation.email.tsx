@@ -1,4 +1,4 @@
-import type { RolesSchemaType } from "@thechamomileclub/api";
+import type { RolesEnum } from "@thechamomileclub/api";
 
 import { EmailLayout, Section, Heading, ButtonLink, Link, Copy } from "./components";
 
@@ -34,6 +34,6 @@ export const MemberInvitationEmail = (props: MemberInvitationEmailProps) => {
 export interface MemberInvitationEmailProps {
 	name: string,
 	link: string,
-	roles: RolesSchemaType[],
+	roles: RolesEnum[],
 	active?: boolean
 }
