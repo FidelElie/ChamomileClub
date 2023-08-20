@@ -1,6 +1,7 @@
 import { View } from "react-native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
+import LoginScreen from "./login";
 import LandingScreen from "./landing";
 import OneTimePasswordScreen from "./otp";
 
@@ -16,6 +17,7 @@ export default function RootLayout ({ onLayoutRootView }: RootLayoutProps) {
 					!user ? (
 						<>
 							<Stack.Screen name="Landing" component={LandingScreen} />
+							<Stack.Screen name="Login" component={LoginScreen} />
 							<Stack.Screen name="OTP" component={OneTimePasswordScreen} />
 						</>
 					) : (

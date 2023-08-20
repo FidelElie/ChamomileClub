@@ -1,11 +1,10 @@
-import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
+import { NextResponse, type NextRequest } from "next/server";
 
 export function middleware(request: NextRequest) {
 	const { pathname, search } = request.nextUrl;
 
 	if (!pathname.startsWith("/api")) {
-		return NextResponse.redirect(new URL(`/api${pathname}${search}`, request.url));
+		return NextResponse.rewrite(new URL(`/api${pathname}${search}`, request.url));
 	}
 
 	return NextResponse.next();

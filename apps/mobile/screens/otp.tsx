@@ -1,19 +1,27 @@
-import { Text, View, Pressable } from "react-native";
-import { useNavigation } from "@react-navigation/native";
-import { styled } from "nativewind";
+import { useNavigation, useRoute } from "@react-navigation/native";
 
-import { LandingLayout, OneTimePasswordDisplay } from "../components/interfaces";
+import { useValidateLoginCode } from "@/library/queries";
 
-import type { RootStackNavigationProps } from "./_types";
+import type { RootStackNavigationProps, RootStackRouteProps } from "./_types";
 
-const StyledPressable = styled(Pressable);
+import { Button, Copy, Heading, Flex } from "@/components/core";
+
+import { LandingLayout } from "@/components/interfaces";
+
+import { OneTimePasswordDisplay } from "@/components/screens/otp/OneTimePasswordDisplay";
 
 const OneTimePasswordScreen = () => {
+	const route = useRoute<RootStackRouteProps<"OTP">>();
 	const navigation = useNavigation<RootStackNavigationProps>();
+
+	const validateLoginCode = useValidateLoginCode();
 
 	const handleOTPVerification = async (code: string) => {
 		try {
-			console.log(code);
+			const response = await validateLoginCode.mutateAsync({
+				keyId: route.params.keyId,
+				code
+			});
 		} catch (error) {
 			console.error(error);
 		}
@@ -21,25 +29,21 @@ const OneTimePasswordScreen = () => {
 
 	return (
 		<LandingLayout>
-			<View className="mb-6 space-y-2">
-				<Text className="font-heading uppercase text-white text-center text-xl">
-					Enter your code
-				</Text>
-				<Text className="text-cream font-body uppercase text-center">
-					Please enter the one time password we have sent to your email.
-				</Text>
-			</View>
-			<View className="space-y-3">
-				<OneTimePasswordDisplay onSubmit={handleOTPVerification}/>
-				<StyledPressable
-					className="bg-cream px-5 rounded-lg py-2 active:opacity-50"
-					onPressIn={() => navigation.navigate("Landing")}
-				>
-					<Text className="font-body text-center uppercase text-base text-black">
-						Cancel
-					</Text>
-				</StyledPressable>
-			</View>
+			<Flex.Column className="mb-6 space-y-2 items-center">
+				<Heading size="xl">Enter your code</Heading>
+				<Copy color="cream" className="text-center">
+					Please enter the one time password we have sent to your email
+				</Copy>
+			</Flex.Column>
+			<Flex.Column className="space-y-3">
+				<OneTimePasswordDisplay
+					onSubmit={handleOTPVerification}
+					isSubmitting={validateLoginCode.isLoading}
+				/>
+				<Button.Secondary onPressIn={() => navigation.navigate("Login")}>
+					<Copy color="black">Cancel</Copy>
+				</Button.Secondary>
+			</Flex.Column>
 		</LandingLayout>
 	)
 }

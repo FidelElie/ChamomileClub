@@ -1,3 +1,3 @@
 export default {
-	stories: "emails/**/*.stories.{tsx,ts}",
+	stories: "library/emails/**/*.stories.{tsx,ts}",
 };

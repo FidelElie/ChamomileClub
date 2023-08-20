@@ -2,17 +2,27 @@ import { ReactNode, useRef } from "react";
 import { View, Image } from "react-native";
 import { Video, ResizeMode } from "expo-av";
 import { StatusBar } from "expo-status-bar";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { twMerge } from "tailwind-merge";
 
-import LandingVideo from "@/assets/landing-video.mp4";
+import LandingVideo from "@/assets/videos/landing-video.mp4";
 import OrangeLogo from "@/assets/logos/orange-logo.png";
 
+import { Show } from "@/components/core";
+
+const DEFAULT_LOGO_OPTIONS: Required<LandingLayoutProps["logo"]> = {
+	flow: false
+}
+
 export const LandingLayout = (props: LandingLayoutProps) => {
-	const { children } = props;
+	const { className, logo, children } = props;
+
+	const mergedLogoOptions = Object.assign({}, DEFAULT_LOGO_OPTIONS, logo);
 
 	const videoRef = useRef(null);
 
 	return (
-		<View className="w-full h-full justify-center items-center relative">
+		<View className="w-full h-full items-center relative">
 			<StatusBar style="light" animated translucent />
 			<View className="w-full h-full">
 				<Video
@@ -25,21 +35,36 @@ export const LandingLayout = (props: LandingLayoutProps) => {
 				/>
 				<View className="absolute w-full h-full bg-black opacity-90" />
 			</View>
-			<View className="absolute top-0 justify-center pt-14">
-				<Image
-					source={OrangeLogo}
-					className="h-14 -left-1.5"
-					alt="Logo"
-					resizeMode={ResizeMode.CONTAIN}
-				/>
-			</View>
-			<View className="absolute w-4/5 justify-center">
-				{ children }
-			</View>
+			<Show if={!mergedLogoOptions.flow}>
+				<SafeAreaView className="absolute top-0">
+					<LandingLogo/>
+				</SafeAreaView>
+			</Show>
+			<SafeAreaView className={twMerge("absolute w-4/5 h-full justify-center", className)}>
+				<Show if={mergedLogoOptions.flow}>
+					<LandingLogo />
+				</Show>
+				{children}
+			</SafeAreaView>
 		</View>
 	)
 }
 
+const LandingLogo = ({ className }: { className?: string }) => (
+	<View className="justify-center items-center">
+		<Image
+			source={OrangeLogo}
+			className={twMerge("h-14 -left-1.5", className)}
+			alt="Logo"
+			resizeMode={ResizeMode.CONTAIN}
+		/>
+	</View>
+)
+
 export interface LandingLayoutProps {
+	className?: string;
+	logo?: {
+		flow?: boolean;
+	};
 	children: ReactNode;
 }

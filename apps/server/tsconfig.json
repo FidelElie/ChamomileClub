@@ -16,11 +16,9 @@
     "incremental": true,
     "baseUrl": ".",
     "paths": {
-      "@/routes/*": ["controllers/*"],
-      "@/library/*": ["./library/*"],
-      "@/services/*": ["./services/*"],
-      "@/emails/*": ["./emails/*"],
-      "@/*": ["./*"]
+      "@/routes": ["routes/index.ts"],
+      "@/routes/*": ["routes/*"],
+      "@/library/*": ["./library/*"]
     },
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true
