@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 import { View } from "react-native";
 import { twMerge } from "tailwind-merge";
 
-import { FLEX_DIRECTIONS_MAP } from "@/library/constants";
+import { FLEX_DIRECTIONS_MAP } from "../../constants";
 
 const StyledView = styled(View);
 
@@ -15,16 +15,18 @@ export const For = <T extends unknown>(props: ForProps<T>) => {
 		className
 	)
 
-	const iterable = Array.from(each, (item, index) => children(item, index));
+	if (!each.length) { return <StyledView className={compiledClassName}>{_else}</StyledView> }
 
-	if (!iterable.length) { return <StyledView className={compiledClassName}>{_else}</StyledView> }
-
-	return <StyledView className={compiledClassName}>{iterable}</StyledView>
+	return (
+		<StyledView className={compiledClassName}>
+			{ each.map((entry, entryIndex) => children(entry, entryIndex) )}
+		</StyledView>
+	)
 }
 
 export interface ForProps<T> {
 	className?: string;
-	each: Iterable<T>;
+	each: T[];
 	else?: ReactNode;
 	direction?: keyof typeof FLEX_DIRECTIONS_MAP;
 	children: (data: T, index: number) => ReactNode;

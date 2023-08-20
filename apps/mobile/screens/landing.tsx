@@ -1,6 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 
-import { Button, Copy, Flex } from "@/components/core";
+import { Button, Copy, Flex } from "@thechamomileclub/ui";
 
 import { LandingLayout } from "@/components/interfaces";
 

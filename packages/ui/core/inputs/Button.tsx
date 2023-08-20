@@ -15,7 +15,7 @@ const BaseButton = forwardRef<View, ButtonProps>((props, ref) => {
 				"active:opacity-50",
 				disabled && "opacity-75",
 				theme === "PRIMARY" && "bg-green",
-				theme === "SECONDARY" && "bg-cream",
+				theme === "SECONDARY" && "bg-white border-green",
 				theme === "TERTIARY" && "bg-black",
 				className
 			)}
@@ -55,6 +55,7 @@ export const Button = Object.assign(
 );
 
 export interface  ButtonProps extends ComponentProps<typeof Pressable> {
+	className?: string;
 	theme?: "PRIMARY" | "SECONDARY" | "TERTIARY";
 }
 

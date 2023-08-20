@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { View } from "react-native";
 import { twMerge } from "tailwind-merge";
 
-import { For, TextField, TextFieldRef, Button, Copy } from "@/components/core";
+import { For, TextField, TextFieldRef, Button, Copy } from "@thechamomileclub/ui";
 
 export const OneTimePasswordDisplay = (props: OneTimePasswordDisplayProps) => {
 	const { className, onSubmit, length = 6, isSubmitting } = props;
@@ -43,23 +43,22 @@ export const OneTimePasswordDisplay = (props: OneTimePasswordDisplayProps) => {
 
 	return (
 		<View className={twMerge("justify-context space-y-4", className)}>
-			<View className="flex-row justify-center">
-				<For each={values} direction="row" className="space-x-2">
-					{
-						(value, valueIndex) => (
-							<TextField
-								key={valueIndex}
-								className="font-body w-10"
-								ref={(element) => { inputRefs.current[valueIndex] = element; }}
-								value={value}
-								textAlign="center"
-								onChangeText={text => onChangeCode(valueIndex, text)}
-								keyboardType="number-pad"
-								maxLength={1}
-							/>
-						)
-					}
-				</For>
+			<View className="flex-row justify-center space-x-2">
+				{
+					values.map((value, valueIndex) => (
+						<TextField
+							key={valueIndex}
+							className="font-body w-10"
+							ref={(element) => { inputRefs.current[valueIndex] = element; }}
+							value={value}
+							placeholder="-"
+							textAlign="center"
+							onChangeText={text => onChangeCode(valueIndex, text)}
+							keyboardType="number-pad"
+							maxLength={1}
+						/>
+					))
+				}
 			</View>
 			<Button.Primary disabled={submitDisabled} onPressIn={onDispatchSubmit}>
 				<Copy>Continue</Copy>

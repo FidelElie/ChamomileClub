@@ -3,7 +3,7 @@ import { View } from "react-native";
 import { styled } from "nativewind";
 import { twMerge } from "tailwind-merge";
 
-import { FLEX_DIRECTIONS_MAP } from "@/library/constants";
+import { FLEX_DIRECTIONS_MAP } from "../../constants";
 
 const StyledView = styled(View);
 

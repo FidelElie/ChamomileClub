@@ -5,10 +5,10 @@ import { StatusBar } from "expo-status-bar";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { twMerge } from "tailwind-merge";
 
+import { Show } from "@thechamomileclub/ui";
+
 import LandingVideo from "@/assets/videos/landing-video.mp4";
 import OrangeLogo from "@/assets/logos/orange-logo.png";
-
-import { Show } from "@/components/core";
 
 const DEFAULT_LOGO_OPTIONS: Required<LandingLayoutProps["logo"]> = {
 	flow: false
@@ -33,7 +33,7 @@ export const LandingLayout = (props: LandingLayoutProps) => {
 					shouldPlay
 					isLooping
 				/>
-				<View className="absolute w-full h-full bg-black opacity-90" />
+				<View className="absolute w-full h-full bg-midnight opacity-90" />
 			</View>
 			<Show if={!mergedLogoOptions.flow}>
 				<SafeAreaView className="absolute top-0">
@@ -54,7 +54,7 @@ const LandingLogo = ({ className }: { className?: string }) => (
 	<View className="justify-center items-center">
 		<Image
 			source={OrangeLogo}
-			className={twMerge("h-14 -left-1.5", className)}
+			className={twMerge("h-20 -left-1.5", className)}
 			alt="Logo"
 			resizeMode={ResizeMode.CONTAIN}
 		/>

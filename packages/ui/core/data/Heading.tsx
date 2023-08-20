@@ -3,7 +3,7 @@ import { Text } from "react-native";
 import { styled } from "nativewind";
 import { twMerge } from "tailwind-merge";
 
-import { TEXT_COLORS_MAP, TEXT_SIZES_MAP } from "@/library/constants";
+import { TEXT_COLORS_MAP, TEXT_SIZES_MAP } from "../../constants";
 
 const StyledText = styled(Text);
 

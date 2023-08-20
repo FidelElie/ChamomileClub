@@ -1,10 +1,10 @@
 import { useNavigation, useRoute } from "@react-navigation/native";
 
+import { Button, Copy, Heading, Flex } from "@thechamomileclub/ui";
+
 import { useValidateLoginCode } from "@/library/queries";
 
 import type { RootStackNavigationProps, RootStackRouteProps } from "./_types";
-
-import { Button, Copy, Heading, Flex } from "@/components/core";
 
 import { LandingLayout } from "@/components/interfaces";
 
@@ -41,7 +41,7 @@ const OneTimePasswordScreen = () => {
 					isSubmitting={validateLoginCode.isLoading}
 				/>
 				<Button.Secondary onPressIn={() => navigation.navigate("Login")}>
-					<Copy color="black">Cancel</Copy>
+					<Copy color="midnight">Cancel</Copy>
 				</Button.Secondary>
 			</Flex.Column>
 		</LandingLayout>

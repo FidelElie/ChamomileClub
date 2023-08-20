@@ -1,6 +1,6 @@
 import { SESClient } from "@aws-sdk/client-ses";
 
-import { AppConfig } from "@/library/config";
+import { AppConfig } from "./app.config";
 
 declare global {
 	var emailClient: SESClient

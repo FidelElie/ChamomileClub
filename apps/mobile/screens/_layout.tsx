@@ -1,5 +1,6 @@
-import { View } from "react-native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+
+import { Flex } from "@thechamomileclub/ui";
 
 import LoginScreen from "./login";
 import LandingScreen from "./landing";
@@ -11,7 +12,7 @@ export default function RootLayout ({ onLayoutRootView }: RootLayoutProps) {
 	const user = null;
 
 	return (
-		<View className="h-full w-full bg-cream" onLayout={onLayoutRootView}>
+		<Flex className="h-full w-full bg-cream" onLayout={onLayoutRootView}>
 			<Stack.Navigator screenOptions={{ headerShown: false }}>
 				{
 					!user ? (
@@ -26,7 +27,7 @@ export default function RootLayout ({ onLayoutRootView }: RootLayoutProps) {
 					)
 				}
 			</Stack.Navigator>
-		</View>
+		</Flex>
 	)
 }
 

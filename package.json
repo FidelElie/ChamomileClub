@@ -20,6 +20,7 @@
         "@api": "yarn workspace @thechamomileclub/api",
         "@database": "yarn workspace @thechamomileclub/database",
         "@tailwind": "yarn workspace @thechamomileclub/tailwind",
+        "@ui": "yarn workspace @thechamomileclub/ui",
         "@webapp:dev": "yarn dev --filter=./apps/website --filter=./apps/server",
         "@mobile:dev": "yarn dev --filter=./apps/mobile --filter=./apps/server"
     },

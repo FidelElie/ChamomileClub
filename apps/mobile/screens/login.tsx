@@ -2,14 +2,12 @@ import { useEffect, useRef, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 
 import { StartAuthProcessInterfaces, safeParse } from "@thechamomileclub/api";
+import { Button, Copy, Heading, TextField, Flex, TextFieldRef } from "@thechamomileclub/ui";
 
 import { useStartAuthProcess } from "@/library/queries";
-
-import { Button, Copy, Heading, TextField, Flex, TextFieldRef } from "@/components/core";
+import type { RootStackNavigationProps } from "./_types";
 
 import { LandingLayout } from "@/components/interfaces";
-
-import type { RootStackNavigationProps } from "./_types";
 
 const LoginScreen = () => {
 	const inputRef = useRef<TextFieldRef>(null);
@@ -24,9 +22,9 @@ const LoginScreen = () => {
 
 	const handleSubmission = async () => {
 		try {
-			const response = await startAuthProcess.mutateAsync({ email: email.toLowerCase() });
+			// const response = await startAuthProcess.mutateAsync({ email: email.toLowerCase() });
 
-			navigation.navigate("OTP", { keyId: response.keyId });
+			navigation.navigate("OTP", { keyId: "" });
 		} catch (error: any) {
 			if (!error.response) { console.error(error); }
 
@@ -40,8 +38,8 @@ const LoginScreen = () => {
 
 	return (
 		<LandingLayout>
-			<Flex className="justify-center mb-3">
-				<Heading className="text-center mb-3">Email Address</Heading>
+			<Flex className="justify-center mb-6">
+				<Heading className="text-center mb-5">Email Address</Heading>
 				<TextField
 					ref={inputRef}
 					placeholder="ENTER HERE"
@@ -57,7 +55,7 @@ const LoginScreen = () => {
 					<Copy>Continue</Copy>
 				</Button.Primary>
 				<Button.Secondary onPressIn={() => navigation.navigate("Landing")}>
-					<Copy color="black">Back</Copy>
+					<Copy color="green">Back</Copy>
 				</Button.Secondary>
 			</Flex>
 		</LandingLayout>
