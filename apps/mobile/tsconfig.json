@@ -4,9 +4,11 @@
     "strict": true,
     "baseUrl": ".",
     "paths": {
+      "@/assets": ["./assets/index.ts"],
       "@/assets/*": ["./assets/*"],
       "@/components/*": ["./components/*"],
       "@/library/*": ["./library/*"]
     }
-  }
+  },
+  "include": ["**/*.ts", "**/*.tsx", "app.d.ts"]
 }

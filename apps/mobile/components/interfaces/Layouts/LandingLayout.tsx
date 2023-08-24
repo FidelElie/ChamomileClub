@@ -8,11 +8,9 @@ import { twMerge } from "tailwind-merge";
 import { Show } from "@thechamomileclub/ui";
 
 import LandingVideo from "@/assets/videos/landing-video.mp4";
-import OrangeLogo from "@/assets/logos/orange-logo.png";
+import OrangeLogo from "@/assets/logos/yellow-alt-logo.png";
 
-const DEFAULT_LOGO_OPTIONS: Required<LandingLayoutProps["logo"]> = {
-	flow: false
-}
+const DEFAULT_LOGO_OPTIONS: Required<LandingLayoutProps["logo"]> = { flow: false };
 
 export const LandingLayout = (props: LandingLayoutProps) => {
 	const { className, logo, children } = props;

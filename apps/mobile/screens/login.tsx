@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 
-import { StartAuthProcessInterfaces, safeParse } from "@thechamomileclub/api";
+import { StartAuthProcessInterfaces } from "@thechamomileclub/api";
 import { Button, Copy, Heading, TextField, Flex, TextFieldRef } from "@thechamomileclub/ui";
 
 import { useStartAuthProcess } from "@/library/queries";
@@ -18,7 +18,7 @@ const LoginScreen = () => {
 
 	const startAuthProcess = useStartAuthProcess();
 
-	const validSubmission = safeParse(StartAuthProcessInterfaces.body, { email });
+	const validSubmission = StartAuthProcessInterfaces.body.safeParse({ email });
 
 	const handleSubmission = async () => {
 		try {

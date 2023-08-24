@@ -12,18 +12,17 @@ import {
 	focusManager
 } from "@thechamomileclub/api";
 
-import NotCourierFont from "@/assets/fonts/NotCourier-sans-Bold.ttf";
-import PollerOne from "@/assets/fonts/PollerOne-Regular.ttf";
+import { NotCourierSansFont, PollerOneFont } from "@/assets";
 
 import { AuthProvider } from "@/library/providers";
 
 import RootLayout from "./_layout";
 
-SplashScreen.preventAutoHideAsync();
+SplashScreen.preventAutoHideAsync().catch(() => {});
 
 const fonts = {
-	"Not-Courier": NotCourierFont,
-	"Poller-One": PollerOne
+	"Not-Courier": NotCourierSansFont,
+	"Poller-One": PollerOneFont
 }
 
 const queryClient = new QueryClient();

@@ -19,8 +19,6 @@ axiosClient.interceptors.request.use(async (config) => {
 	try {
 		const value = await AsyncStorage.getItem(AppConfig.SESSION_STORAGE_KEY);
 
-		console.log(value);
-
 		if (value !== null) {
 			const parsedValue = JSON.parse(value);
 

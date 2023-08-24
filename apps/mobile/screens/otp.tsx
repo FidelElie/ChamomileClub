@@ -2,6 +2,7 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 
 import { Button, Copy, Heading, Flex } from "@thechamomileclub/ui";
 
+import { useAuth } from "@/library/providers";
 import { useValidateLoginCode } from "@/library/queries";
 
 import type { RootStackNavigationProps, RootStackRouteProps } from "./_types";
@@ -11,21 +12,14 @@ import { LandingLayout } from "@/components/interfaces";
 import { OneTimePasswordDisplay } from "@/components/screens/otp/OneTimePasswordDisplay";
 
 const OneTimePasswordScreen = () => {
-	const route = useRoute<RootStackRouteProps<"OTP">>();
+	const { params: { keyId } } = useRoute<RootStackRouteProps<"OTP">>();
 	const navigation = useNavigation<RootStackNavigationProps>();
 
-	const validateLoginCode = useValidateLoginCode();
+	const { login } = useAuth();
 
-	const handleOTPVerification = async (code: string) => {
-		try {
-			const response = await validateLoginCode.mutateAsync({
-				keyId: route.params.keyId,
-				code
-			});
-		} catch (error) {
-			console.error(error);
-		}
-	}
+	const validateLoginCode = useValidateLoginCode({
+		onSuccess: (response) => login(response.token)
+	});
 
 	return (
 		<LandingLayout>
@@ -37,7 +31,7 @@ const OneTimePasswordScreen = () => {
 			</Flex.Column>
 			<Flex.Column className="space-y-3">
 				<OneTimePasswordDisplay
-					onSubmit={handleOTPVerification}
+					onSubmit={(code) => validateLoginCode.mutate({ keyId, code })}
 					isSubmitting={validateLoginCode.isLoading}
 				/>
 				<Button.Secondary onPressIn={() => navigation.navigate("Login")}>

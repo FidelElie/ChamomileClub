@@ -7,6 +7,7 @@ import { useAuth } from "@/library/providers";
 import LoginScreen from "./login";
 import LandingScreen from "./landing";
 import OneTimePasswordScreen from "./otp";
+import HomeScreen from "./home";
 
 const Stack = createNativeStackNavigator();
 
@@ -25,6 +26,7 @@ export default function RootLayout ({ onLayoutRootView }: RootLayoutProps) {
 						</>
 					) : (
 						<>
+							<Stack.Screen name="Home" component={HomeScreen}/>
 						</>
 					)
 				}

@@ -26,10 +26,18 @@ export const useStartAuthProcess = () => useMutation({
 	}
 });
 
-export const useValidateLoginCode = () => useMutation({
+export const useValidateLoginCode = (
+	config?: { onSuccess?: (data: { token: string }) => void }
+) => useMutation({
 	mutationFn: async (body: z.infer<typeof ValidateLoginCodeInterfaces.body>) => {
 		const response = (await axiosClient.put("/v1/auth", body)).data;
 
 		return ValidateLoginCodeInterfaces.response.parse(response);
-	}
+	},
+	...(config || {})
+});
+
+export const useLogoutUser = (config?: { onSuccess?: () => void }) => useMutation({
+	mutationFn: async () => axiosClient.delete("v1/auth"),
+	...(config || {})
 });
