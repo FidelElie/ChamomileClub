@@ -1,11 +1,13 @@
 import nodePath from "path";
 
-import type { NextApiRequest, NextApiResponse } from "next";
 import { createRouter } from "next-connect";
-import { NotFoundException } from "./exceptions";
+import type { NextApiResponse } from "next";
+
+import { ApiRequest } from "./types";
+import { httpResponse, notFoundResponse } from "./responses";
 
 export const Controller = <
-	NextRequest extends NextApiRequest = NextApiRequest,
+	NextRequest extends ApiRequest = ApiRequest,
 	NextResponse extends NextApiResponse = NextApiResponse
 >(
 	path: string = "/",
@@ -15,7 +17,7 @@ export const Controller = <
 
 	const { middlewares } = mergeOptions;
 
-	const router = createRouter<NextRequest, NextResponse>();
+	const router = createRouter<any, NextResponse>();
 
 	for (const middleware of middlewares) { router.use(middleware); }
 
@@ -44,7 +46,7 @@ export const ControllerGroup = ({ path, controllers }: ControllerGrouping) => {
 }
 
 export const createServerRouter = <
-	NextRequest extends NextApiRequest = NextApiRequest,
+	NextRequest extends ApiRequest = ApiRequest,
 	NextResponse extends NextApiResponse = NextApiResponse
 >(options: RouterOptions<NextRequest, NextResponse>) => {
 	const mergeOptions = Object.assign({}, { controllers: [], middlewares: [] }, options ?? {});
@@ -54,7 +56,7 @@ export const createServerRouter = <
 	const flattenedControllers = controllers.flat();
 
 	return async (req: NextRequest, res: NextResponse) => {
-		const routerTest = createRouter<NextRequest, NextResponse>();
+		const routerTest = createRouter<any, NextResponse>();
 
 		for (const middleware of middlewares) { routerTest.use(middleware); }
 
@@ -69,16 +71,16 @@ export const createServerRouter = <
 }
 
 const handlerConfiguration = {
-	onNoMatch: () => {
-		throw new NotFoundException("Route Not Found");
+	onNoMatch: (_: ApiRequest, res: NextApiResponse) => {
+		return notFoundResponse(res, "Route Not Found");
 	},
-	onError: (error: any, _: NextApiRequest, res: NextApiResponse) => {
+	onError: (error: any, _: ApiRequest, res: NextApiResponse) => {
 		if (!error.status) { console.error(error); }
 
-		res.status(error.status || 500).json({
-			status: error.status,
+		return httpResponse(res, {
+			status: error.status || 500,
 			message: error.message,
-			...(process.env.NODE_ENV !== "production" ? { stack: error.stack } : {})
+			data: process.env.NODE_ENV !== "production" ? { stack: error.stack } : {}
 		});
 	}
 }
@@ -88,7 +90,7 @@ export type CreatedController = ReturnType<typeof Controller>;
 export type ControllerGrouping = { path: string; controllers: CreatedController[] };
 
 export type Middleware<
-	NextRequest extends NextApiRequest = NextApiRequest,
+	NextRequest extends ApiRequest = ApiRequest,
 	NextResponse extends NextApiResponse = NextApiResponse
 > = (
 	req: NextRequest,
@@ -97,14 +99,14 @@ export type Middleware<
 ) => any;
 
 export type ControllerOptions<
-	NextRequest extends NextApiRequest = NextApiRequest,
+	NextRequest extends ApiRequest = ApiRequest,
 	NextResponse extends NextApiResponse = NextApiResponse
 > = {
 	middlewares?: Middleware<NextRequest, NextResponse>[]
 }
 
 export type RouterOptions<
-	NextRequest extends NextApiRequest = NextApiRequest,
+	NextRequest extends ApiRequest = ApiRequest,
 	NextResponse extends NextApiResponse = NextApiResponse
 > = {
 	controllers: (CreatedController | CreatedController[])[]

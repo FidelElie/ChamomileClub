@@ -1,4 +1,4 @@
-export { z } from "zod";
+export { z, ZodType } from "zod";
 export { default as axios } from "axios";
 export * from "@tanstack/react-query";
 

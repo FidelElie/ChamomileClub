@@ -5,12 +5,12 @@ import { z, SessionSchema, UserSchema } from "@thechamomileclub/api";
 import { getXataClient } from "@thechamomileclub/database";
 
 import { verifyToken } from "../services";
-import type { RequestWithAuth } from "../types";
+import type { ApiRequestWithAuth } from "../server";
 
 const { db } = getXataClient();
 
-export const sessionMiddleware = async (
-	req: RequestWithAuth,
+export const exposeSession = async (
+	req: ApiRequestWithAuth,
 	_: NextApiResponse,
 	next: NextHandler
 ) => {

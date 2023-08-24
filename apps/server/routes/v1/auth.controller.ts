@@ -1,20 +1,38 @@
-import { Controller } from "@/library/server";
+import {
+	StartAuthProcessInterfaces,
+	ValidateLoginCodeInterfaces ,
+	UpdateCurrentUserInterfaces
+} from "@thechamomileclub/api";
 
-import { RequestWithAuth } from "@/library/types";
-import { sessionMiddleware } from "@/library/middlewares";
+import { ApiRequestWithAuth, Controller } from "@/library/server";
+
+import { exposeSession, validateRequestEntities } from "@/library/middlewares";
 
 import * as AuthControllerService from "./auth.controller.service";
 
-const AuthController = Controller<RequestWithAuth>("/auth");
+const AuthController = Controller<ApiRequestWithAuth>("/auth");
 
-AuthController.get("/", sessionMiddleware, AuthControllerService.getCurrentUser);
+AuthController.get("/", exposeSession, AuthControllerService.getCurrentUser);
 
-AuthController.post("/", AuthControllerService.startAuthProcess);
+AuthController.post(
+	"/",
+	validateRequestEntities(StartAuthProcessInterfaces),
+	AuthControllerService.startAuthProcess
+);
 
-AuthController.put("/", AuthControllerService.validateLoginCode);
+AuthController.put(
+	"/",
+	validateRequestEntities(ValidateLoginCodeInterfaces),
+	AuthControllerService.validateLoginCode
+);
 
-AuthController.patch("/", sessionMiddleware, AuthControllerService.updateCurrentUser);
+AuthController.patch(
+	"/",
+	exposeSession,
+	validateRequestEntities(UpdateCurrentUserInterfaces),
+	AuthControllerService.updateCurrentUser
+);
 
-AuthController.delete("/", sessionMiddleware, AuthControllerService.logoutUser);
+AuthController.delete("/", exposeSession, AuthControllerService.logoutUser);
 
 export default AuthController;

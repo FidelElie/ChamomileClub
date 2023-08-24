@@ -1,39 +1,54 @@
-import { NextApiRequest, NextApiResponse } from "next";
+import { NextApiResponse } from "next";
 
 import { getXataClient } from "@thechamomileclub/database";
 import {
+	InferDTOs,
 	KeySchema,
 	SessionSchema,
 	UserSchema,
 	StartAuthProcessInterfaces,
-	ValidateLoginCodeInterfaces
+	ValidateLoginCodeInterfaces,
+	UpdateCurrentUserInterfaces
 } from "@thechamomileclub/api";
 
-import type { RequestWithAuth } from "@/library/types";
 import { generateRandomString, signToken, verifyToken } from "@/library/services";
 import {
-	BadRequestException,
-	NotFoundException,
-	UnauthorisedException,
+	ApiRequest,
+	ApiRequestWithAuth,
+	badRequestResponse,
+	createdResponse,
+	notFoundResponse,
+	unauthorisedResponse,
+	unprocessableEntityResponse,
 } from "@/library/server";
 
 const { db } = getXataClient();
 
-/** Get current authenticated user */
-export const getCurrentUser = async (req: RequestWithAuth, res: NextApiResponse) => {
+/** GET /auth: Get current authenticated user */
+export const getCurrentUser = async (
+	req: ApiRequestWithAuth,
+	res: NextApiResponse
+) => {
 	res.status(200).json({
 		session: req.auth?.session || null,
 		user: req.auth?.user || null
 	});
 }
 
-/** Start Auth Process for creating login codes */
-export const startAuthProcess = async (req: NextApiRequest, res: NextApiResponse) => {
-	const { email } = StartAuthProcessInterfaces.body.parse(req.body);
+/** POST /auth: Start Auth Process for creating login codes */
+export const startAuthProcess = async (
+	req: ApiRequest<InferDTOs<typeof StartAuthProcessInterfaces>>,
+	res: NextApiResponse
+) => {
+	const { email } = req.body;
 
 	const userWithEmail = await db.users.filter({ email }).getFirst();
 
-	if (!userWithEmail) { throw new NotFoundException("User not found"); }
+	if (!userWithEmail) { return notFoundResponse(res, "User not found"); }
+
+	const userResult = UserSchema.safeParse(userWithEmail);
+
+	if (!userResult.success) { return unprocessableEntityResponse(res, "User invalid"); }
 
 	const existingAccessKeys = await db.keys.filter({ user: userWithEmail.id }).getAll();
 
@@ -42,49 +57,71 @@ export const startAuthProcess = async (req: NextApiRequest, res: NextApiResponse
 	const accessKey = await db.keys.create(
 		{
 			code: generateRandomString(6),
-			user: { id: userWithEmail.id },
-			token: signToken({ id: userWithEmail.id, email: userWithEmail.email })
+			user: { id: userResult.data.id },
+			token: signToken({ id: userResult.data.id, email: userResult.data.email })
 		} satisfies Pick<KeySchema, "code" | "user" | "token">
 	);
 
-	res.status(201).json({ keyId: accessKey.id, forename: userWithEmail.forename });
+	const payload = {
+		keyId: accessKey.id,
+		forename: userResult.data.forename
+	} satisfies InferDTOs<typeof StartAuthProcessInterfaces>["response"];
+
+	return createdResponse(res, payload);
 }
 
-/** Validate login provided login and authenticate user */
-export const validateLoginCode = async (req: NextApiRequest, res: NextApiResponse) => {
-	const { keyId, code } = ValidateLoginCodeInterfaces.body.parse(req.body);
+/** PUT /auth: Validate login provided login and authenticate user */
+export const validateLoginCode = async (
+	req: ApiRequest<InferDTOs<typeof ValidateLoginCodeInterfaces>>,
+	res: NextApiResponse
+) => {
+	const { keyId, code } = req.body;
 
 	const correspondingKey = await db.keys.read(keyId);
 
-	if (!correspondingKey) { throw new BadRequestException("Key not found"); }
+	if (!correspondingKey) { return badRequestResponse(res, "Key not found"); }
 
 	const { token, code: keyCode } = KeySchema.parse(correspondingKey);
 
 	const { decoded, error } = verifyToken<Pick<UserSchema, "id" | "email">>(token!);
 
-	if (error || keyCode !== code) { throw new UnauthorisedException("Invalid token"); }
+	if (error || keyCode !== code) { return unauthorisedResponse(res, "Invalid token"); }
 
 	const newSession = await db.sessions.create(
 		{ user: { id: decoded!.id } } satisfies Pick<SessionSchema, "user">
 	);
 
-	const sessionToken = signToken({ session: newSession.id })
+	const sessionToken = signToken({ session: newSession.id });
 
-	res.status(201).json({ token: sessionToken });
+	await db.keys.delete(keyId);
+
+	const payload = {
+		token: sessionToken
+	} satisfies InferDTOs<typeof ValidateLoginCodeInterfaces>["response"];
+
+	return createdResponse(res, payload);
 }
 
-/** Update authenticated user information  */
-export const updateCurrentUser = async (req: RequestWithAuth, res: NextApiResponse) => {
-	if (!req.auth) { return res.status(403).end(); }
+/** PATCH /auth: Update authenticated user information  */
+export const updateCurrentUser = async (
+	req: ApiRequestWithAuth<InferDTOs<typeof UpdateCurrentUserInterfaces>>,
+	res: NextApiResponse
+) => {
+	if (!req.auth) { return unauthorisedResponse(res, "No user auth"); }
 
-	await db.users.updateOrThrow(req.auth.user.id, req.body);
+	await db.users.update(req.auth.user.id, req.body);
+
+	return res.status(204).end();
 }
 
-/** Logout current authenticated user */
-export const logoutUser = async (req: RequestWithAuth, res: NextApiResponse) => {
-	if (!req.auth) { throw new BadRequestException("No session found"); }
+/** DELETE /auth Logout current authenticated user */
+export const logoutUser = async (
+	req: ApiRequestWithAuth,
+	res: NextApiResponse
+) => {
+	if (!req.auth) { return badRequestResponse(res, "No session found"); }
 
-	await db.sessions.delete(req.auth.session);
+	await db.sessions.update(req.auth.session, { deletedAt: new Date() });
 
 	return res.status(204).end();
 }

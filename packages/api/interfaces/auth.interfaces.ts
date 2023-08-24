@@ -20,7 +20,7 @@ export const ValidateLoginCodeInterfaces = {
 }
 
 export const UpdateCurrentUserInterfaces = {
-	body: z.any(), // TODO placeholder change this to allowed keys
+	body: UserSchema.pick({ nickname: true, active: true }).partial(),
 	response: z.void()
 }
 
