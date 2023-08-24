@@ -1,15 +1,20 @@
 import { Controller } from "@/library/server";
 
+import { RequestWithAuth } from "@/library/types";
+import { sessionMiddleware } from "@/library/middlewares";
+
 import * as AuthControllerService from "./auth.controller.service";
 
-const AuthController = Controller("/auth");
+const AuthController = Controller<RequestWithAuth>("/auth");
 
-AuthController.router.get(AuthControllerService.getCurrentUser);
+AuthController.get("/", sessionMiddleware, AuthControllerService.getCurrentUser);
 
-AuthController.router.post(AuthControllerService.startAuthProcess);
+AuthController.post("/", AuthControllerService.startAuthProcess);
 
-AuthController.router.put(AuthControllerService.validateLoginCode);
+AuthController.put("/", AuthControllerService.validateLoginCode);
 
-AuthController.router.patch(AuthControllerService.updateCurrentUser)
+AuthController.patch("/", sessionMiddleware, AuthControllerService.updateCurrentUser);
+
+AuthController.delete("/", sessionMiddleware, AuthControllerService.logoutUser);
 
 export default AuthController;

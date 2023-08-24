@@ -2,7 +2,7 @@ import { z } from "zod";
 
 import { BaseSchema } from "./Base.schema";
 
-export const RolesEnum = z.enum(["admin", "founder", "editor", "team", "member", "prospect"]);
+export const RolesEnum = z.enum(["ADMIN", "FOUNDER", "EDITOR", "TEAM", "MEMBER", "PROSPECT"]);
 
 export type RolesEnum = z.infer<typeof RolesEnum>;
 

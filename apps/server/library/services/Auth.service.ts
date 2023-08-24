@@ -9,7 +9,7 @@ export const signToken = (payload: string | object | Buffer, config?: SignOption
 export const verifyToken = <T extends string | JWT.Jwt | JWT.JwtPayload>(
 	token: string,
 	config: VerifyOptions & { error?: Error, onSuccess?: (decoded: T) => void } = {}
-) => {
+) : ({ decoded: T, error: null } | { decoded: null, error: any }) => {
 	const {
 		error: errorToThrow,
 		onSuccess,
@@ -22,7 +22,7 @@ export const verifyToken = <T extends string | JWT.Jwt | JWT.JwtPayload>(
 		if (onSuccess) { onSuccess(decodedToken); }
 
 		return { decoded: decodedToken, error: null }
-	} catch (error) {
+	} catch (error: any) {
 		if (errorToThrow) { throw errorToThrow; }
 
 		return { decoded: null, error }

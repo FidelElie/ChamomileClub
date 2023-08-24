@@ -1,13 +1,20 @@
-import { NextResponse, type NextRequest } from "next/server";
+import { createEdgeRouter } from "next-connect";
+import { NextFetchEvent, NextRequest, NextResponse } from "next/server";
 
-export function middleware(request: NextRequest) {
-	const { pathname, search } = request.nextUrl;
+export const middleware = (request: NextRequest, event: NextFetchEvent) => {
+	const router = createEdgeRouter<NextRequest, NextFetchEvent>();
 
-	if (!pathname.startsWith("/api")) {
-		return NextResponse.rewrite(new URL(`/api${pathname}${search}`, request.url));
-	}
+	router.all((request) => {
+		const { pathname, search } = request.nextUrl;
 
-	return NextResponse.next();
+		if (!pathname.startsWith("/api")) {
+			return NextResponse.rewrite(new URL(`/api${pathname}${search}`, request.url));
+		}
+
+		return NextResponse.next();
+	});
+
+	return router.run(request, event);
 }
 
 export const config = { matcher: ['/((?!_next/image|public).*)'] }

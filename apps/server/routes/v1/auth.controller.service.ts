@@ -9,22 +9,31 @@ import {
 	ValidateLoginCodeInterfaces
 } from "@thechamomileclub/api";
 
+import type { RequestWithAuth } from "@/library/types";
 import { generateRandomString, signToken, verifyToken } from "@/library/services";
+import {
+	BadRequestException,
+	NotFoundException,
+	UnauthorisedException,
+} from "@/library/server";
 
 const { db } = getXataClient();
 
-export const getCurrentUser = async (req: NextApiRequest, res: NextApiResponse) => {
-
-
-	res.status(200).json(null);
+/** Get current authenticated user */
+export const getCurrentUser = async (req: RequestWithAuth, res: NextApiResponse) => {
+	res.status(200).json({
+		session: req.auth?.session || null,
+		user: req.auth?.user || null
+	});
 }
 
+/** Start Auth Process for creating login codes */
 export const startAuthProcess = async (req: NextApiRequest, res: NextApiResponse) => {
 	const { email } = StartAuthProcessInterfaces.body.parse(req.body);
 
 	const userWithEmail = await db.users.filter({ email }).getFirst();
 
-	if (!userWithEmail) { return res.status(404).json({ code: "USER_NOT_FOUND" }); }
+	if (!userWithEmail) { throw new NotFoundException("User not found"); }
 
 	const existingAccessKeys = await db.keys.filter({ user: userWithEmail.id }).getAll();
 
@@ -41,30 +50,41 @@ export const startAuthProcess = async (req: NextApiRequest, res: NextApiResponse
 	res.status(201).json({ keyId: accessKey.id, forename: userWithEmail.forename });
 }
 
+/** Validate login provided login and authenticate user */
 export const validateLoginCode = async (req: NextApiRequest, res: NextApiResponse) => {
 	const { keyId, code } = ValidateLoginCodeInterfaces.body.parse(req.body);
 
 	const correspondingKey = await db.keys.read(keyId);
 
-	if (!correspondingKey) { throw new Error("Key not found"); }
+	if (!correspondingKey) { throw new BadRequestException("Key not found"); }
 
 	const { token, code: keyCode } = KeySchema.parse(correspondingKey);
 
 	const { decoded, error } = verifyToken<Pick<UserSchema, "id" | "email">>(token!);
 
-	if (error || keyCode !== code) { throw new Error("Invalid Token"); }
+	if (error || keyCode !== code) { throw new UnauthorisedException("Invalid token"); }
 
 	const newSession = await db.sessions.create(
 		{ user: { id: decoded!.id } } satisfies Pick<SessionSchema, "user">
 	);
 
-	res.status(201).json({ sessionId: newSession.id });
+	const sessionToken = signToken({ session: newSession.id })
+
+	res.status(201).json({ token: sessionToken });
 }
 
-export const updateCurrentUser = async (req: NextApiRequest, res: NextApiResponse) => {
+/** Update authenticated user information  */
+export const updateCurrentUser = async (req: RequestWithAuth, res: NextApiResponse) => {
+	if (!req.auth) { return res.status(403).end(); }
 
+	await db.users.updateOrThrow(req.auth.user.id, req.body);
 }
 
-export const logoutUser = () => {
+/** Logout current authenticated user */
+export const logoutUser = async (req: RequestWithAuth, res: NextApiResponse) => {
+	if (!req.auth) { throw new BadRequestException("No session found"); }
 
+	await db.sessions.delete(req.auth.session);
+
+	return res.status(204).end();
 }

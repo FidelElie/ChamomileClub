@@ -3,7 +3,10 @@ import { z } from "zod";
 import { UserSchema } from "../schemas";
 
 export const GetCurrentUserInterfaces = {
-	response: z.union([UserSchema, z.literal(null)])
+	response: z.union([
+		z.object({ session: z.string(), user: UserSchema }),
+		z.object({ session: z.null(), user: z.null() })
+	])
 }
 
 export const StartAuthProcessInterfaces = {
@@ -13,5 +16,14 @@ export const StartAuthProcessInterfaces = {
 
 export const ValidateLoginCodeInterfaces = {
 	body: z.object({ keyId: z.string(), code: z.string() }),
-	response: z.object({ sessionId: z.string() })
+	response: z.object({ token: z.string() })
+}
+
+export const UpdateCurrentUserInterfaces = {
+	body: z.any(), // TODO placeholder change this to allowed keys
+	response: z.void()
+}
+
+export const LogoutUserInterfaces = {
+	response: z.void()
 }

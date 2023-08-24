@@ -1,19 +1,17 @@
 import nodePath from "path";
 
-import { NextApiRequest, NextApiResponse } from "next";
+import type { NextApiRequest, NextApiResponse } from "next";
 import { createRouter } from "next-connect";
-
 import { NotFoundException } from "./exceptions";
-
-const controllerOptions: Required<ControllerOptions> = {
-	middlewares: []
-}
 
 export const Controller = <
 	NextRequest extends NextApiRequest = NextApiRequest,
 	NextResponse extends NextApiResponse = NextApiResponse
->(path: string = "/", options?: ControllerOptions<NextRequest, NextResponse>) => {
-	const mergeOptions = Object.assign({}, controllerOptions, options ?? {});
+>(
+	path: string = "/",
+	options?: ControllerOptions<NextRequest, NextResponse>
+) => {
+	const mergeOptions = Object.assign({}, { middlewares: [] }, options ?? {});
 
 	const { middlewares } = mergeOptions;
 
@@ -24,20 +22,14 @@ export const Controller = <
 	return {
 		path,
 		router,
-		bootstrap: () => {
-			router.all("*", () => { throw new NotFoundException("Not Found") });
-
-			return router.handler({
-				onNoMatch: (_, res) => {
-					res.status(404).end("Not Found");
-				},
-				onError: (error: any, _, res) => {
-					console.error(error);
-
-					res.status(error.statusCode || 500).end(error.message);
-				}
-			});
-		}
+		user: router.use,
+		get: router.get,
+		post: router.post,
+		patch: router.patch,
+		put: router.put,
+		delete: router.delete,
+		head: router.head,
+		bootstrap: () => router.handler(handlerConfiguration)
 	}
 }
 
@@ -51,62 +43,43 @@ export const ControllerGroup = ({ path, controllers }: ControllerGrouping) => {
 	return controllers.map(controller => ({ ...controller, path: joinPaths(controller.path) }));
 }
 
-
-const routerOptions: Required<RouterOptions> = {
-	controllers: [],
-	middlewares: [],
-}
-
 export const createServerRouter = <
 	NextRequest extends NextApiRequest = NextApiRequest,
 	NextResponse extends NextApiResponse = NextApiResponse
 >(options: RouterOptions<NextRequest, NextResponse>) => {
-	const mergeOptions = Object.assign({}, routerOptions, options ?? {});
+	const mergeOptions = Object.assign({}, { controllers: [], middlewares: [] }, options ?? {});
 
 	const { controllers, middlewares } = mergeOptions;
 
 	const flattenedControllers = controllers.flat();
 
-	const handlersMap = flattenedControllers.map(controller => {
-		const { path, bootstrap } = controller;
-
-		const handler = bootstrap();
-
-		const normalisedPath = !path.startsWith("/") ? `/${path}` : path;
-
-		return { basePath: normalisedPath, handler }
-	});
-
 	return async (req: NextRequest, res: NextResponse) => {
-		const { url } = req;
+		const routerTest = createRouter<NextRequest, NextResponse>();
 
-		for (const middleware of middlewares) { await middleware(req, res, () => {}); }
+		for (const middleware of middlewares) { routerTest.use(middleware); }
 
-		if (!url) { return res.status(404).json({ statusCode: 404, url, message: "Not Found" }); }
+		for (const controller of flattenedControllers) {
+			const { path, router } = controller;
 
-		const strippedUrl = url.replace("/api", "");
-
-		const normalisedUrl = strippedUrl === "" ? "/" : strippedUrl;
-
-		const splitUrl = normalisedUrl.split("/");
-
-		let matchedController = null;
-		let index = 0;
-
-		while (index < splitUrl.length) {
-			const pathSegment = splitUrl.slice(0, splitUrl.length - index).join("/");
-			matchedController = handlersMap.find(map => map.basePath === pathSegment)
-
-			if (matchedController) { break; }
-
-			index++;
+			routerTest.use(path, router);
 		}
 
-		if (!matchedController) {
-			return res.status(404).json({ statusCode: 404, url, message: "Not Found" });
-		}
+		return routerTest.handler(handlerConfiguration)(req, res);
+	}
+}
 
-		return matchedController.handler(req, res);
+const handlerConfiguration = {
+	onNoMatch: () => {
+		throw new NotFoundException("Route Not Found");
+	},
+	onError: (error: any, _: NextApiRequest, res: NextApiResponse) => {
+		if (!error.status) { console.error(error); }
+
+		res.status(error.status || 500).json({
+			status: error.status,
+			message: error.message,
+			...(process.env.NODE_ENV !== "production" ? { stack: error.stack } : {})
+		});
 	}
 }
 
@@ -127,7 +100,7 @@ export type ControllerOptions<
 	NextRequest extends NextApiRequest = NextApiRequest,
 	NextResponse extends NextApiResponse = NextApiResponse
 > = {
-		middlewares?: Middleware<NextRequest, NextResponse>[]
+	middlewares?: Middleware<NextRequest, NextResponse>[]
 }
 
 export type RouterOptions<
