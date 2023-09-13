@@ -9,14 +9,14 @@
         "apps/*"
     ],
     "scripts": {
-        "clean": "bun run ./scripts/clean.ts",
-        "@website": "bun run --cwd apps/website",
-        "@server": "bun run --cwd apps/server",
-        "@mobile": "bun run --cwd apps/mobile",
-        "@api": "bun run --cwd packages/api",
-        "@database": "bun run --cwd packages/database",
-        "@tailwind": "bun run --cwd packages/tailwind",
-        "@ui": "bun run --cwd packages/ui"
+        "clean": "ts-node ./scripts/clean.ts",
+        "@website": "yarn workspace @thechamomileclub/website",
+        "@server": "yarn workspace @thechamomileclub/server",
+        "@mobile": "yarn workspace @thechamomileclub/mobile",
+        "@api": "yarn workspace @thechamomileclub/api",
+        "@database": "yarn workspace @thechamomileclub/database",
+        "@tailwind": "yarn workspace @thechamomileclub/tailwind",
+        "@ui": "yarn workspace @thechamomileclub/ui"
     },
     "devDependencies": {
         "concurrently": "^7.6.0",
