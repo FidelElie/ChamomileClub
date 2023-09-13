@@ -1,10 +1,10 @@
 import {
-	z,
 	useQuery,
 	useMutation,
 	GetCurrentUserInterfaces,
 	StartAuthProcessInterfaces,
 	ValidateLoginCodeInterfaces,
+	UpdateCurrentUserInterfaces
 } from "@thechamomileclub/api";
 
 import { axiosClient } from "../client";
@@ -16,10 +16,10 @@ export const useGetCurrentUser = () => useQuery(
 
 		return GetCurrentUserInterfaces.response.parse(response);
 	}
-)
+);
 
 export const useStartAuthProcess = () => useMutation({
-	mutationFn: async (body: z.infer<typeof StartAuthProcessInterfaces.body>) => {
+	mutationFn: async (body: StartAuthProcessInterfaces["body"]) => {
 		const response = (await axiosClient.post("/v1/auth", body)).data;
 
 		return StartAuthProcessInterfaces.response.parse(response);
@@ -27,12 +27,23 @@ export const useStartAuthProcess = () => useMutation({
 });
 
 export const useValidateLoginCode = (
-	config?: { onSuccess?: (data: { token: string }) => void }
+	config?: { onSuccess?: (data: { token: string }) => void, onError?: (error: any) => void }
 ) => useMutation({
-	mutationFn: async (body: z.infer<typeof ValidateLoginCodeInterfaces.body>) => {
+	mutationFn: async (body: ValidateLoginCodeInterfaces["body"]) => {
 		const response = (await axiosClient.put("/v1/auth", body)).data;
 
 		return ValidateLoginCodeInterfaces.response.parse(response);
+	},
+	...(config || {})
+});
+
+export const useUpdateCurrentUser = (
+	config?: { onSuccess?: (data: string) => void, onError?: (error: any) => void }
+) => useMutation({
+	mutationFn: async (body: UpdateCurrentUserInterfaces["body"]) => {
+		const response = (await axiosClient.patch("/v1/auth", body)).data;
+
+		return UpdateCurrentUserInterfaces.response.parse(response);
 	},
 	...(config || {})
 });

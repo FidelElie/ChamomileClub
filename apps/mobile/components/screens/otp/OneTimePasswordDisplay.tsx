@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { View } from "react-native";
 import { twMerge } from "tailwind-merge";
 
-import { For, TextField, TextFieldRef, Button, Copy } from "@thechamomileclub/ui";
+import { TextField, TextFieldRef, Button, Copy } from "@thechamomileclub/ui";
 
 export const OneTimePasswordDisplay = (props: OneTimePasswordDisplayProps) => {
 	const { className, onSubmit, length = 6, isSubmitting } = props;
@@ -12,16 +12,22 @@ export const OneTimePasswordDisplay = (props: OneTimePasswordDisplayProps) => {
 
 	const submitDisabled = values.some(value => !value) || !!isSubmitting;
 
-	const onChangeCode = (index: number, character: string) => {
-		if (character !== "" && !/[0-9]/.test(character)) { return; }
+	const onChangeCode = (index: number, text: string) => {
+		if (text !== "" && !/[0-9]/.test(text)) { return; }
+
+		const currentIndexValue = values[index];
+
+		const newValue = text.replace(currentIndexValue, "");
+
+		const normalisedValue = (!newValue && text !== "") ? currentIndexValue : newValue;
 
 		setValues(
 			currentValues => currentValues.map(
-				(currentValue, currentValueIndex) => currentValueIndex === index ? character : currentValue
+				(currentValue, currentValueIndex) => currentValueIndex === index ? normalisedValue : currentValue
 			)
 		);
 
-		if (character) {
+		if (currentIndexValue !== normalisedValue) {
 			const currentFocussedInputIndex = inputRefs.current.findIndex(input => input?.isFocused());
 
 			const newIndex = currentFocussedInputIndex + 1;
@@ -55,7 +61,7 @@ export const OneTimePasswordDisplay = (props: OneTimePasswordDisplayProps) => {
 							textAlign="center"
 							onChangeText={text => onChangeCode(valueIndex, text)}
 							keyboardType="number-pad"
-							maxLength={1}
+							// maxLength={1}
 						/>
 					))
 				}

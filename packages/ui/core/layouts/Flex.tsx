@@ -1,14 +1,17 @@
-import { ComponentProps, forwardRef } from "react";
+import { ComponentProps, forwardRef, useMemo } from "react";
 import { View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { styled } from "nativewind";
 import { twMerge } from "tailwind-merge";
 
 import { FLEX_DIRECTIONS_MAP } from "../../constants";
 
-const StyledView = styled(View);
-
 const BaseFlex = forwardRef<View, FlexProps>((props, ref) => {
-	const { className, direction = "column", children, ...viewProps } = props;
+	const { className, direction = "column", safe, children, ...viewProps } = props;
+
+	const ViewComponent = safe ? SafeAreaView : View;
+
+	const StyledView = useMemo(() => styled(ViewComponent), [ViewComponent]);
 
 	return (
 		<StyledView
@@ -59,7 +62,8 @@ export const Flex = Object.assign(
 )
 
 export interface FlexProps extends ComponentProps<typeof View> {
-	direction?: keyof typeof FLEX_DIRECTIONS_MAP
+	direction?: keyof typeof FLEX_DIRECTIONS_MAP;
+	safe?: boolean;
 }
 
 export type DirectedFlexProps = Omit<FlexProps, "direction">;

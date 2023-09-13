@@ -1,4 +1,4 @@
-import { ReactNode, createContext, useContext, useEffect } from "react";
+import { ReactNode, createContext, useContext, useEffect, useState } from "react";
 
 import type { UserSchema } from "@thechamomileclub/api";
 
@@ -11,12 +11,14 @@ const initialContext: AuthContextType = {
 	user: null,
 	token: null,
 	login: () => {},
-	logout: () => {}
+	logout: () => {},
+	initialising: true
 }
 
 const AuthContext = createContext(initialContext);
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
+	const [initialising, setInitialising] = useState(true);
 	const [token, setToken] = useAsyncStorage<string | null>(AppConfig.SESSION_STORAGE_KEY, null);
 
 	const currentUserQuery = useGetCurrentUser();
@@ -28,13 +30,18 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
 	useEffect(() => { currentUserQuery.refetch(); }, [token]);
 
+	useEffect(() => {
+		if (currentUserQuery.isFetched) { setInitialising(false); }
+	}, [currentUserQuery])
+
 	return (
 		<AuthContext.Provider
 			value={{
 				...(currentUserQuery.isSuccess ? currentUserQuery.data : { session: null, user: null }),
 				token: token || null,
 				login,
-				logout
+				logout,
+				initialising
 			}}
 		>
 			{ children }
@@ -56,6 +63,7 @@ type AuthContextType = {
 	token: string | null;
 	login: (token: string) => void;
 	logout: () => void;
+	initialising: boolean;
 }
 
 export interface AuthProviderProps {

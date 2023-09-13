@@ -1,6 +1,8 @@
+import { useState } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
 
-import { Button, Copy, Heading, Flex } from "@thechamomileclub/ui";
+import { ValidateLoginCodeInterfaces } from "@thechamomileclub/api";
+import { Button, Copy, Heading, Flex, Show, Banner } from "@thechamomileclub/ui";
 
 import { useAuth } from "@/library/providers";
 import { useValidateLoginCode } from "@/library/queries";
@@ -11,15 +13,27 @@ import { LandingLayout } from "@/components/interfaces";
 
 import { OneTimePasswordDisplay } from "@/components/screens/otp/OneTimePasswordDisplay";
 
+export type SubmissionErrors =
+	null |
+	ValidateLoginCodeInterfaces["400"] |
+	ValidateLoginCodeInterfaces["401"]
+
 const OneTimePasswordScreen = () => {
 	const { params: { keyId } } = useRoute<RootStackRouteProps<"OTP">>();
 	const navigation = useNavigation<RootStackNavigationProps>();
 
 	const { login } = useAuth();
+	const [error, setError] = useState<SubmissionErrors>(null);
 
 	const validateLoginCode = useValidateLoginCode({
-		onSuccess: (response) => login(response.token)
+		onSuccess: (response) => login(response.token),
+		onError: (error) => setError(error.response || null)
 	});
+
+	const submitLoginCode = (code: string) => {
+		setError(null);
+		validateLoginCode.mutate({ keyId, code });
+	}
 
 	return (
 		<LandingLayout>
@@ -30,8 +44,15 @@ const OneTimePasswordScreen = () => {
 				</Copy>
 			</Flex.Column>
 			<Flex.Column className="space-y-3">
+				<Show if={error}>
+					<Banner.Error className="mb-3">
+						<Copy color="midnight" className="text-sm text-center">
+							We found an invalid code, please try again
+						</Copy>
+					</Banner.Error>
+				</Show>
 				<OneTimePasswordDisplay
-					onSubmit={(code) => validateLoginCode.mutate({ keyId, code })}
+					onSubmit={submitLoginCode}
 					isSubmitting={validateLoginCode.isLoading}
 				/>
 				<Button.Secondary onPressIn={() => navigation.navigate("Login")}>

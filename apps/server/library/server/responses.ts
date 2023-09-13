@@ -12,18 +12,17 @@ export const httpResponse = <
 
 export const okResponse = <
 	NextResponse extends NextApiResponse = NextApiResponse
->(req: NextResponse, jsonPayload: any) => {
-	req.status(200).json(jsonPayload);
+>(res: NextResponse, jsonPayload: any) => {
+	res.status(200).json(jsonPayload);
 	return jsonPayload
 }
 
 export const createdResponse = <
 	NextResponse extends NextApiResponse = NextApiResponse
->(req: NextResponse, jsonPayload: any) => {
-	req.status(201).json(jsonPayload)
+>(res: NextResponse, jsonPayload: any) => {
+	res.status(201).json(jsonPayload)
 	return jsonPayload;
 }
-
 
 export const badRequestResponse = <
 	NextResponse extends NextApiResponse = NextApiResponse
@@ -65,8 +64,6 @@ export const notFoundResponse = <
 	data: { reason: "Not Found" }
 });
 
-
-
 export const conflictResponse = <
 	NextResponse extends NextApiResponse = NextApiResponse
 >(res: NextResponse, message: string) => httpResponse(res, {
@@ -102,7 +99,7 @@ export const imATeapotResponse = <
 export const unprocessableEntityResponse = <
 	NextResponse extends NextApiResponse = NextApiResponse
 >(res: NextResponse, message: string) => httpResponse(res, {
-	status: 403,
+	status: 422,
 	message,
 	data: { reason: "Not Found" }
 });

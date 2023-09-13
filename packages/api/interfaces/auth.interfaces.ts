@@ -1,6 +1,13 @@
 import { z } from "zod";
 
 import { UserSchema } from "../schemas";
+import {
+	InferDTOs,
+	BadRequestResponseDTO,
+	NotFoundResponseDTO,
+	UnauthorisedResponseDTO,
+	UnprocessableEntityResponseDTO
+} from "../library";
 
 export const GetCurrentUserInterfaces = {
 	response: z.union([
@@ -9,21 +16,35 @@ export const GetCurrentUserInterfaces = {
 	])
 }
 
+export type GetCurrentUserInterfaces = InferDTOs<typeof GetCurrentUserInterfaces>;
+
 export const StartAuthProcessInterfaces = {
 	body: z.object({ email: z.string().email() }),
-	response: z.object({ keyId: z.string(), forename: z.string() })
+	response: z.object({ keyId: z.string(), forename: z.string() }),
+	404: NotFoundResponseDTO("User not found"),
+	422: UnprocessableEntityResponseDTO("User invalid")
 }
+
+export type StartAuthProcessInterfaces = InferDTOs<typeof StartAuthProcessInterfaces>;
 
 export const ValidateLoginCodeInterfaces = {
 	body: z.object({ keyId: z.string(), code: z.string() }),
-	response: z.object({ token: z.string() })
+	response: z.object({ token: z.string() }),
+	400: BadRequestResponseDTO("Key not found"),
+	401: UnauthorisedResponseDTO("Invalid code")
 }
+
+export type ValidateLoginCodeInterfaces = InferDTOs<typeof ValidateLoginCodeInterfaces>;
 
 export const UpdateCurrentUserInterfaces = {
 	body: UserSchema.pick({ nickname: true, active: true }).partial(),
-	response: z.void()
+	response: z.literal("")
 }
 
+export type UpdateCurrentUserInterfaces = InferDTOs<typeof UpdateCurrentUserInterfaces>;
+
 export const LogoutUserInterfaces = {
-	response: z.void()
+	response: z.literal("")
 }
+
+export type LogoutUserInterfaces = InferDTOs<typeof LogoutUserInterfaces>;

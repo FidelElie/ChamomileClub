@@ -5,6 +5,8 @@ export type RootStackParamList = {
 	Landing: undefined;
 	Login: undefined;
 	OTP: { keyId: string };
+	Bridge: undefined;
+	HomeTabs: undefined;
 };
 
 export type RootStackNavigationProps = NativeStackNavigationProp<

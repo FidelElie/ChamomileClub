@@ -4,6 +4,7 @@ import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import NetInfo from "@react-native-community/netinfo";
 import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import {
 	QueryClientProvider,
@@ -18,6 +19,8 @@ import { AuthProvider } from "@/library/providers";
 
 import RootLayout from "./_layout";
 
+const Stack = createNativeStackNavigator();
+
 SplashScreen.preventAutoHideAsync().catch(() => {});
 
 const fonts = {
@@ -28,13 +31,13 @@ const fonts = {
 const queryClient = new QueryClient();
 
 export default function App() {
-	const [fontsLoaded, fontError] = useFonts(fonts);
+	const [fontsLoaded, fontsError] = useFonts(fonts);
 
 	const onLayoutRootView = useCallback(async () => {
-		if (fontsLoaded || fontError) {
+		if (fontsLoaded || fontsError) {
 			await SplashScreen.hideAsync();
 		}
-	}, [fontsLoaded, fontError]);
+	}, [fontsLoaded, fontsError]);
 
 	onlineManager.setEventListener(setOnline => {
 		return NetInfo.addEventListener(state => setOnline(!!state.isConnected))
@@ -48,13 +51,13 @@ export default function App() {
 		return () => subscription.remove();
 	}, []);
 
-	if (!fontsLoaded && !fontError) { return null; }
+	if (!fontsLoaded && !fontsError) { return null; }
 
 	return (
 		<QueryClientProvider client={queryClient}>
 			<AuthProvider>
 				<NavigationContainer>
-					<RootLayout onLayoutRootView={onLayoutRootView} />
+					<RootLayout  onLayoutRootView={onLayoutRootView}/>
 				</NavigationContainer>
 			</AuthProvider>
 		</QueryClientProvider>

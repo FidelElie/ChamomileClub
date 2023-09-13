@@ -2,7 +2,7 @@ const founders = [
   {
     name: "Joe",
     position: "Venue Owner",
-    text: "Goes by many names: High roller, Shark or Bully around the table. Founder Joe utilizs his legal mind to be suggestive and thoughtful in his strategies; bringing the wins and chips to his corner. Calm, calculated and the cards love him... A dangerous combination",
+    text: "Goes by many names: High roller, Shark or Bully around the table. Founder Joe utilizs his legal mind to be suggestive and thoughtful in his strategies; bringing the wins and chips to his corner. Calm, calculated and the cards love him... A dangerous combination.",
     image: "/images/founders/joe.jpeg",
     pad: true
   },

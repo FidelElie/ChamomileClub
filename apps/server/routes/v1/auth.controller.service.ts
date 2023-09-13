@@ -25,10 +25,7 @@ import {
 const { db } = getXataClient();
 
 /** GET /auth: Get current authenticated user */
-export const getCurrentUser = async (
-	req: ApiRequestWithAuth,
-	res: NextApiResponse
-) => {
+export const getCurrentUser = (req: ApiRequestWithAuth, res: NextApiResponse) => {
 	res.status(200).json({
 		session: req.auth?.session || null,
 		user: req.auth?.user || null
@@ -85,7 +82,7 @@ export const validateLoginCode = async (
 
 	const { decoded, error } = verifyToken<Pick<UserSchema, "id" | "email">>(token!);
 
-	if (error || keyCode !== code) { return unauthorisedResponse(res, "Invalid token"); }
+	if (error || keyCode !== code) { return unauthorisedResponse(res, "Invalid code"); }
 
 	const newSession = await db.sessions.create(
 		{ user: { id: decoded!.id } } satisfies Pick<SessionSchema, "user">
