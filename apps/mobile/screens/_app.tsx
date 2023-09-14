@@ -4,7 +4,6 @@ import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import NetInfo from "@react-native-community/netinfo";
 import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import {
 	QueryClientProvider,
@@ -18,8 +17,6 @@ import { NotCourierSansFont, PollerOneFont } from "@/assets";
 import { AuthProvider } from "@/library/providers";
 
 import RootLayout from "./_layout";
-
-const Stack = createNativeStackNavigator();
 
 SplashScreen.preventAutoHideAsync().catch(() => {});
 

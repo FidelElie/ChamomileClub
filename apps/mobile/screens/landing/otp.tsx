@@ -7,9 +7,7 @@ import { Button, Copy, Heading, Flex, Show, Banner } from "@thechamomileclub/ui"
 import { useAuth } from "@/library/providers";
 import { useValidateLoginCode } from "@/library/queries";
 
-import type { RootStackNavigationProps, RootStackRouteProps } from "./_types";
-
-import { LandingLayout } from "@/components/interfaces";
+import { LandingStackNavigationProps, LandingStackRouteProps } from "./_types";
 
 import { OneTimePasswordDisplay } from "@/components/screens/otp/OneTimePasswordDisplay";
 
@@ -19,8 +17,8 @@ export type SubmissionErrors =
 	ValidateLoginCodeInterfaces["401"]
 
 const OneTimePasswordScreen = () => {
-	const { params: { keyId } } = useRoute<RootStackRouteProps<"OTP">>();
-	const navigation = useNavigation<RootStackNavigationProps>();
+	const { params: { keyId } } = useRoute<LandingStackRouteProps<"OTP">>();
+	const navigation = useNavigation<LandingStackNavigationProps>();
 
 	const { login } = useAuth();
 	const [error, setError] = useState<SubmissionErrors>(null);
@@ -36,7 +34,7 @@ const OneTimePasswordScreen = () => {
 	}
 
 	return (
-		<LandingLayout>
+		<Flex className="items-center justify-center flex-grow">
 			<Flex.Column className="mb-6 space-y-2 items-center">
 				<Heading size="xl">Enter your code</Heading>
 				<Copy color="cream" className="text-center">
@@ -59,7 +57,7 @@ const OneTimePasswordScreen = () => {
 					<Copy color="midnight">Cancel</Copy>
 				</Button.Secondary>
 			</Flex.Column>
-		</LandingLayout>
+		</Flex>
 	)
 }
 

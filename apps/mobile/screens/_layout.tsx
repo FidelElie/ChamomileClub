@@ -5,47 +5,36 @@ import { Flex } from "@thechamomileclub/ui";
 import { useAuth } from "@/library/providers";
 import type { RootStackParamList } from "./_types";
 
-import LoginScreen from "./login";
-import LandingScreen from "./landing";
-import OneTimePasswordScreen from "./otp";
+import OnboardingScreen from "./onboarding";
+import LandingStackLayout from "./landing/_layout";
+import HomeTabLayout from "./auth/_layout";
 
-import BridgeScreen from "./bridge";
-import HomeTabLayout from "./(home)/_layout";
-
-const Stack = createNativeStackNavigator<RootStackParamList>();
+const RootStack = createNativeStackNavigator<RootStackParamList>();
 
 export default function RootLayout ({ onLayoutRootView }: RootLayoutProps) {
-	const { user, initialising } = useAuth();
+	const { user } = useAuth();
 
 	return (
 		<Flex className="h-full w-full bg-green" onLayout={onLayoutRootView}>
-			{
-				!initialising && (
-					<Stack.Navigator screenOptions={{ headerShown: false }}>
-						{
-							!user && (
-								<Stack.Group>
-									<Stack.Screen name="Landing" component={LandingScreen} />
-									<Stack.Screen name="Login" component={LoginScreen} />
-									<Stack.Screen name="OTP" component={OneTimePasswordScreen} />
-								</Stack.Group>
-							)
-						}
-						{
-							(user && !user.active) && (
-								<Stack.Screen name="Bridge" component={BridgeScreen} />
-							)
-						}
-						{
-							(user && user.active) && (
-								<Stack.Group>
-									<Stack.Screen name="HomeTabs" component={HomeTabLayout} />
-								</Stack.Group>
-							)
-						}
-					</Stack.Navigator>
-				)
-			}
+			<RootStack.Navigator screenOptions={{ headerShown: false }}>
+				{
+					!user && (
+						<RootStack.Screen name="LandingStack" component={LandingStackLayout}/>
+					)
+				}
+				{
+					(user && !user.active) && (
+						<RootStack.Screen name="Onboarding" component={OnboardingScreen} />
+					)
+				}
+				{
+					(user && user.active) && (
+						<RootStack.Group>
+							<RootStack.Screen name="HomeTabs" component={HomeTabLayout} />
+						</RootStack.Group>
+					)
+				}
+			</RootStack.Navigator>
 		</Flex>
 	)
 }

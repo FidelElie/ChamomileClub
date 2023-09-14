@@ -9,7 +9,7 @@ import { LandingLayout } from "@/components/interfaces";
 
 import { OnboardingFlow } from "@/components/screens/bridge/OnboardingFlow";
 
-const BridgeScreen = () => {
+const OnboardingScreen = () => {
 	const { user } = useAuth();
 	const [initialAnimationEnded, setInitialAnimationEnded] = useState(false);
 
@@ -57,4 +57,4 @@ const BridgeScreen = () => {
 	)
 }
 
-export default BridgeScreen;
+export default OnboardingScreen;
