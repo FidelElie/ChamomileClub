@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { AppState } from "react-native";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
@@ -18,7 +18,7 @@ import { AuthProvider } from "@/library/providers";
 
 import RootLayout from "./_layout";
 
-SplashScreen.preventAutoHideAsync().catch(() => {});
+SplashScreen.hideAsync().catch(() => {});
 
 const fonts = {
 	"Not-Courier": NotCourierSansFont,
@@ -29,12 +29,7 @@ const queryClient = new QueryClient();
 
 export default function App() {
 	const [fontsLoaded, fontsError] = useFonts(fonts);
-
-	const onLayoutRootView = useCallback(async () => {
-		if (fontsLoaded || fontsError) {
-			await SplashScreen.hideAsync();
-		}
-	}, [fontsLoaded, fontsError]);
+	const [hasNavigated, setHasNavigated] = useState(false);
 
 	onlineManager.setEventListener(setOnline => {
 		return NetInfo.addEventListener(state => setOnline(!!state.isConnected))
@@ -48,13 +43,17 @@ export default function App() {
 		return () => subscription.remove();
 	}, []);
 
+	useEffect(() => {
+		if (!hasNavigated) { setHasNavigated(true); }
+	}, [hasNavigated])
+
 	if (!fontsLoaded && !fontsError) { return null; }
 
 	return (
 		<QueryClientProvider client={queryClient}>
-			<AuthProvider>
+			<AuthProvider suspend={!fontsLoaded || !!fontsError || !hasNavigated}>
 				<NavigationContainer>
-					<RootLayout  onLayoutRootView={onLayoutRootView}/>
+					<RootLayout/>
 				</NavigationContainer>
 			</AuthProvider>
 		</QueryClientProvider>

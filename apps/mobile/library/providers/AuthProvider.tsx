@@ -1,10 +1,12 @@
-import { ReactNode, createContext, useContext, useEffect, useState } from "react";
+import { ReactNode, createContext, useContext, useEffect } from "react";
 
 import type { UserSchema } from "@thechamomileclub/api";
 
 import { AppConfig } from "../configs";
 import { useAsyncStorage } from "../hooks";
 import { useGetCurrentUser, useLogoutUser } from "../queries";
+
+import { SplashScreen } from "@/components/interfaces";
 
 const initialContext: AuthContextType = {
 	session: null,
@@ -17,12 +19,13 @@ const initialContext: AuthContextType = {
 
 const AuthContext = createContext(initialContext);
 
-export const AuthProvider = ({ children }: AuthProviderProps) => {
-	const [initialising, setInitialising] = useState(true);
+export const AuthProvider = ({ children, suspend }: AuthProviderProps) => {
 	const [token, setToken] = useAsyncStorage<string | null>(AppConfig.SESSION_STORAGE_KEY, null);
 
 	const currentUserQuery = useGetCurrentUser();
 	const logoutUser = useLogoutUser({ onSuccess: () => setToken(null) });
+
+	const initialising = !currentUserQuery.isFetched || !!suspend
 
 	const login = (token: string) => { setToken(token); }
 
@@ -30,21 +33,18 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
 	useEffect(() => { currentUserQuery.refetch(); }, [token]);
 
-	useEffect(() => {
-		if (currentUserQuery.isFetched) { setInitialising(false); }
-	}, [currentUserQuery])
-
 	return (
 		<AuthContext.Provider
 			value={{
 				...(currentUserQuery.isSuccess ? currentUserQuery.data : { session: null, user: null }),
 				token: token || null,
+				initialising,
 				login,
 				logout,
-				initialising
 			}}
 		>
 			{ children }
+			<SplashScreen show={initialising || !!suspend}/>
 		</AuthContext.Provider>
 	)
 }
@@ -67,5 +67,6 @@ type AuthContextType = {
 }
 
 export interface AuthProviderProps {
+	suspend?: boolean;
 	children: ReactNode;
 }

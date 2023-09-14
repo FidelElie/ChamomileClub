@@ -2,7 +2,7 @@ import { Image } from "react-native";
 import { ResizeMode } from "expo-av";
 import { StatusBar } from "expo-status-bar";
 
-import { Button, Copy, Flex, Heading } from "@thechamomileclub/ui";
+import { Button, COLORS, Copy, Flex, Heading } from "@thechamomileclub/ui";
 
 import { YellowAltLogo } from "@/assets";
 
@@ -26,7 +26,7 @@ const HomeScreen = () => {
 	return (
 		<Flex className="bg-green h-full">
 			<StatusBar style="light" />
-			<Flex className="items-end px-10 pt-3" safe>
+			<Flex className="items-end px-10 border-0.5" safe={true}>
 				<Flex className="h-20 w-20 mb-0.5">
 					<Image
 						source={YellowAltLogo}
@@ -36,13 +36,15 @@ const HomeScreen = () => {
 					/>
 				</Flex>
 				<Copy size="base" className="mb-0.5">Good {determineTimeOfDay()},</Copy>
-				<Heading size="2xl">{user?.forename} {user?.surname}</Heading>
+				<Heading size="2xl" numberOfLines={1} className="w-full text-right">
+					{user?.forename} {user?.surname}
+				</Heading>
 				<Copy size="sm" color="yellow">{user?.roles}</Copy>
 			</Flex>
-			<Flex className="flex-grow items-center justify-center">
-				<Button.Secondary onPressIn={logout}>
-					<Copy color="green">Logout</Copy>
-				</Button.Secondary>
+			<Flex className="flex-grow px-5 py-5">
+				<Flex.Column>
+					<Heading>Upcoming Events</Heading>
+				</Flex.Column>
 			</Flex>
 		</Flex>
 	)

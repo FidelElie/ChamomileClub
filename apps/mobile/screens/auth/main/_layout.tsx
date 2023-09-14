@@ -16,7 +16,7 @@ export default function MainTabsLayout() {
 			initialRouteName="Home"
 			screenOptions={{
 				headerShown: false,
-				tabBarStyle: { position: "absolute" },
+				tabBarStyle: { backgroundColor: COLORS["midnight"], borderTopWidth: 0 },
 				tabBarActiveTintColor: COLORS["midnight"],
 				tabBarInactiveTintColor: COLORS["white"],
 			}}

@@ -11,11 +11,11 @@ import HomeTabLayout from "./auth/_layout";
 
 const RootStack = createNativeStackNavigator<RootStackParamList>();
 
-export default function RootLayout ({ onLayoutRootView }: RootLayoutProps) {
+export default function RootLayout () {
 	const { user } = useAuth();
 
 	return (
-		<Flex className="h-full w-full bg-green" onLayout={onLayoutRootView}>
+		<Flex className="h-full w-full bg-green">
 			<RootStack.Navigator screenOptions={{ headerShown: false }}>
 				{
 					!user && (
