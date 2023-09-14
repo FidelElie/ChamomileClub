@@ -7,8 +7,7 @@ import { twMerge } from "tailwind-merge";
 
 import { Show } from "@thechamomileclub/ui";
 
-import LandingVideo from "@/assets/videos/landing-video.mp4";
-import OrangeLogo from "@/assets/logos/yellow-alt-logo.png";
+import { LandingVideo, YellowAltLogo } from "@/assets";
 
 const DEFAULT_LOGO_OPTIONS: Required<LandingLayoutProps["logo"]> = { flow: false };
 
@@ -51,7 +50,7 @@ export const LandingLayout = (props: LandingLayoutProps) => {
 const LandingLogo = ({ className }: { className?: string }) => (
 	<View className="justify-center items-center">
 		<Image
-			source={OrangeLogo}
+			source={YellowAltLogo}
 			className={twMerge("h-20 -left-1.5", className)}
 			alt="Logo"
 			resizeMode={ResizeMode.CONTAIN}
