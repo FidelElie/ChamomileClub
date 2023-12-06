@@ -10,6 +10,14 @@ export const UserRoles = {
 	PROSPECT: "PROSPECT"
 } as const;
 
+export const RolePriorities = {
+	ADMIN: 0,
+	FOUNDER: 1,
+	TEAM: 2,
+	MEMBER: 3,
+	PROSPECT: 4
+} as const;
+
 export const RolesEnum = z.enum([
 	UserRoles.ADMIN,
 	UserRoles.FOUNDER,
