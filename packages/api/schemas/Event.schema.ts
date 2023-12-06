@@ -8,16 +8,24 @@ export const EventStatuses = {
 	CANCELLED: "CANCELLED"
 } as const;
 
-export const EventStatusEnum = z.enum(["SCHEDULED", "PENDING", "CANCELLED"]);
+export const EventStatusEnum = z.enum([
+	EventStatuses.SCHEDULED,
+	EventStatuses.PENDING,
+	EventStatuses.CANCELLED
+]);
 
 export type EventStatusEnum = z.infer<typeof EventStatusEnum>;
 
 export const EventSchema = BaseSchema.merge(
 	z.object({
 		name: z.string().nullish(),
+		description: z.string().nullish(),
 		owner: z.object({ id: z.string() }),
-		date: z.coerce.date().transform(date => date.toISOString()),
-		status: EventStatusEnum
+		date: z.coerce.date(),
+		status: EventStatusEnum,
+		startDate: z.coerce.date().nullish(),
+		endDate: z.coerce.date().nullish(),
+		createdAt: z.coerce.date(),
 	})
 )
 

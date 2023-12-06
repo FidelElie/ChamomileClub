@@ -6,7 +6,7 @@ import { UserSchema } from "@thechamomileclub/api";
 export type RequestEntities = {
 	body?: any;
 	params?: { [param: string]: string };
-	query?: { [query: string]: string | string[] };
+	query?: { [query: string]: any };
 	headers?: IncomingHttpHeaders
 }
 

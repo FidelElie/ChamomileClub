@@ -18,7 +18,10 @@
     "paths": {
       "@/routes": ["routes/index.ts"],
       "@/routes/*": ["routes/*"],
-      "@/library/*": ["./library/*"]
+      "@/library": ["library/index.ts"],
+      "@/library/*": ["library/*"],
+      "@/services": ["services/index.ts"],
+      "@/services/*": ["services/*"]
     },
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true

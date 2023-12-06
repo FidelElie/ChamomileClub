@@ -19,6 +19,8 @@ const tables = [
       { name: "description", type: "text" },
       { name: "roles", type: "multiple" },
       { name: "email", type: "email" },
+      { name: "createdAt", type: "datetime" },
+      { name: "public", type: "bool", notNull: true, defaultValue: "true" },
     ],
     revLinks: [
       { column: "user", table: "keys" },
@@ -43,6 +45,9 @@ const tables = [
       { name: "owner", type: "link", link: { table: "users" } },
       { name: "date", type: "datetime" },
       { name: "status", type: "string" },
+      { name: "startDate", type: "datetime" },
+      { name: "endDate", type: "datetime" },
+      { name: "description", type: "string" },
     ],
     revLinks: [
       { column: "event", table: "polls" },
@@ -54,6 +59,7 @@ const tables = [
     columns: [
       { name: "user", type: "link", link: { table: "users" } },
       { name: "deletedAt", type: "datetime" },
+      { name: "createdAt", type: "datetime" },
     ],
   },
   {
@@ -63,6 +69,8 @@ const tables = [
       { name: "createdBy", type: "link", link: { table: "users" } },
       { name: "expiresAt", type: "datetime" },
       { name: "multipleVotesPerUser", type: "bool", defaultValue: "false" },
+      { name: "createdAt", type: "datetime" },
+      { name: "name", type: "string" },
     ],
   },
   {
@@ -70,6 +78,8 @@ const tables = [
     columns: [
       { name: "event", type: "link", link: { table: "events" } },
       { name: "user", type: "link", link: { table: "users" } },
+      { name: "status", type: "string" },
+      { name: "createdAt", type: "datetime" },
     ],
   },
 ] as const;

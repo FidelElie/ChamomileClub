@@ -16,7 +16,7 @@ const BaseButton = forwardRef<View, ButtonProps>((props, ref) => {
 				disabled && "opacity-75",
 				theme === "PRIMARY" && "bg-green",
 				theme === "SECONDARY" && "bg-white border-green",
-				theme === "TERTIARY" && "bg-black",
+				theme === "TERTIARY" && "bg-midnight",
 				className
 			)}
 			disabled={disabled}
@@ -50,7 +50,7 @@ export const Button = Object.assign(
 	{
 		Primary: PrimaryButton,
 		Secondary: SecondaryButton,
-		TertiaryButton: TertiaryButton
+		Tertiary: TertiaryButton
 	}
 );
 

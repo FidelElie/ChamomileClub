@@ -5,7 +5,8 @@ import { BaseSchema } from "./Base.schema";
 export const EventUserSchema = BaseSchema.merge(
 	z.object({
 		user: z.object({ id: z.string() }),
-		event: z.object({ id: z.string() })
+		event: z.object({ id: z.string() }),
+		createdAt: z.coerce.date()
 	})
 )
 

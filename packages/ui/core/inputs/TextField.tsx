@@ -3,21 +3,21 @@ import { TextInput } from "react-native";
 import { styled } from "nativewind";
 import { twMerge } from "tailwind-merge";
 
-import { COLORS } from "../../constants";
-
-const StyledTextInput = styled(TextInput)
+const StyledTextInput = styled(TextInput);
 
 export const TextField = forwardRef<TextFieldRef, TextFieldProps>((props, ref) => {
-	const { className, inputClassName, ...textInputProps } = props;
+	const { className, value, placeholder, inputClassName, ...textInputProps } = props;
 
 	return (
 		<StyledTextInput
 			className={twMerge(
-				"border-0.5 rounded-lg border-cream h-10",
-				"font-body tracking-wide text-cream",
+				"border-0.5 rounded-lg border-white h-10",
+				"font-body tracking-wide text-white",
 				className
 			)}
-			placeholderTextColor={COLORS["midnight-100"]}
+			placeholderTextColor="rgba(255, 255, 255, 0.5)"
+			value={value?.toUpperCase() || ""}
+			placeholder={placeholder?.toUpperCase() || ""}
 			{...textInputProps}
 			ref={ref}
 		/>

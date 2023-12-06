@@ -14,7 +14,6 @@
     "@tanstack/react-query": "^4.33.0",
     "@tanstack/react-query-devtools": "^4.24.10",
     "@thechamomileclub/database": "*",
-    "axios": "^1.4.0",
     "zod": "^3.22.2"
   },
   "peerDependencies": {
