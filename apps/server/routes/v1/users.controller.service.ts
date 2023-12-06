@@ -3,6 +3,8 @@ import { NextApiResponse } from "next"
 import { getXataClient } from "@thechamomileclub/database";
 import {
 	CreateUsersInterfaces,
+	DeleteUserInterfaces,
+	EditUserInterfaces,
 	FetchUsersInterfaces,
 	InferDTOs,
 	UserSchema
@@ -51,4 +53,33 @@ export const createUsers = async (
 	const newMembers = await UserService.createAndInviteNewMembers(entries);
 
 	res.status(201).json({ items: newMembers } satisfies CreateUsersDTOs["response"]);
+}
+
+type EditUserDTOs = InferDTOs<typeof EditUserInterfaces>;
+
+export const editUser = async (
+	req: ApiRequest<EditUserDTOs>,
+	res: NextApiResponse
+) => {
+	const { userId } = req.params;
+
+	const updatedUser = await db.users.update({ id: userId, ...req.body });
+
+	const validatedUser = UserSchema.parse(updatedUser);
+
+	res.status(200).json({ payload: validatedUser } satisfies EditUserDTOs["response"]);
+
+}
+
+type DeleteUserDTOs = InferDTOs<typeof DeleteUserInterfaces>;
+
+export const deleteUser = async (
+	req: ApiRequest<DeleteUserDTOs>,
+	res: NextApiResponse
+) => {
+	const { userId } = req.params;
+
+	await db.users.delete(userId);
+
+	res.status(200).json({ userId } satisfies DeleteUserDTOs["response"]);
 }

@@ -1,4 +1,10 @@
-import { z, UserRoles, UserCreationSchema, UserCreationFieldsSchema } from "@thechamomileclub/api";
+import {
+	z,
+	UserRoles,
+	UserCreationSchema,
+	UserCreationFieldsSchema,
+	UserSchema
+} from "@thechamomileclub/api";
 import { getXataClient } from "@thechamomileclub/database";
 
 const { db } = getXataClient();
@@ -18,5 +24,7 @@ export const createAndInviteNewMembers = async (entries: UserCreationFieldsSchem
 
 	const validatedEntries = z.array(UserCreationSchema).parse(usersToCreate);
 
-	return db.users.create(validatedEntries);
+	const newUsers = db.users.create(validatedEntries);
+
+	return z.array(UserSchema).parse(newUsers);
 }
