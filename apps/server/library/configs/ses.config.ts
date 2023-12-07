@@ -1,35 +1,32 @@
-import { SESClient } from "@aws-sdk/client-ses";
-
 import { AppConfig } from "./app.config";
+import { SESService, createSESService } from "@/services";
 
 declare global {
-	var emailClient: SESClient
+	var SES: ReturnType<typeof SESService>;
 }
 
-let emailClient: SESClient;
+let SES: ReturnType<typeof SESService>;
+
+const sesConfig = {
+	region: AppConfig.emails.region || "eu-west-2",
+	credentials: {
+		accessKeyId: AppConfig.emails.clientId,
+		secretAccessKey: AppConfig.emails.secretKey
+	}
+}
+
+const serviceConfig = {
+	sender: { email: AppConfig.emails.senderEmail, name: AppConfig.emails.senderName }
+}
 
 if (process.env.NODE_ENV === "development") {
-	if (!global.emailClient) {
-		const client = new SESClient({
-			region: AppConfig.emails.region || "eu-west-2",
-			credentials: {
-				accessKeyId: AppConfig.emails.clientId,
-				secretAccessKey: AppConfig.emails.secretKey
-			}
-		});
-
-		global.emailClient = client;
+	if (!global.SES) {
+		global.SES = createSESService(sesConfig, serviceConfig);
 	}
 
-	emailClient = global.emailClient;
+	SES = global.SES;
 } else {
-	emailClient = new SESClient({
-		region: AppConfig.emails.region || "eu-west-2",
-		credentials: {
-			accessKeyId: AppConfig.emails.clientId,
-			secretAccessKey: AppConfig.emails.secretKey
-		}
-	});
+	SES = createSESService(sesConfig, serviceConfig);
 }
 
-export default emailClient;
+export default SES;

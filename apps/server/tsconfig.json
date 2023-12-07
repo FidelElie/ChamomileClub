@@ -16,6 +16,7 @@
     "incremental": true,
     "baseUrl": ".",
     "paths": {
+      "@/emails": ["emails/index.ts"],
       "@/routes": ["routes/index.ts"],
       "@/routes/*": ["routes/*"],
       "@/library": ["library/index.ts"],

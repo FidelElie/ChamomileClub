@@ -4,7 +4,7 @@ import { NextHandler } from "next-connect";
 import { z, SessionSchema, UserSchema } from "@thechamomileclub/api";
 import { getXataClient } from "@thechamomileclub/database";
 
-import { verifyToken } from "../services";
+import { verifyToken } from "@/services";
 import type { ApiRequestWithAuth } from "../server";
 
 const { db } = getXataClient();

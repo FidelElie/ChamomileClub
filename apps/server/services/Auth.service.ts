@@ -1,6 +1,6 @@
 import JWT, { type VerifyOptions, type SignOptions } from "jsonwebtoken";
 
-import { AppConfig } from "../configs";
+import { AppConfig } from "../library/configs";
 
 export const signToken = (payload: string | object | Buffer, config?: SignOptions) => {
 	return JWT.sign(payload, AppConfig.secret, config);
