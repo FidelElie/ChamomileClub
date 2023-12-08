@@ -7,7 +7,7 @@ import {
 	EditUserInterfaces,
 	FetchUsersInterfaces,
 	InferDTOs,
-	UserSchema
+	UserEntity
 } from "@thechamomileclub/api";
 
 import { ApiRequest } from "@/library/server";
@@ -36,7 +36,7 @@ export const fetchUsers = async (
 		} : {})
 	});
 
-	const validatedUsers = users.records.map(user => UserSchema.parse(user));
+	const validatedUsers = users.records.map(user => UserEntity.parse(user));
 
 	res.status(200).json({ items: validatedUsers } satisfies FetchUsersDTOs["response"]);
 }
@@ -65,7 +65,7 @@ export const editUser = async (
 
 	const updatedUser = await db.users.update({ id: userId, ...req.body });
 
-	const validatedUser = UserSchema.parse(updatedUser);
+	const validatedUser = UserEntity.parse(updatedUser);
 
 	res.status(200).json({ payload: validatedUser } satisfies EditUserDTOs["response"]);
 

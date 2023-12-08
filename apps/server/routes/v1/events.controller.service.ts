@@ -6,10 +6,10 @@ import {
 	FetchEventsInterfaces,
 	CreateEventsInterfaces,
 	EventStatuses,
-	EventUserSchema,
+	EventUserEntity,
 	EditEventInterfaces,
-	EventSchema,
-	UserSchema,
+	EventEntity,
+	UserEntity,
 	z
 } from "@thechamomileclub/api";
 
@@ -45,10 +45,10 @@ export const fetchEvents = async (req: ApiRequest<FetchEventsDTOs>, res: NextApi
 	const eventsWithMembers = await Promise.all(events.records.map(async event => {
 		const eventMembers = await db.eventusers.filter({ event: event.id }).select(["user"]).getMany();
 
-		const validatedEvent = EventSchema.parse(event);
+		const validatedEvent = EventEntity.parse(event);
 
 		const members = eventMembers.map(member => {
-			const validatedMember = EventUserSchema.merge(z.object({ user: UserSchema })).parse(member);
+			const validatedMember = EventUserEntity.merge(z.object({ user: UserEntity })).parse(member);
 
 			return validatedMember.user;
 		})
@@ -79,13 +79,13 @@ export const createEvents = async (
 			status: EventStatuses.PENDING
 		});
 
-		const validatedEvent = EventSchema.parse(createdEvent);
+		const validatedEvent = EventEntity.parse(createdEvent);
 
 		const usersForEvent = [...members, ...newMembers].map(member => ({
 			event: { id: validatedEvent.id },
 			user: { id: member.id },
 			createdAt: new Date(),
-		})) satisfies Omit<EventUserSchema, "id">[];
+		})) satisfies Omit<EventUserEntity, "id">[];
 
 		await db.eventusers.create(usersForEvent);
 
@@ -109,7 +109,7 @@ export const editEvent = async (req: ApiRequestWithAuth<EditEventDTOs>, res: Nex
 		...(status ? { status } : {})
 	});
 
-	const validatedEvent = EventSchema.parse(updatedEvent);
+	const validatedEvent = EventEntity.parse(updatedEvent);
 
 	res.status(200).json({ item: validatedEvent } satisfies EditEventDTOs["response"]);
 }

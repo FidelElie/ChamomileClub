@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { BaseSchema } from "./Base.schema";
+import { BaseEntity } from "./Base.entity";
 
 export const EventStatuses = {
 	SCHEDULED: "SCHEDULED",
@@ -16,7 +16,7 @@ export const EventStatusEnum = z.enum([
 
 export type EventStatusEnum = z.infer<typeof EventStatusEnum>;
 
-export const EventSchema = BaseSchema.merge(
+export const EventEntity = BaseEntity.merge(
 	z.object({
 		name: z.string().nullish(),
 		description: z.string().nullish(),
@@ -29,4 +29,4 @@ export const EventSchema = BaseSchema.merge(
 	})
 )
 
-export type EventSchema = z.infer<typeof EventSchema>;
+export type EventEntity = z.infer<typeof EventEntity>;

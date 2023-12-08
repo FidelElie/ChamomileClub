@@ -1,26 +1,26 @@
 import { z } from "zod";
 
-import { RolesEnum, UserSchema, UserCreationFieldsSchema } from "../schemas";
+import { UserRolesEnum, UserEntity, UserCreationFieldsEntity } from "../entities";
 import { PaginationQuery } from "../library";
 
 export const FetchUsersInterfaces = {
 	query: PaginationQuery.merge(z.object({
-		role:	z.union([RolesEnum, z.array(RolesEnum)]).optional()
+		role:	z.union([UserRolesEnum, z.array(UserRolesEnum)]).optional()
 	})),
-	response: z.object({ items: z.array(UserSchema) })
+	response: z.object({ items: z.array(UserEntity) })
 }
 
 export const CreateUsersInterfaces = {
 	body: z.object({
-		entries: z.array(UserCreationFieldsSchema)
+		entries: z.array(UserCreationFieldsEntity)
 	}),
-	response: z.object({ items: z.array(UserSchema) })
+	response: z.object({ items: z.array(UserEntity) })
 }
 
 export const EditUserInterfaces = {
 	params: z.object({ userId: z.string() }),
-	body: UserCreationFieldsSchema.partial(),
-	response: z.object({ payload: UserSchema })
+	body: UserCreationFieldsEntity.partial(),
+	response: z.object({ payload: UserEntity })
 }
 
 export const DeleteUserInterfaces = {

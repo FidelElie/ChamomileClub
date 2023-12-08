@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { BaseSchema } from "./Base.schema";
+import { BaseEntity } from "./Base.entity";
 
 export const UserRoles = {
 	ADMIN: "ADMIN",
@@ -10,7 +10,7 @@ export const UserRoles = {
 	PROSPECT: "PROSPECT"
 } as const;
 
-export const RolePriorities = {
+export const UserRolePriorities = {
 	ADMIN: 0,
 	FOUNDER: 1,
 	TEAM: 2,
@@ -18,7 +18,7 @@ export const RolePriorities = {
 	PROSPECT: 4
 } as const;
 
-export const RolesEnum = z.enum([
+export const UserRolesEnum = z.enum([
 	UserRoles.ADMIN,
 	UserRoles.FOUNDER,
 	UserRoles.TEAM,
@@ -26,9 +26,9 @@ export const RolesEnum = z.enum([
 	UserRoles.PROSPECT
 ]);
 
-export type RolesEnum = z.infer<typeof RolesEnum>;
+export type UserRolesEnum = z.infer<typeof UserRolesEnum>;
 
-export const UserSchema = BaseSchema.merge(
+export const UserEntity = BaseEntity.merge(
 	z.object({
 		email: z.string().email(),
 		forename: z.string(),
@@ -37,19 +37,19 @@ export const UserSchema = BaseSchema.merge(
 		active: z.boolean().default(false),
 		position: z.string().nullish(),
 		description: z.string().nullish(),
-		roles: z.array(RolesEnum),
+		roles: z.array(UserRolesEnum),
 		public: z.boolean().default(true),
 		createdAt: z.coerce.date()
 	})
 );
 
-export type UserSchema = z.infer<typeof UserSchema>;
+export type UserEntity = z.infer<typeof UserEntity>;
 
-export const UserCreationSchema = UserSchema.omit({ id: true });
+export const UserCreationEntity = UserEntity.omit({ id: true });
 
-export type UserCreationSchema = z.infer<typeof UserCreationSchema>;
+export type UserCreationEntity = z.infer<typeof UserCreationEntity>;
 
-export const UserCreationFieldsSchema = UserSchema.pick({
+export const UserCreationFieldsEntity = UserEntity.pick({
 	email: true,
 	forename: true,
 	surname: true,
@@ -57,4 +57,4 @@ export const UserCreationFieldsSchema = UserSchema.pick({
 	roles: true
 });
 
-export type UserCreationFieldsSchema = z.infer<typeof UserCreationFieldsSchema>;
+export type UserCreationFieldsEntity = z.infer<typeof UserCreationFieldsEntity>;

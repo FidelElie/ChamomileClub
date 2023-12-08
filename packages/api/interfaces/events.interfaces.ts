@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { EventSchema, EventStatusEnum, UserCreationFieldsSchema, UserSchema } from "../schemas";
+import { EventEntity, EventStatusEnum, UserCreationFieldsEntity, UserEntity } from "../entities";
 
 import { PaginationQuery } from "../library";
 
@@ -14,7 +14,7 @@ export const FetchEventsInterfaces = {
 		})
 	).default({}),
 	response: z.object({
-		items: z.array(EventSchema.merge(z.object({ members: z.array(UserSchema) })))
+		items: z.array(EventEntity.merge(z.object({ members: z.array(UserEntity) })))
 	})
 }
 
@@ -23,13 +23,13 @@ export const CreateEventsInterfaces = {
 		entries: z.array(
 			z.object({
 				name: z.string(),
-				members: z.array(UserSchema),
-				invites: z.array(UserCreationFieldsSchema)
+				members: z.array(UserEntity),
+				invites: z.array(UserCreationFieldsEntity)
 			})
 		)
 	}),
 	response: z.object({
-		items: z.array(EventSchema)
+		items: z.array(EventEntity)
 	})
 }
 
@@ -41,5 +41,5 @@ export const EditEventInterfaces = {
 		name: z.string().optional(),
 		status: EventStatusEnum.optional()
 	}),
-	response: z.object({ item: EventSchema })
+	response: z.object({ item: EventEntity })
 }

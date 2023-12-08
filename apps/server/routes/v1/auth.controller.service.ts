@@ -5,7 +5,7 @@ import {
 	InferDTOs,
 	KeySchema,
 	SessionSchema,
-	UserSchema,
+	UserEntity,
 	StartAuthProcessInterfaces,
 	ValidateLoginCodeInterfaces,
 	UpdateCurrentUserInterfaces
@@ -43,7 +43,7 @@ export const startAuthProcess = async (
 
 	if (!userWithEmail) { return notFoundResponse(res, "User not found"); }
 
-	const userResult = UserSchema.safeParse(userWithEmail);
+	const userResult = UserEntity.safeParse(userWithEmail);
 
 	if (!userResult.success) { return unprocessableEntityResponse(res, "User invalid"); }
 
@@ -80,7 +80,7 @@ export const validateLoginCode = async (
 
 	const { token, code: keyCode } = KeySchema.parse(correspondingKey);
 
-	const { decoded, error } = verifyToken<Pick<UserSchema, "id" | "email">>(token!);
+	const { decoded, error } = verifyToken<Pick<UserEntity, "id" | "email">>(token!);
 
 	if (error || keyCode !== code) { return unauthorisedResponse(res, "Invalid code"); }
 

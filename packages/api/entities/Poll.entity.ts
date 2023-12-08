@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { BaseSchema } from "./Base.schema";
+import { BaseEntity } from "./Base.entity";
 
 export const PollTypes = {
 	EVENT_DATE: "EVENT_DATE"
@@ -8,7 +8,7 @@ export const PollTypes = {
 
 export const PollTypesEnum = z.enum([PollTypes.EVENT_DATE]);
 
-export const PollSchema = BaseSchema.merge(
+export const PollEntity = BaseEntity.merge(
 	z.object({
 		name: z.string(),
 		type: PollTypesEnum,
@@ -21,4 +21,4 @@ export const PollSchema = BaseSchema.merge(
 	})
 );
 
-export type PollSchema = z.infer<typeof PollSchema>;
+export type PollEntity = z.infer<typeof PollEntity>;

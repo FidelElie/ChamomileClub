@@ -1,8 +1,8 @@
 import { z } from "zod";
 
-import { BaseSchema } from "./Base.schema";
+import { BaseEntity } from "./Base.entity";
 
-export const PollOptionSchema = BaseSchema.merge(
+export const PollOptionEntity = BaseEntity.merge(
 	z.object({
 		name: z.string(),
 		description: z.string().nullish(),
@@ -13,4 +13,4 @@ export const PollOptionSchema = BaseSchema.merge(
 	})
 );
 
-export type PollOptionSchema = z.infer<typeof PollOptionSchema>;
+export type PollOptionEntity = z.infer<typeof PollOptionEntity>;

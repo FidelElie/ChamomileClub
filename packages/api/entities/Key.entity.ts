@@ -1,8 +1,8 @@
 import { z } from "zod";
 
-import { BaseSchema } from "./Base.schema";
+import { BaseEntity } from "./Base.entity";
 
-export const KeySchema = BaseSchema.merge(
+export const KeyEntity = BaseEntity.merge(
 	z.object({
 		id: z.string(),
 		token: z.string(),
@@ -11,4 +11,4 @@ export const KeySchema = BaseSchema.merge(
 	})
 );
 
-export type KeySchema = z.infer<typeof KeySchema>;
+export type KeyEntity = z.infer<typeof KeyEntity>;
