@@ -1,0 +1,12 @@
+{
+  "lineWidth": 80,
+  "tabWidth": 2,
+  "tabs": false,
+  "semicolons": true,
+  "singleQuote": false,
+  "jsxSingleQuote": false,
+  "trailingCommas": "es5",
+  "bracketSpacing": true,
+  "bracketSameLine": false,
+  "allowParens": "always"
+}

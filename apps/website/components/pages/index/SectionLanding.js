@@ -47,7 +47,7 @@ const LandingSection = (props) => {
         })}>
           <div className="container mx-auto flex-grow flex flex-col justify-center px-5 text-center md:max-w-xl lg:max-w-5xl z-10 lg:px-10">
             <h1 className="text-red-600 text-5xl tracking-tigher font-medium mb-1 font-heading md:text-7xl lg:text-8xl">
-              Texas Hold'em
+              Texas Hold&apos;em
             </h1>
             <h2 className="text-3xl text-white mb-3 font-light md:text-5xl">
               redefined for the

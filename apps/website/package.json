@@ -6,7 +6,8 @@
     "dev": "next dev -p 3002",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "eslint .",
+    "check:types": "tsc --noEmit"
   },
   "dependencies": {
     "@chamomileclub/casinojs": "1.0.0",

@@ -1,42 +1,50 @@
 import { NextApiResponse } from "next";
 import { NextHandler } from "next-connect";
 
-import { RolePriorities, RolesEnum } from "@thechamomileclub/api";
+import { UserRolePriorities, UserRolesEnum } from "@thechamomileclub/api";
 
 import { ApiRequestWithAuth, unauthorisedResponse } from "../server";
 
-export const requireRolesGuard = (requiredRoles: RolesEnum[]) =>  {
-	return (
-		req: ApiRequestWithAuth,
-		res: NextApiResponse,
-		next: NextHandler
-	) => {
-		const { auth } = req;
+export const requireRolesGuard = (requiredRoles: UserRolesEnum[]) => {
+  return (req: ApiRequestWithAuth, res: NextApiResponse, next: NextHandler) => {
+    const { auth } = req;
 
-		if (!auth?.session || !auth.user) { return unauthorisedResponse(res); }
+    if (!auth?.session || !auth.user) {
+      return unauthorisedResponse(res);
+    }
 
-		const { roles } = auth.user;
+    const { roles } = auth.user;
 
-		const minimumPriority = Math.min(...requiredRoles.map(role => RolePriorities[role]));
+    const minimumPriority = Math.min(
+      ...requiredRoles.map((role) => UserRolePriorities[role]),
+    );
 
-		const userHasRequiredRole = roles.some(role => requiredRoles.includes(role));
+    const userHasRequiredRole = roles.some((role) =>
+      requiredRoles.includes(role),
+    );
 
-		const userHasHigherPriority = roles.some(role => RolePriorities[role] <= minimumPriority);
+    const userHasHigherPriority = roles.some(
+      (role) => UserRolePriorities[role] <= minimumPriority,
+    );
 
-		if (!userHasRequiredRole && !userHasHigherPriority) { return unauthorisedResponse(res); }
+    if (!userHasRequiredRole && !userHasHigherPriority) {
+      return unauthorisedResponse(res);
+    }
 
-		next();
-	}
-}
+    next();
+  };
+};
 
 export const requireAuthGuard = (
-	req: ApiRequestWithAuth,
-	res: NextApiResponse,
-	next: NextHandler
+  req: ApiRequestWithAuth,
+  res: NextApiResponse,
+  next: NextHandler,
 ) => {
-	const { auth } = req;
+  const { auth } = req;
 
-	if (!auth?.session || !auth.user) { return unauthorisedResponse(res); }
+  if (!auth?.session || !auth.user) {
+    return unauthorisedResponse(res);
+  }
 
-	next();
-}
+  next();
+};

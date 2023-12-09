@@ -1,0 +1,15 @@
+{
+  "name": "@thechamomileclub/scripts",
+  "version": "1.0.0",
+  "description": "In repo scripts that provide utilities and installs",
+  "private": true,
+  "scripts": {
+    "lint": "eslint .",
+    "check:types": "tsc --noEmit",
+    "clean": "ts-node ./code/clean.ts",
+    "husky": "ts-node ./code/husky.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.2"
+  }
+}

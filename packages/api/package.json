@@ -7,6 +7,10 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "scripts": {
+    "lint": "eslint .",
+    "check:types": "tsc --noEmit"
+  },
   "devDependencies": {
     "typescript": "^4.9.5"
   },

@@ -1,0 +1,9 @@
+{
+	"extends": [
+		"universe/native",
+		"../../.eslintrc"
+	],
+	"rules": {
+		"import/order": "off"
+	}
+}

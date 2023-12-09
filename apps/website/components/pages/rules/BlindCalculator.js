@@ -19,13 +19,11 @@ const BlindCalculator = () => {
 	const ChosenFace = faces[currentFace];
 
 	const rollDice = () => {
-		while (true) {
-			const roll = Math.floor(Math.random() * 6);
-			if (currentFace !== roll) {
-				setCurrentFace(roll);
-				break;
-			}
-		}
+		let roll = Math.floor(Math.random() * 6);
+
+		while (roll === currentFace) { roll = Math.floor(Math.random() * 6); }
+
+		setCurrentFace(roll);
 	}
 
 	useEffect(() => {setCurrentFace(Math.floor(Math.random() * 6))}, [])

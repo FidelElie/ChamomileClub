@@ -1,9 +1,6 @@
 import Head from "next/head";
 import PropTypes from "prop-types";
 
-// ! Library
-import { joinClasses } from "../../../lib/utilities";
-
 // ! Components
 import Navbar from "./Navbar";
 import Footer from "./Footer";

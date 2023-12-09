@@ -5,24 +5,52 @@
     "license": "MIT",
     "private": true,
     "workspaces": [
-        "packages/*",
-        "apps/*"
+        "apps/*",
+        "packages/*"
     ],
     "scripts": {
-        "clean": "ts-node ./scripts/clean.ts",
+        "dev": "lerna run dev",
+        "test": "lerna run test",
+        "lint": "lerna run lint",
+        "check:types": "lerna run check:types",
+        "format": "prettier --write .",
+        "pre-commit": "lint-staged",
+        "prepare": "yarn @scripts husky",
+        "clean": "yarn @scripts clean",
         "@website": "yarn workspace @thechamomileclub/website",
         "@server": "yarn workspace @thechamomileclub/server",
         "@mobile": "yarn workspace @thechamomileclub/mobile",
         "@api": "yarn workspace @thechamomileclub/api",
         "@database": "yarn workspace @thechamomileclub/database",
         "@tailwind": "yarn workspace @thechamomileclub/tailwind",
-        "@ui": "yarn workspace @thechamomileclub/ui"
+        "@ui": "yarn workspace @thechamomileclub/ui",
+        "@scripts": "yarn workspace @thechamomileclub/scripts"
     },
     "devDependencies": {
-        "concurrently": "^7.6.0",
+        "@types/rimraf": "^4.0.5",
+        "@typescript-eslint/eslint-plugin": "^6.13.2",
+        "@typescript-eslint/parser": "^6.13.2",
         "commander": "^11.0.0",
+        "concurrently": "^7.6.0",
+        "eslint": "^8.55.0",
+        "eslint-config-prettier": "^9.1.0",
+        "husky": "^8.0.3",
+        "lerna": "^8.0.0",
+        "lint-staged": "^15.2.0",
+        "prettier": "^3.1.0",
         "rimraf": "^5.0.1",
-        "ts-node": "^10.9.1",
-        "turbo": "^1.10.7"
+        "ts-node": "^10.9.1"
+    },
+    "lint-staged": {
+        "*.{ts,tsx}": [
+            "prettier --write",
+            "eslint --fix",
+            "npx tsc --noEmit"
+        ]
+    },
+    "husky": {
+        "hooks": {
+            "pre-commit": "yarn lint-staged"
+        }
     }
 }
