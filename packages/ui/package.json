@@ -4,10 +4,12 @@
   "main": "index.ts",
   "types": "index.ts",
   "license": "MIT",
+  "scripts": {
+    "lint": "eslint ."
+  },
   "dependencies": {
     "@react-native-community/datetimepicker": "7.2.0",
     "nativewind": "^2.0.11",
-
     "tailwind-merge": "^1.14.0"
   },
   "devDependencies": {

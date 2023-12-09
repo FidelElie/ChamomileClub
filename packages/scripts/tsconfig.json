@@ -1,7 +1,5 @@
 {
   "extends": "../../root.tsconfig.json",
-  "compilerOptions": {
-
-  },
+  "compilerOptions": {},
   "include": ["code"]
 }

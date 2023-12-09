@@ -1,3 +1,3 @@
 export const AppConfig = {
-	SESSION_STORAGE_KEY: "@thechamomileclub"
-}
+  SESSION_STORAGE_KEY: "@thechamomileclub",
+};

@@ -9,12 +9,15 @@ export const DARK_CLASS = "dark";
 
 const SUPPORTED_THEMES = ["light", "dark"] as const;
 
-const initialContext: ThemeContextType = { theme: "light", setTheme: () => {} }
+const initialContext: ThemeContextType = { theme: "light", setTheme: () => {} };
 
 const ThemeContext = createContext(initialContext);
 
 const ThemeProvider = ({ children }: ThemeProviderProps) => {
-  const [theme, setTheme] = useLocalStorage<Themes>(THEME_STORAGE_KEY, initialContext.theme);
+  const [theme, setTheme] = useLocalStorage<Themes>(
+    THEME_STORAGE_KEY,
+    initialContext.theme,
+  );
 
   useEffect(() => {
     document.documentElement.classList.toggle(DARK_CLASS, theme === "dark");
@@ -22,18 +25,19 @@ const ThemeProvider = ({ children }: ThemeProviderProps) => {
 
   return (
     <ThemeContext.Provider value={{ theme, setTheme }}>
-      { children }
+      {children}
     </ThemeContext.Provider>
-  )
-}
+  );
+};
 
 export const useTheme = () => useContext(ThemeContext);
 
-type Themes = typeof SUPPORTED_THEMES[number];
+type Themes = (typeof SUPPORTED_THEMES)[number];
 
-type ThemeContextType = { theme: Themes, setTheme: (value: Themes) => void }
+type ThemeContextType = { theme: Themes; setTheme: (value: Themes) => void };
 
-export interface ThemeProviderProps { children: ReactNode }
+export interface ThemeProviderProps {
+  children: ReactNode;
+}
 
 export default ThemeProvider;
-

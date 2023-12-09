@@ -3,7 +3,7 @@ module.exports = {
   content: [
     "./pages/**/*.{js,ts,jsx,tsx}",
     "./components/**/*.{js,ts,jsx,tsx}",
-    "./components/**/*.{js,ts,jsx,tsx}"
+    "./components/**/*.{js,ts,jsx,tsx}",
   ],
   darkMode: "class",
   theme: {
@@ -14,17 +14,13 @@ module.exports = {
         inverted: "#4c3f5b",
         invertedLight: "#67567a",
         invertedDark: "#282130",
-      }
+      },
     },
   },
-  plugins: [
-    require("tailwind-scrollbar"),
-    require("@tailwindcss/forms")
-  ],
+  plugins: [require("tailwind-scrollbar"), require("@tailwindcss/forms")],
   variants: {
     extend: {
       opacity: ["disabled"],
     },
   },
-
-}
+};

@@ -11,20 +11,20 @@ import OneTimePasswordScreen from "./otp";
 const LandingStack = createNativeStackNavigator<LandingStackParamList>();
 
 export default function LandingStackLayout() {
-	return (
-		<LandingLayout>
-			<LandingStack.Navigator
-				initialRouteName="Landing"
-				screenOptions={{
-					headerShown: false,
-					contentStyle: { backgroundColor: "rgba(0, 0, 0, 0)"},
-					animation: "none"
-				}}
-			>
-				<LandingStack.Screen name="Landing" component={LandingScreen} />
-				<LandingStack.Screen name="Login" component={LoginScreen} />
-				<LandingStack.Screen name="OTP" component={OneTimePasswordScreen} />
-			</LandingStack.Navigator>
-		</LandingLayout>
-	)
+  return (
+    <LandingLayout>
+      <LandingStack.Navigator
+        initialRouteName="Landing"
+        screenOptions={{
+          headerShown: false,
+          contentStyle: { backgroundColor: "rgba(0, 0, 0, 0)" },
+          animation: "none",
+        }}
+      >
+        <LandingStack.Screen name="Landing" component={LandingScreen} />
+        <LandingStack.Screen name="Login" component={LoginScreen} />
+        <LandingStack.Screen name="OTP" component={OneTimePasswordScreen} />
+      </LandingStack.Navigator>
+    </LandingLayout>
+  );
 }

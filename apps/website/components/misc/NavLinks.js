@@ -9,8 +9,8 @@ const links = [
   { name: "Rules", footerName: "Rules", href: "/rules" },
   { name: "Hands", footerName: "Hands", href: "/hands" },
   { name: "Founders", footerName: "Founders", href: "/founders" },
-  { name: "Team", footerName: "Team", href: "/team" }
-]
+  { name: "Team", footerName: "Team", href: "/team" },
+];
 
 const NavLinks = (props) => {
   const { id, linkStyle, mode } = props;
@@ -21,41 +21,41 @@ const NavLinks = (props) => {
     } else {
       return link.name;
     }
-  }
+  };
 
   const determineValidLink = (link) => {
     if (mode === "navbar" && link.footerOnly) {
-      return false
+      return false;
     } else if (mode === "footer" && link.navbarOnly) {
-      return false
+      return false;
     } else {
       return true;
     }
-  }
+  };
 
   return (
     <>
-      {
-        links.map(link => {
-          return determineValidLink(link) && (
+      {links.map((link) => {
+        return (
+          determineValidLink(link) && (
             <Link
               href={link.href}
               key={`${id}-${link.href}`}
               className={joinClasses({ [linkStyle]: linkStyle })}
             >
-              { determineLinkName(link) }
+              {determineLinkName(link)}
             </Link>
           )
-        })
-      }
+        );
+      })}
     </>
-  )
-}
+  );
+};
 
 NavLinks.propTypes = {
   id: PropTypes.string.isRequired,
   linkStyle: PropTypes.string,
-  mode: PropTypes.oneOf(["navbar", "footer"]).isRequired
-}
+  mode: PropTypes.oneOf(["navbar", "footer"]).isRequired,
+};
 
 export default NavLinks;

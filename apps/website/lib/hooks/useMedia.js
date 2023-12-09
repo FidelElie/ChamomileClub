@@ -11,21 +11,21 @@ const useMedia = (src) => {
     const errored = () => {
       setMediaLoading(false);
       setMediaError(true);
-    }
+    };
     const bindImageAttributes = () => {
-      mediaRef.current.onload = loaded
-      mediaRef.current.onerror = errored
+      mediaRef.current.onload = loaded;
+      mediaRef.current.onerror = errored;
       mediaRef.current.src = src;
-    }
+    };
 
     const bindVideoAttributes = () => {
       mediaRef.current.onloadeddata = loaded;
       mediaRef.current.onerror = errored;
       mediaRef.current.src = src;
-    }
+    };
 
     if (!src) {
-      setMediaLoading(false)
+      setMediaLoading(false);
     } else {
       if (mediaRef) {
         switch (mediaRef.current.nodeName) {
@@ -37,7 +37,7 @@ const useMedia = (src) => {
             break;
         }
       }
-    };
+    }
   }, [src]);
 
   useEffect(() => {
@@ -49,8 +49,8 @@ const useMedia = (src) => {
     mediaLoaded,
     mediaLoading,
     mediaError,
-    noMediaPresent: mediaLoaded && !src
-  }
-}
+    noMediaPresent: mediaLoaded && !src,
+  };
+};
 
 export default useMedia;

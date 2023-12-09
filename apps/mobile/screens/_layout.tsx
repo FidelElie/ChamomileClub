@@ -11,34 +11,31 @@ import HomeTabLayout from "./auth/_layout";
 
 const RootStack = createNativeStackNavigator<RootStackParamList>();
 
-export default function RootLayout () {
-	const { user } = useAuth();
+export default function RootLayout() {
+  const { user } = useAuth();
 
-	return (
-		<Flex className="h-full w-full bg-green">
-			<RootStack.Navigator screenOptions={{ headerShown: false }}>
-				{
-					!user && (
-						<RootStack.Screen name="LandingStack" component={LandingStackLayout}/>
-					)
-				}
-				{
-					(user && !user.active) && (
-						<RootStack.Screen name="Onboarding" component={OnboardingScreen} />
-					)
-				}
-				{
-					(user && user.active) && (
-						<RootStack.Group>
-							<RootStack.Screen name="HomeTabs" component={HomeTabLayout} />
-						</RootStack.Group>
-					)
-				}
-			</RootStack.Navigator>
-		</Flex>
-	)
+  return (
+    <Flex className="h-full w-full bg-green">
+      <RootStack.Navigator screenOptions={{ headerShown: false }}>
+        {!user && (
+          <RootStack.Screen
+            name="LandingStack"
+            component={LandingStackLayout}
+          />
+        )}
+        {user && !user.active && (
+          <RootStack.Screen name="Onboarding" component={OnboardingScreen} />
+        )}
+        {user && user.active && (
+          <RootStack.Group>
+            <RootStack.Screen name="HomeTabs" component={HomeTabLayout} />
+          </RootStack.Group>
+        )}
+      </RootStack.Navigator>
+    </Flex>
+  );
 }
 
 export interface RootLayoutProps {
-	onLayoutRootView: () => Promise<void>
+  onLayoutRootView: () => Promise<void>;
 }

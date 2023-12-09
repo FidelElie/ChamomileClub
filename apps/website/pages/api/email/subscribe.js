@@ -11,14 +11,18 @@ export default async function sendSubscription(req, res) {
       to: process.env.ADMIN_EMAIL,
       subject: emailSubject,
       text: `Email: ${email}`,
-      html: `<div>Email: ${email}</div>`
-    }
+      html: `<div>Email: ${email}</div>`,
+    };
 
     await transporter.sendMail(mailData);
 
-    res.status(200).json({ error: null, message: "Application sent successfully" });
+    res
+      .status(200)
+      .json({ error: null, message: "Application sent successfully" });
   } catch (error) {
     console.log(error);
-    res.status(500).json({ error: error, message: "Application Was Unsuccessfully" });
+    res
+      .status(500)
+      .json({ error: error, message: "Application Was Unsuccessfully" });
   }
 }

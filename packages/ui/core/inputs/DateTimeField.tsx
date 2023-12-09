@@ -7,40 +7,43 @@ import { Copy } from "../data/Copy";
 import { Button, ButtonProps } from "./Button";
 
 export const DateTimeField = (props: DateTimeFieldProps) => {
-	const { className, theme = "PRIMARY", placeholder = "Select date", value } = props;
+  const {
+    className,
+    theme = "PRIMARY",
+    placeholder = "Select date",
+    value,
+  } = props;
 
-	const [display, setDisplay] = useState({ date: false, time: false });
+  const [display, setDisplay] = useState({ date: false, time: false });
 
-	const editDisplay = (newDisplay: Partial<typeof display>) => setDisplay(
-		currentDisplay => ({ ...currentDisplay, ...newDisplay })
-	);
+  const editDisplay = (newDisplay: Partial<typeof display>) =>
+    setDisplay((currentDisplay) => ({ ...currentDisplay, ...newDisplay }));
 
-	const fieldTheming = {
-		buttonTheme: theme,
-		textColor: theme === "SECONDARY" ? "green" : "white"
-	} as const;
+  const fieldTheming = {
+    buttonTheme: theme,
+    textColor: theme === "SECONDARY" ? "green" : "white",
+  } as const;
 
-	return (
-		<Flex.Column className={className}>
-			<Show if={!value}>
-				<Button theme={fieldTheming.buttonTheme} onPressIn={() => editDisplay({ date: true })}>
-					<Copy color={fieldTheming.textColor}>{placeholder}</Copy>
-				</Button>
-			</Show>
+  return (
+    <Flex.Column className={className}>
+      <Show if={!value}>
+        <Button
+          theme={fieldTheming.buttonTheme}
+          onPressIn={() => editDisplay({ date: true })}
+        >
+          <Copy color={fieldTheming.textColor}>{placeholder}</Copy>
+        </Button>
+      </Show>
 
-			{/* <Button theme={fieldTheming.buttonTheme} onPressIn={() => setShow(!show)} className="w-full">
+      {/* <Button theme={fieldTheming.buttonTheme} onPressIn={() => setShow(!show)} className="w-full">
 				<Copy color={fieldTheming.textColor}>
 					{ value ? `${value.toLocaleDateString()} ${value.toLocaleTimeString()}` : placeholder }
 				</Copy>
 			</Button> */}
-			<Show if={display.date && value}>
-				<DateTimePicker
-					value={value!}
-					mode="date"
-					display="spinner"
-				/>
-			</Show>
-			{/* <Show if={show}
+      <Show if={display.date && value}>
+        <DateTimePicker value={value!} mode="date" display="spinner" />
+      </Show>
+      {/* <Show if={show}
 			<Show if={show && value}>
 				<DateTimePicker
 					value={value!}
@@ -53,14 +56,14 @@ export const DateTimeField = (props: DateTimeFieldProps) => {
 					display="spinner"
 				/>
 			</Show> */}
-		</Flex.Column>
-	)
-}
+    </Flex.Column>
+  );
+};
 
 export interface DateTimeFieldProps {
-	className?: string;
-	theme?: ButtonProps["theme"];
-	value?: Date | null;
-	placeholder?: string;
-	onChange?: (date: Date | null) => void;
+  className?: string;
+  theme?: ButtonProps["theme"];
+  value?: Date | null;
+  placeholder?: string;
+  onChange?: (date: Date | null) => void;
 }

@@ -6,9 +6,9 @@ const transporter = nodemailer.createTransport({
   service: "Gmail",
   auth: {
     user: process.env.SMTP_EMAIL,
-    pass: process.env.SMTP_PASSWORD
+    pass: process.env.SMTP_PASSWORD,
   },
-  secure: true
+  secure: true,
 });
 
 export default transporter;

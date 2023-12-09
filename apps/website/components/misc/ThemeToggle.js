@@ -7,10 +7,16 @@ const ThemeToggle = () => {
   const toggleTheme = () => setTheme(theme === "light" ? "dark" : "light");
 
   return theme === "light" ? (
-    <WhiteChip className="w-min h-8 rounded-full shadow-lg" onClick={toggleTheme} />
+    <WhiteChip
+      className="w-min h-8 rounded-full shadow-lg"
+      onClick={toggleTheme}
+    />
   ) : (
-    <BlackChip className="w-min h-8 rounded-full shadow-lg" onClick={toggleTheme} />
-  )
-}
+    <BlackChip
+      className="w-min h-8 rounded-full shadow-lg"
+      onClick={toggleTheme}
+    />
+  );
+};
 
 export default ThemeToggle;

@@ -6,11 +6,7 @@ import { useTheme } from "../lib/providers/Theme.provider";
 
 // ! Components
 import AppLayout from "../components/core/App";
-import {
-  PageHeader,
-  SubTitle,
-  Paragraph
-} from "../components/core/Prose";
+import { PageHeader, SubTitle, Paragraph } from "../components/core/Prose";
 
 export default function Hands() {
   const { theme } = useTheme();
@@ -33,26 +29,24 @@ export default function Hands() {
             </a>
           </div>
         </div>
-        {
-          hands.map(hand => (
-            <div className="mb-5" key={hand.name}>
-              <SubTitle>{ hand.name }</SubTitle>
-              <Paragraph>{ hand.description }</Paragraph>
-              <div className="flex items-center space-x-3 my-3">
-                {
-                  hand.cards.map((Card, index) => (
-                    <Card
-                      className="w-1/5 h-auto md:w-1/12 shadow-lg"
-                      key={`${hand.name}-${index}`}
-                    />
-                  ))
-                }
-              </div>
-              <Paragraph><span className="italic text-base">{hand.cardDescription}</span></Paragraph>
+        {hands.map((hand) => (
+          <div className="mb-5" key={hand.name}>
+            <SubTitle>{hand.name}</SubTitle>
+            <Paragraph>{hand.description}</Paragraph>
+            <div className="flex items-center space-x-3 my-3">
+              {hand.cards.map((Card, index) => (
+                <Card
+                  className="w-1/5 h-auto md:w-1/12 shadow-lg"
+                  key={`${hand.name}-${index}`}
+                />
+              ))}
             </div>
-          ))
-        }
+            <Paragraph>
+              <span className="italic text-base">{hand.cardDescription}</span>
+            </Paragraph>
+          </div>
+        ))}
       </div>
     </AppLayout>
-  )
+  );
 }

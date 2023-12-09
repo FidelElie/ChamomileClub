@@ -7,15 +7,21 @@
   src: url("/fonts/behaus93.ttf");
   font-style: normal;
   font-weight: 400;
-  font-display: swap
+  font-display: swap;
 }
 
 body {
   @apply scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-white overflow-y-auto;
 }
 
-* { @apply transition-colors; }
+* {
+  @apply transition-colors;
+}
 
-.font-heading { font-family: "Behaus 93", sans-serif; }
+.font-heading {
+  font-family: "Behaus 93", sans-serif;
+}
 
-.button { @apply px-4 py-2 rounded-md; }
+.button {
+  @apply px-4 py-2 rounded-md;
+}

@@ -5,10 +5,6 @@ import EventsController from "./events.controller";
 import UsersController from "./users.controller";
 
 export default ControllerGroup({
-	path: "/v1",
-	controllers: [
-		AuthController,
-		EventsController,
-		UsersController
-	]
+  path: "/v1",
+  controllers: [AuthController, EventsController, UsersController],
 });
