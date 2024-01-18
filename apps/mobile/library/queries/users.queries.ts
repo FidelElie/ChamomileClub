@@ -16,11 +16,9 @@ export const useFetchUsers = (
   useQuery({
     queryKey: ["users", query],
     queryFn: async () => {
-      const queryParams = new URLSearchParams(query as any);
+      const queryParams = new URLSearchParams(query as unknown as URLSearchParams);
 
-      const url = `/v1/users${
-        queryParams.size ? `?${queryParams.toString()}` : ""
-      }`;
+      const url = `/v1/users${queryParams.size ? `?${queryParams.toString()}` : ""}`;
 
       const response = await fetchClient.fetch(url, { method: "GET" });
 
@@ -34,7 +32,7 @@ export const useCreateUsers = () =>
 
     const validatedBody = CreateUsersInterfaces.body.parse(body);
 
-    const url = `/v1/users`;
+    const url = "/v1/users";
 
     const response = await fetchClient.fetch(url, {
       method: "POST",

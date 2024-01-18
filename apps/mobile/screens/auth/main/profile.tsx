@@ -1,16 +1,9 @@
-import { ComponentProps, useState } from "react";
-import { ScrollView } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import { ComponentProps, useState } from "react";
+import { ScrollView } from "react-native";
 
-import {
-  Button,
-  COLORS,
-  Copy,
-  Flex,
-  Heading,
-  twJoin,
-} from "@thechamomileclub/ui";
+import { Button, COLORS, Copy, Flex, Heading, twJoin } from "@thechamomileclub/ui";
 
 import { useEnsureAuth } from "@/library/providers";
 
@@ -28,7 +21,7 @@ const ProfileScreen = () => {
       <ScrollView className="h-full">
         <Flex.Column className="items-center bg-midnight rounded-lg py-4 px-6">
           <Button className="w-20 h-20 rounded-full border border-white mb-2.5">
-            <AntDesign name="download" color={COLORS["white"]} size={27} />
+            <AntDesign name="download" color={COLORS.white} size={27} />
           </Button>
           <Heading className="-mb-0.5">
             {user.forename} {user.surname}
@@ -97,7 +90,7 @@ const NavigationCardButton = (props: NavigationCardButtonProps) => {
       <Flex.Row className="w-full items-center">
         <AntDesign
           name={icon}
-          color={COLORS["white"]}
+          color={COLORS.white}
           size={30}
           className="mr-3"
         />
@@ -107,7 +100,7 @@ const NavigationCardButton = (props: NavigationCardButtonProps) => {
             {subtitle}
           </Copy>
         </Flex.Column>
-        <AntDesign name="right" color={COLORS["white"]} size={15} />
+        <AntDesign name="right" color={COLORS.white} size={15} />
       </Flex.Row>
     </Button>
   );

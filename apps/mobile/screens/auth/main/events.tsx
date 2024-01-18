@@ -1,6 +1,6 @@
+import { Skeleton } from "moti/skeleton";
 import { useState } from "react";
 import { ScrollView } from "react-native";
-import { Skeleton } from "moti/skeleton";
 
 import { COLORS, Copy, Flex, Show, TextField } from "@thechamomileclub/ui";
 
@@ -23,21 +23,20 @@ const EventsScreen = () => {
           width="100%"
           height="100%"
           colorMode="dark"
-          backgroundColor={COLORS["midnight"]}
+          backgroundColor={COLORS.midnight}
         >
           <Show if={eventsQuery.isSuccess ? eventsQuery.data.items : null}>
             {(events) =>
-              events.length ? (
-                events.map((event) => (
-                  <Flex key={event.id}>
-                    <Copy>{event.name}</Copy>
-                    <Copy>Number of members {event.members.length}</Copy>
-                  </Flex>
-                ))
-              ) : (
-                <NoEventsPlaceholder user={user} />
-              )
-            }
+              events.length
+                ? (
+                  events.map((event) => (
+                    <Flex key={event.id}>
+                      <Copy>{event.name}</Copy>
+                      <Copy>Number of members {event.members.length}</Copy>
+                    </Flex>
+                  ))
+                )
+                : <NoEventsPlaceholder user={user} />}
           </Show>
         </Skeleton>
       </ScrollView>

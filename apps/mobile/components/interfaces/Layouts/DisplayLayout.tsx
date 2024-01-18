@@ -1,14 +1,7 @@
-import type { ReactNode } from "react";
 import { AntDesign } from "@expo/vector-icons";
+import type { ReactNode } from "react";
 
-import {
-  Button,
-  COLORS,
-  Copy,
-  Flex,
-  Heading,
-  twJoin,
-} from "@thechamomileclub/ui";
+import { Button, COLORS, Copy, Flex, Heading, twJoin } from "@thechamomileclub/ui";
 
 export const DisplayLayout = (props: DisplayLayoutProps) => {
   const { title, subtitle, safe, onBack, children } = props;
@@ -26,7 +19,7 @@ export const DisplayLayout = (props: DisplayLayoutProps) => {
             className="border border-white rounded-full p-2.5"
             onPressIn={onBack}
           >
-            <AntDesign name="left" color={COLORS["yellow"]} size={15} />
+            <AntDesign name="left" color={COLORS.yellow} size={15} />
           </Button>
         )}
         <Flex.Column className="items-end">

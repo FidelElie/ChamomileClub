@@ -1,13 +1,13 @@
 import { useState } from "react";
 
 import { useQueryClient, type UserEntity } from "@thechamomileclub/api";
-import { Flex, Copy, Button, Show, TextField } from "@thechamomileclub/ui";
+import { Button, Copy, Flex, Show, TextField } from "@thechamomileclub/ui";
 
 import { useUpdateCurrentUser } from "@/library/queries";
 
 type Stages = "INTRODUCTION" | "DETAILS";
 
-export const OnboardingFlow = (props: { user: UserEntity }) => {
+export const OnboardingFlow = (props: { user: UserEntity; }) => {
   const { user } = props;
 
   const queryClient = useQueryClient();
@@ -38,8 +38,8 @@ export const OnboardingFlow = (props: { user: UserEntity }) => {
         active: true,
       });
       queryClient.invalidateQueries(["auth"]);
-    } catch (error: any) {
-      if (!error.response) {
+    } catch (error: unknown) {
+      if (error instanceof Error) {
         console.error(error);
       }
     }

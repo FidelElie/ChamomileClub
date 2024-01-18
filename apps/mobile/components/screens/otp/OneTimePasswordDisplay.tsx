@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { View } from "react-native";
 import { twMerge } from "tailwind-merge";
 
-import { TextField, TextFieldRef, Button, Copy } from "@thechamomileclub/ui";
+import { Button, Copy, TextField, TextFieldRef } from "@thechamomileclub/ui";
 
 export const OneTimePasswordDisplay = (props: OneTimePasswordDisplayProps) => {
   const { className, onSubmit, length = 6, isSubmitting } = props;
@@ -21,13 +21,12 @@ export const OneTimePasswordDisplay = (props: OneTimePasswordDisplayProps) => {
 
     const newValue = text.replace(currentIndexValue, "");
 
-    const normalisedValue =
-      !newValue && text !== "" ? currentIndexValue : newValue;
+    const normalisedValue = !newValue && text !== "" ? currentIndexValue : newValue;
 
     setValues((currentValues) =>
       currentValues.map((currentValue, currentValueIndex) =>
-        currentValueIndex === index ? normalisedValue : currentValue,
-      ),
+        currentValueIndex === index ? normalisedValue : currentValue
+      )
     );
 
     if (currentIndexValue !== normalisedValue) {
@@ -61,7 +60,7 @@ export const OneTimePasswordDisplay = (props: OneTimePasswordDisplayProps) => {
       <View className="flex-row justify-center space-x-2">
         {values.map((value, valueIndex) => (
           <TextField
-            key={valueIndex}
+            key={`Field - ${valueIndex}`}
             className="font-body w-10"
             ref={(element) => {
               inputRefs.current[valueIndex] = element;

@@ -1,17 +1,8 @@
-import { useEffect, useRef, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
+import { useEffect, useRef, useState } from "react";
 
 import { StartAuthProcessInterfaces } from "@thechamomileclub/api";
-import {
-  Button,
-  Copy,
-  Heading,
-  TextField,
-  Flex,
-  TextFieldRef,
-  Show,
-  Banner,
-} from "@thechamomileclub/ui";
+import { Banner, Button, Copy, Flex, Heading, Show, TextField, TextFieldRef } from "@thechamomileclub/ui";
 
 import { useStartAuthProcess } from "@/library/queries";
 import { LandingStackNavigationProps } from "./_types";
@@ -41,13 +32,14 @@ const LoginScreen = () => {
       });
 
       navigation.navigate("OTP", { keyId: response.keyId });
-    } catch (error: any) {
-      if (!error.response) {
+    } catch (error: unknown) {
+      if (error instanceof Error) {
         console.error(error);
       }
 
-      const { data } = error.response;
-      setError(data);
+      // FIXME not sure why this is error.response
+      // const { data } = error.response;
+      // setError(data);
     }
   };
 

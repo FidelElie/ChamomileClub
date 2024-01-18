@@ -1,8 +1,8 @@
-import { StyleSheet } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import { StyleSheet } from "react-native";
 
-import { Flex, Button, ButtonProps, COLORS } from "@thechamomileclub/ui";
+import { Button, ButtonProps, COLORS, Flex } from "@thechamomileclub/ui";
 
 import { useAuth } from "@/library/providers";
 
@@ -30,7 +30,7 @@ export const TabBarButton = () => {
           name="plus"
           style={styles.tabBarButtonIcon}
           size={20}
-          color={COLORS["yellow"]}
+          color={COLORS.yellow}
         />
       </Flex>
     </Button>
@@ -51,7 +51,7 @@ export const TabBarButton = () => {
 //         name="plus"
 //         style={styles.tabBarButtonIcon}
 //         size={20}
-//         color={COLORS["yellow"]}
+//         color={COLORS.yellow}
 //       />
 //     </Flex>
 //   </Button>

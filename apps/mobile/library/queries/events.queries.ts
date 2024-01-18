@@ -1,10 +1,10 @@
 import {
-  InferDTOs,
-  useQuery,
-  useMutation,
-  FetchEventsInterfaces,
   CreateEventsInterfaces,
   EditEventInterfaces,
+  FetchEventsInterfaces,
+  InferDTOs,
+  useMutation,
+  useQuery,
 } from "@thechamomileclub/api";
 
 import { fetchClient } from "../client";
@@ -13,11 +13,9 @@ export const useFetchEvents = (
   query: InferDTOs<typeof FetchEventsInterfaces>["query"],
 ) =>
   useQuery(["user", query], async () => {
-    const queryParams = new URLSearchParams(query as any);
+    const queryParams = new URLSearchParams(query as unknown as URLSearchParams);
 
-    const url = `/v1/events${
-      queryParams.size ? `?${queryParams.toString()}` : ""
-    }`;
+    const url = `/v1/events${queryParams.size ? `?${queryParams.toString()}` : ""}`;
 
     const response = await fetchClient.fetch(url, { method: "GET" });
 
@@ -31,7 +29,7 @@ export const useCreateEvents = () =>
     ) => {
       const { body } = config;
 
-      const url = `/v1/events`;
+      const url = "/v1/events";
 
       const validatedBody = CreateEventsInterfaces.body.parse(body);
 

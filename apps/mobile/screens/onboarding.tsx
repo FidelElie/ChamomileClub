@@ -1,5 +1,5 @@
-import { useState } from "react";
 import { MotiView } from "moti";
+import { useState } from "react";
 
 import { Copy, Flex, Heading, Show } from "@thechamomileclub/ui";
 
@@ -26,9 +26,7 @@ const OnboardingScreen = () => {
             animate={{ opacity: 1 }}
             transition={{ duration: 500 }}
           >
-            <Copy size="xl" className="mb-1.5">
-              Welcome
-            </Copy>
+            <Copy size="xl" className="mb-1.5">Welcome</Copy>
           </MotiView>
           <MotiView
             from={{ opacity: 0 }}
@@ -53,7 +51,9 @@ const OnboardingScreen = () => {
             animate={{ opacity: initialAnimationEnded ? 1 : 0 }}
             className="w-full py-5 flex-grow"
           >
-            <OnboardingFlow user={user!} />
+            <Show if={user}>
+              {user => <OnboardingFlow user={user} />}
+            </Show>
           </MotiView>
         </Flex>
       </Flex>

@@ -1,9 +1,9 @@
-import { useState } from "react";
 import DateTimePicker from "@react-native-community/datetimepicker";
+import { useState } from "react";
 
+import { Copy } from "../data/Copy";
 import { Flex } from "../layouts/Flex";
 import { Show } from "../utilities/Show";
-import { Copy } from "../data/Copy";
 import { Button, ButtonProps } from "./Button";
 
 export const DateTimeField = (props: DateTimeFieldProps) => {
@@ -35,15 +35,18 @@ export const DateTimeField = (props: DateTimeFieldProps) => {
         </Button>
       </Show>
 
-      {/* <Button theme={fieldTheming.buttonTheme} onPressIn={() => setShow(!show)} className="w-full">
+      {
+        /* <Button theme={fieldTheming.buttonTheme} onPressIn={() => setShow(!show)} className="w-full">
 				<Copy color={fieldTheming.textColor}>
 					{ value ? `${value.toLocaleDateString()} ${value.toLocaleTimeString()}` : placeholder }
 				</Copy>
-			</Button> */}
+			</Button> */
+      }
       <Show if={display.date && value}>
-        <DateTimePicker value={value!} mode="date" display="spinner" />
+        <DateTimePicker value={value ?? new Date()} mode="date" display="spinner" />
       </Show>
-      {/* <Show if={show}
+      {
+        /* <Show if={show}
 			<Show if={show && value}>
 				<DateTimePicker
 					value={value!}
@@ -55,7 +58,8 @@ export const DateTimeField = (props: DateTimeFieldProps) => {
 					mode="time"
 					display="spinner"
 				/>
-			</Show> */}
+			</Show> */
+      }
     </Flex.Column>
   );
 };

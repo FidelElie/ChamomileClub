@@ -1,15 +1,8 @@
-import { useState } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
+import { useState } from "react";
 
 import { ValidateLoginCodeInterfaces } from "@thechamomileclub/api";
-import {
-  Button,
-  Copy,
-  Heading,
-  Flex,
-  Show,
-  Banner,
-} from "@thechamomileclub/ui";
+import { Banner, Button, Copy, Flex, Heading, Show } from "@thechamomileclub/ui";
 
 import { useAuth } from "@/library/providers";
 import { useValidateLoginCode } from "@/library/queries";
@@ -30,11 +23,11 @@ const OneTimePasswordScreen = () => {
   const navigation = useNavigation<LandingStackNavigationProps>();
 
   const { login } = useAuth();
-  const [error, setError] = useState<SubmissionErrors>(null);
+  const [error, setError] = useState<unknown | null>(null);
 
   const validateLoginCode = useValidateLoginCode({
     onSuccess: (response) => login(response.token),
-    onError: (error) => setError(error.response || null),
+    onError: (error) => setError(error),
   });
 
   const submitLoginCode = (code: string) => {

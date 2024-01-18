@@ -1,16 +1,16 @@
-import { StyleSheet } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { StyleSheet } from "react-native";
 
 import { COLORS, Flex, Show } from "@thechamomileclub/ui";
 
 import { useAuth } from "@/library/providers";
 import type { MainTabParamList } from "./_types";
 
+import CatalogScreen from "./catalog";
+import EventsScreen from "./events";
 import HomeScreen from "./home";
 import ProfileScreen from "./profile";
-import EventsScreen from "./events";
-import CatalogScreen from "./catalog";
 
 import { TabBarButton } from "@/components/screens/main/TabBarButton";
 
@@ -52,8 +52,8 @@ export default function MainTabsLayout() {
             </Flex.Column>
           );
         },
-        tabBarActiveTintColor: COLORS["yellow"],
-        tabBarInactiveTintColor: COLORS["white"],
+        tabBarActiveTintColor: COLORS.yellow,
+        tabBarInactiveTintColor: COLORS.white,
         tabBarShowLabel: false,
       })}
     >
@@ -76,7 +76,7 @@ const EmptyTab = () => null;
 
 const styles = StyleSheet.create({
   tabBar: {
-    backgroundColor: COLORS["midnight"],
+    backgroundColor: COLORS.midnight,
     borderTopWidth: 0,
     display: "flex",
     flexDirection: "row",

@@ -1,19 +1,11 @@
-import { useRef, useState } from "react";
-import { ScrollView } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import { useRef, useState } from "react";
+import { ScrollView } from "react-native";
 
 import { useQueryClient } from "@thechamomileclub/api";
 
-import {
-  Heading,
-  TextField,
-  Flex,
-  Button,
-  Copy,
-  COLORS,
-  Show,
-} from "@thechamomileclub/ui";
+import { Button, COLORS, Copy, Flex, Heading, Show, TextField } from "@thechamomileclub/ui";
 
 import { useEnsureAuth } from "@/library/providers";
 import { useUpdateCurrentUser } from "@/library/queries";
@@ -55,7 +47,7 @@ const EditProfileScreen = () => {
       <ScrollView className="flex-grow">
         <Flex.Row className="bg-midnight px-6 py-4 rounded-lg mb-3 items-center">
           <Button className="w-14 h-14 rounded-full border border-white mr-4">
-            <AntDesign name="download" color={COLORS["white"]} size={15} />
+            <AntDesign name="download" color={COLORS.white} size={15} />
           </Button>
           <Flex.Column>
             <Heading numberOfLines={1}>
@@ -104,17 +96,13 @@ const EditProfileScreen = () => {
         <ToggleCardButton
           classes="mb-2.5"
           title="Visible"
-          subtitle={
-            "Your account information will come\nup in searches when creating events\nand public areas."
-          }
+          subtitle={"Your account information will come\nup in searches when creating events\nand public areas."}
           toggled={fields.public}
           onToggle={() => editFields({ public: true })}
         />
         <ToggleCardButton
           title="Hidden"
-          subtitle={
-            "Your profile will not come up in any\nevent searches. (Founders will still\nbe able to find you."
-          }
+          subtitle={"Your profile will not come up in any\nevent searches. (Founders will still\nbe able to find you."}
           toggled={!fields.public}
           onToggle={() => editFields({ public: false })}
         />

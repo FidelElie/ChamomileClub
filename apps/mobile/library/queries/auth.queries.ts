@@ -1,10 +1,10 @@
 import {
-  useQuery,
-  useMutation,
   GetCurrentUserInterfaces,
   StartAuthProcessInterfaces,
-  ValidateLoginCodeInterfaces,
   UpdateCurrentUserInterfaces,
+  useMutation,
+  useQuery,
+  ValidateLoginCodeInterfaces,
 } from "@thechamomileclub/api";
 
 import { fetchClient } from "../client";
@@ -31,8 +31,8 @@ export const useStartAuthProcess = () =>
   });
 
 export const useValidateLoginCode = (config?: {
-  onSuccess?: (data: { token: string }) => void;
-  onError?: (error: any) => void;
+  onSuccess?: (data: { token: string; }) => void;
+  onError?: (error: unknown) => void;
 }) =>
   useMutation({
     mutationFn: async (body: ValidateLoginCodeInterfaces["body"]) => {
@@ -50,7 +50,7 @@ export const useValidateLoginCode = (config?: {
 
 export const useUpdateCurrentUser = (config?: {
   onSuccess?: (data: string) => void;
-  onError?: (error: any) => void;
+  onError?: (error: unknown) => void;
   onMutate?: () => void;
 }) =>
   useMutation({
@@ -67,7 +67,7 @@ export const useUpdateCurrentUser = (config?: {
     ...(config || {}),
   });
 
-export const useLogoutUser = (config?: { onSuccess?: () => void }) =>
+export const useLogoutUser = (config?: { onSuccess?: () => void; }) =>
   useMutation({
     mutationFn: () => fetchClient.fetch("v1/auth", { method: "DELETE" }),
     ...(config || {}),

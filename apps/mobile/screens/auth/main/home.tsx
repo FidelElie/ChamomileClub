@@ -1,9 +1,9 @@
-import { useRef } from "react";
-import { Image, ScrollView } from "react-native";
 import { ResizeMode } from "expo-av";
 import { StatusBar } from "expo-status-bar";
-import { Skeleton } from "moti/skeleton";
 import { MotiView } from "moti";
+import { Skeleton } from "moti/skeleton";
+import { useRef } from "react";
+import { Image, ScrollView } from "react-native";
 
 import { COLORS, Copy, Flex, Heading, Show } from "@thechamomileclub/ui";
 
@@ -24,13 +24,11 @@ const HomeScreen = () => {
   const determineTimeOfDay = () => {
     const currentHour = new Date().getHours();
 
-    if (currentHour >= 0 && currentHour < 12) {
-      return "Morning";
-    } else if (currentHour >= 12 && currentHour < 18) {
-      return "Afternoon";
-    } else {
-      return "Evening";
-    }
+    if (currentHour >= 0 && currentHour < 12) { return "Morning"; }
+
+    if (currentHour >= 12 && currentHour < 18) { return "Afternoon"; }
+
+    return "Evening";
   };
 
   return (
@@ -67,23 +65,22 @@ const HomeScreen = () => {
                 width="100%"
                 height="100%"
                 colorMode="dark"
-                backgroundColor={COLORS["midnight"]}
+                backgroundColor={COLORS.midnight}
               >
                 <Show
                   if={eventsQuery.isSuccess ? eventsQuery.data.items : null}
                 >
                   {(events) =>
-                    events.length ? (
-                      events.map((event) => (
-                        <Flex key={event.id}>
-                          <Copy>{event.name}</Copy>
-                          <Copy>Number of members {event.members.length}</Copy>
-                        </Flex>
-                      ))
-                    ) : (
-                      <NoEventsPlaceholder user={user} />
-                    )
-                  }
+                    events.length
+                      ? (
+                        events.map((event) => (
+                          <Flex key={event.id}>
+                            <Copy>{event.name}</Copy>
+                            <Copy>Number of members {event.members.length}</Copy>
+                          </Flex>
+                        ))
+                      )
+                      : <NoEventsPlaceholder user={user} />}
                 </Show>
               </Skeleton>
             </Flex.Row>

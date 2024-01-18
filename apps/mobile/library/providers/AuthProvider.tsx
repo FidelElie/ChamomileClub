@@ -1,10 +1,4 @@
-import {
-  ReactNode,
-  createContext,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import { createContext, ReactNode, useContext, useEffect, useState } from "react";
 
 import type { UserEntity } from "@thechamomileclub/api";
 
@@ -40,15 +34,13 @@ export const AuthProvider = ({ children, suspend }: AuthProviderProps) => {
 
   const login = (token: string) => {
     setToken(token);
+    currentUserQuery.refetch();
   };
 
   const logout = () => {
     logoutUser.mutate();
-  };
-
-  useEffect(() => {
     currentUserQuery.refetch();
-  }, [token, initialising]);
+  };
 
   useEffect(() => {
     if (currentUserQuery.isFetched) {
@@ -99,7 +91,7 @@ export const useEnsureAuth = (): NonNullableKeys<AuthContextType> => {
   return authContext as NonNullableKeys<AuthContextType>;
 };
 
-type NonNullableKeys<T> = { [Param in keyof T]: NonNullable<T[Param]> };
+type NonNullableKeys<T> = { [Param in keyof T]: NonNullable<T[Param]>; };
 
 type AuthContextType = {
   session: string | null;

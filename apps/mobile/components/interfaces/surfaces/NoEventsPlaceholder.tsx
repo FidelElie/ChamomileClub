@@ -2,14 +2,7 @@ import { AntDesign } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 
 import { UserEntity } from "@thechamomileclub/api";
-import {
-  Show,
-  Flex,
-  Heading,
-  Copy,
-  Button,
-  COLORS,
-} from "@thechamomileclub/ui";
+import { Button, COLORS, Copy, Flex, Heading, Show } from "@thechamomileclub/ui";
 
 import { AuthStackNavigationProps } from "screens/auth/_types";
 
@@ -35,7 +28,7 @@ export const NoEventsPlaceholder = (props: NoEventsPlaceholderProps) => {
               </Copy>
             </Flex.Column>
             <Flex className="items-center justify-center border border-white rounded-full p-2">
-              <AntDesign name="plus" size={15} color={COLORS["yellow"]} />
+              <AntDesign name="plus" size={15} color={COLORS.yellow} />
             </Flex>
           </Flex.Row>
         </Flex>
