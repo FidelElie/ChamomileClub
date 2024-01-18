@@ -3,14 +3,14 @@ import { useState } from "react";
 
 import { Button, Copy, Flex, Show } from "@thechamomileclub/ui";
 
-import { useEnsureAuth } from "@/library/providers";
-
 import { DisplayLayout } from "@/components/interfaces";
 
 import type { EditEventFields, EventFields } from "@/components/screens/auth/create-event/create-event.data";
 import { EventConfirmationStage } from "@/components/screens/auth/create-event/EventConfirmationStage";
 import { EventDetailsStage } from "@/components/screens/auth/create-event/EventDetailsStage";
 import { EventMembersStage } from "@/components/screens/auth/create-event/EventMembersStage";
+
+import { useEnsureAuth } from "@/components/providers";
 
 const STAGE_DATA = [
   {

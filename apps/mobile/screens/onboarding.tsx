@@ -3,11 +3,11 @@ import { useState } from "react";
 
 import { Copy, Flex, Heading, Show } from "@thechamomileclub/ui";
 
-import { useAuth } from "@/library/providers";
-
 import { LandingLayout } from "@/components/interfaces";
 
 import { OnboardingFlow } from "@/components/screens/bridge/OnboardingFlow";
+
+import { useAuth } from "@/components/providers";
 
 const OnboardingScreen = () => {
   const { user } = useAuth();

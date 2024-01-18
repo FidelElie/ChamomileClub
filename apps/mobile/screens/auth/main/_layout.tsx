@@ -4,7 +4,6 @@ import { StyleSheet } from "react-native";
 
 import { COLORS, Flex, Show } from "@thechamomileclub/ui";
 
-import { useAuth } from "@/library/providers";
 import type { MainTabParamList } from "./_types";
 
 import CatalogScreen from "./catalog";
@@ -12,6 +11,7 @@ import EventsScreen from "./events";
 import HomeScreen from "./home";
 import ProfileScreen from "./profile";
 
+import { useAuth } from "@/components/providers";
 import { TabBarButton } from "@/components/screens/main/TabBarButton";
 
 const MainTabs = createBottomTabNavigator<MainTabParamList>();

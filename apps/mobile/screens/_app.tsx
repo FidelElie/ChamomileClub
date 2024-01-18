@@ -1,22 +1,17 @@
-import { useEffect, useState } from "react";
-import { AppState } from "react-native";
-import { useFonts } from "expo-font";
-import * as SplashScreen from "expo-splash-screen";
 import NetInfo from "@react-native-community/netinfo";
 import { NavigationContainer } from "@react-navigation/native";
+import { useFonts } from "expo-font";
+import * as SplashScreen from "expo-splash-screen";
+import { useEffect, useState } from "react";
+import { AppState } from "react-native";
 
-import {
-  QueryClientProvider,
-  QueryClient,
-  onlineManager,
-  focusManager,
-} from "@thechamomileclub/api";
+import { focusManager, onlineManager, QueryClient, QueryClientProvider } from "@thechamomileclub/api";
 
 import { NotCourierSansFont, PollerOneFont } from "@/assets";
 
-import { AuthProvider } from "@/library/providers";
-
 import RootLayout from "./_layout";
+
+import { AuthProvider } from "@/components/providers";
 
 SplashScreen.hideAsync().catch(() => {});
 

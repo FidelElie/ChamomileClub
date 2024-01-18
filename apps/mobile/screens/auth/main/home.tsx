@@ -9,10 +9,11 @@ import { COLORS, Copy, Flex, Heading, Show } from "@thechamomileclub/ui";
 
 import { YellowAltLogo } from "@/assets";
 
-import { useAuth } from "@/library/providers";
 import { useFetchEvents } from "@/library/queries";
 
 import { NoEventsPlaceholder } from "@/components/interfaces";
+
+import { useAuth } from "@/components/providers";
 
 const HomeScreen = () => {
   const { user } = useAuth();

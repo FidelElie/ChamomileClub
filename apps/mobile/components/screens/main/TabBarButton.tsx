@@ -4,9 +4,9 @@ import { StyleSheet } from "react-native";
 
 import { Button, ButtonProps, COLORS, Flex } from "@thechamomileclub/ui";
 
-import { useAuth } from "@/library/providers";
-
 import type { AuthStackNavigationProps } from "screens/auth/_types";
+
+import { useAuth } from "@/components/providers";
 
 export const TabBarButton = () => {
   const { user } = useAuth();

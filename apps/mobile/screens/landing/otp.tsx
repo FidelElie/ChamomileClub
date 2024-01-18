@@ -4,12 +4,13 @@ import { useState } from "react";
 import { ValidateLoginCodeInterfaces } from "@thechamomileclub/api";
 import { Banner, Button, Copy, Flex, Heading, Show } from "@thechamomileclub/ui";
 
-import { useAuth } from "@/library/providers";
 import { useValidateLoginCode } from "@/library/queries";
 
 import { LandingStackNavigationProps, LandingStackRouteProps } from "./_types";
 
 import { OneTimePasswordDisplay } from "@/components/screens/otp/OneTimePasswordDisplay";
+
+import { useAuth } from "@/components/providers";
 
 export type SubmissionErrors =
   | null

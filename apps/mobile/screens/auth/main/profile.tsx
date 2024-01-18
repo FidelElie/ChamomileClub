@@ -5,10 +5,11 @@ import { ScrollView } from "react-native";
 
 import { Button, COLORS, Copy, Flex, Heading, twJoin } from "@thechamomileclub/ui";
 
-import { useEnsureAuth } from "@/library/providers";
+import { AuthStackNavigationProps } from "../_types";
 
 import { DisplayLayout, ToggleCardButton } from "@/components/interfaces";
-import { AuthStackNavigationProps } from "../_types";
+
+import { useEnsureAuth } from "@/components/providers";
 
 const ProfileScreen = () => {
   const { user, logout } = useEnsureAuth();

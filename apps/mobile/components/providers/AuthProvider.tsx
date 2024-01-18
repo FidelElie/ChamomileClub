@@ -2,9 +2,9 @@ import { createContext, ReactNode, useContext, useEffect, useState } from "react
 
 import type { UserEntity } from "@thechamomileclub/api";
 
-import { AppConfig } from "../configs";
-import { useAsyncStorage } from "../hooks";
-import { useGetCurrentUser, useLogoutUser } from "../queries";
+import { AppConfig } from "../../library/configs";
+import { useAsyncStorage } from "../../library/hooks";
+import { useGetCurrentUser, useLogoutUser } from "../../library/queries";
 
 import { SplashScreen } from "@/components/interfaces";
 

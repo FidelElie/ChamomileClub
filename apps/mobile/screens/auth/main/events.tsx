@@ -4,10 +4,11 @@ import { ScrollView } from "react-native";
 
 import { COLORS, Copy, Flex, Show, TextField } from "@thechamomileclub/ui";
 
-import { useAuth } from "@/library/providers";
 import { useFetchEvents } from "@/library/queries";
 
 import { DisplayLayout, NoEventsPlaceholder } from "@/components/interfaces";
+
+import { useAuth } from "@/components/providers";
 
 const EventsScreen = () => {
   const { user } = useAuth();

@@ -2,12 +2,13 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import { Flex } from "@thechamomileclub/ui";
 
-import { useAuth } from "@/library/providers";
 import type { RootStackParamList } from "./_types";
 
 import HomeTabLayout from "./auth/_layout";
 import LandingStackLayout from "./landing/_layout";
 import OnboardingScreen from "./onboarding";
+
+import { useAuth } from "@/components/providers";
 
 const RootStack = createNativeStackNavigator<RootStackParamList>();
 

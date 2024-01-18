@@ -7,10 +7,11 @@ import { useQueryClient } from "@thechamomileclub/api";
 
 import { Button, COLORS, Copy, Flex, Heading, Show, TextField } from "@thechamomileclub/ui";
 
-import { useEnsureAuth } from "@/library/providers";
 import { useUpdateCurrentUser } from "@/library/queries";
 
 import { DisplayLayout, ToggleCardButton } from "@/components/interfaces";
+
+import { useEnsureAuth } from "@/components/providers";
 
 const EditProfileScreen = () => {
   const { user } = useEnsureAuth();
