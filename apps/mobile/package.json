@@ -8,8 +8,8 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "expo": "npx expo",
-    "lint": "eslint .",
-    "check:types": "tsc --noEmit"
+    "lint": "biome lint .",
+    "types": "tsc --noEmit"
   },
   "dependencies": {
     "@expo/vector-icons": "^13.0.0",

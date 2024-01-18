@@ -4,8 +4,8 @@
   "description": "In repo scripts that provide utilities and installs",
   "private": true,
   "scripts": {
-    "lint": "eslint .",
-    "check:types": "tsc --noEmit",
+    "lint": "biome lint .",
+    "types": "tsc --noEmit",
     "clean": "ts-node ./code/clean.ts",
     "husky": "ts-node ./code/husky.ts"
   },

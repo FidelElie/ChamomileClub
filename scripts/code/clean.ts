@@ -1,7 +1,9 @@
+import { Command } from "commander";
 import fs from "fs";
 import path from "path";
 import { rimrafSync } from "rimraf";
-import { Command } from "commander";
+
+import { findRootDir } from "./utilities";
 
 type ProgramConfig = {
   node?: true;
@@ -15,10 +17,10 @@ type FolderIdentifiers = "node_modules" | ".turbo" | "dist" | ".expo";
 const parseProgram = (config: ProgramConfig, rootDir: string) => {
   const folderPathsToDelete = determineFolderPaths(config, rootDir);
 
-  folderPathsToDelete.forEach((path) => {
+  for (const path of folderPathsToDelete) {
     console.log(`Cleaning ${path}`);
     rimrafSync(path);
-  });
+  }
 };
 
 const determineFolderPaths = (config: ProgramConfig, rootDir: string) => {
@@ -27,15 +29,15 @@ const determineFolderPaths = (config: ProgramConfig, rootDir: string) => {
   // Defaults to cleaning node module folders
   if (!Object.keys(config).length) {
     return findFolders(rootDir, "node_modules");
-  } else {
-    return [
-      all || build ? findFolders(rootDir, "dist") : [],
-      all || cache
-        ? findFolders(rootDir, ".turbo").concat(findFolders(rootDir, ".expo"))
-        : [],
-      all || node ? findFolders(rootDir, "node_modules") : [],
-    ].flat();
   }
+
+  return [
+    all || build ? findFolders(rootDir, "dist") : [],
+    all || cache
+      ? findFolders(rootDir, ".turbo").concat(findFolders(rootDir, ".expo"))
+      : [],
+    all || node ? findFolders(rootDir, "node_modules") : [],
+  ].flat();
 };
 
 const findFolders = (
@@ -50,8 +52,8 @@ const findFolders = (
 
   const directories = contents.filter(
     (content) =>
-      fs.lstatSync(path.join(dirPath, content)).isDirectory() &&
-      content !== "node_modules",
+      fs.lstatSync(path.join(dirPath, content)).isDirectory()
+      && content !== "node_modules",
   );
 
   const modulesPath = contents.includes(identifier)
@@ -59,7 +61,7 @@ const findFolders = (
     : [];
 
   const nodeModulesInSubDirectories = directories.map((dirName) =>
-    findFolders(path.join(dirPath, dirName), identifier),
+    findFolders(path.join(dirPath, dirName), identifier)
   );
 
   return [modulesPath, ...nodeModulesInSubDirectories].flat();
@@ -81,6 +83,6 @@ program
 program.parse();
 
 const options = program.opts() satisfies ProgramConfig;
-const rootDir = path.resolve(path.dirname(__dirname));
+const rootDir = path.resolve(findRootDir());
 
 parseProgram(options, rootDir);

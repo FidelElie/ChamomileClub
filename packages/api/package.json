@@ -8,8 +8,8 @@
   "author": "",
   "license": "ISC",
   "scripts": {
-    "lint": "eslint .",
-    "check:types": "tsc --noEmit"
+    "lint": "biome lint .",
+    "types": "tsc --noEmit"
   },
   "devDependencies": {
     "typescript": "^4.9.5"
