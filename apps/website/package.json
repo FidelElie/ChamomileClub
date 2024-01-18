@@ -6,7 +6,6 @@
     "dev": "next dev -p 3002",
     "build": "next build",
     "start": "next start",
-    "lint": "biome lint .",
     "types": "tsc --noEmit"
   },
   "dependencies": {
