@@ -1,22 +1,23 @@
 import nodePath from "path";
 
-import { createRouter } from "next-connect";
 import type { NextApiResponse } from "next";
+import { createRouter } from "next-connect";
 
-import { ApiRequest } from "./types";
 import { httpResponse, notFoundResponse } from "./responses";
+import { ApiRequest } from "./types";
 
 export const Controller = <
   NextRequest extends ApiRequest = ApiRequest,
   NextResponse extends NextApiResponse = NextApiResponse,
 >(
-  path: string = "/",
+  path = "/",
   options?: ControllerOptions<NextRequest, NextResponse>,
 ) => {
   const mergeOptions = Object.assign({}, { middlewares: [] }, options ?? {});
 
   const { middlewares } = mergeOptions;
 
+  // biome-ignore lint/suspicious/noExplicitAny: FIXME
   const router = createRouter<any, NextResponse>();
 
   for (const middleware of middlewares) {
@@ -67,6 +68,7 @@ export const createServerRouter = <
   const flattenedControllers = controllers.flat();
 
   return async (req: NextRequest, res: NextResponse) => {
+    // biome-ignore lint/suspicious/noExplicitAny: FIXME
     const routerTest = createRouter<any, NextResponse>();
 
     for (const middleware of middlewares) {
@@ -87,13 +89,14 @@ const handlerConfiguration = {
   onNoMatch: (_: ApiRequest, res: NextApiResponse) => {
     return notFoundResponse(res, "Route Not Found");
   },
-  onError: (error: any, _: ApiRequest, res: NextApiResponse) => {
-    if (!error.status) {
-      console.error(error);
+  onError: (error: unknown, _: ApiRequest, res: NextApiResponse) => {
+    if (!(error instanceof Error)) {
+      console.log(error);
+      return httpResponse(res, { status: 500 });
     }
 
     return httpResponse(res, {
-      status: error.status || 500,
+      status: ("status" in error && typeof error.status === "number") ? error.status : 500,
       message: error.message,
       data: process.env.NODE_ENV !== "production" ? { stack: error.stack } : {},
     });
@@ -110,7 +113,7 @@ export type ControllerGrouping = {
 export type Middleware<
   NextRequest extends ApiRequest = ApiRequest,
   NextResponse extends NextApiResponse = NextApiResponse,
-> = (req: NextRequest, res: NextResponse, next: () => void) => any;
+> = (req: NextRequest, res: NextResponse, next: () => void) => unknown;
 
 export type ControllerOptions<
   NextRequest extends ApiRequest = ApiRequest,

@@ -1,2 +1,2 @@
 export * from "./app.config";
-export * from "./ses.config";
+export * from "./dependency.config";

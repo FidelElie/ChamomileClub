@@ -3,7 +3,7 @@ import { describe, expect, it } from "@jest/globals";
 describe("guards.middleware", () => {
   describe("requireRolesGuard", () => {
     it("Works", () => {
-      expect(1 === 1).toBeTruthy();
+      expect(Boolean(1)).toBeTruthy();
     });
   });
 });

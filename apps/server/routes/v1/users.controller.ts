@@ -5,21 +5,19 @@ import {
   FetchUsersInterfaces,
 } from "@thechamomileclub/api";
 
+import { dependencyMap } from "@/library/configs";
+import { requireAuthGuard, requireRolesGuard, validateRequestEntities } from "@/library/middlewares";
 import { ApiRequestWithAuth, Controller } from "@/library/server";
-import {
-  exposeSession,
-  requireAuthGuard,
-  requireRolesGuard,
-  validateRequestEntities,
-} from "@/library/middlewares";
 
-import * as UsersControllerService from "./users.controller.service";
+import { createUsersControllerService } from "./users.controller.service";
 
 const UsersController = Controller<ApiRequestWithAuth>("/users");
 
+const UsersControllerService = createUsersControllerService(dependencyMap);
+
 UsersController.get(
   "/",
-  exposeSession,
+  dependencyMap.exposeSession,
   requireAuthGuard,
   validateRequestEntities(FetchUsersInterfaces),
   UsersControllerService.fetchUsers,
@@ -27,7 +25,7 @@ UsersController.get(
 
 UsersController.post(
   "/",
-  exposeSession,
+  dependencyMap.exposeSession,
   requireRolesGuard(["FOUNDER"]),
   validateRequestEntities(CreateUsersInterfaces),
   UsersControllerService.createUsers,
@@ -35,7 +33,7 @@ UsersController.post(
 
 UsersController.patch(
   "/:userId",
-  exposeSession,
+  dependencyMap.exposeSession,
   requireRolesGuard(["FOUNDER"]),
   validateRequestEntities(EditUserInterfaces),
   UsersControllerService.editUser,
@@ -43,7 +41,7 @@ UsersController.patch(
 
 UsersController.delete(
   "/:userId",
-  exposeSession,
+  dependencyMap.exposeSession,
   requireRolesGuard(["FOUNDER"]),
   validateRequestEntities(DeleteUserInterfaces),
   UsersControllerService.deleteUser,

@@ -4,12 +4,12 @@ export const httpResponse = <
   NextResponse extends NextApiResponse = NextApiResponse,
 >(
   res: NextResponse,
-  config: { status: number; message?: string; data?: { [key: string]: any } },
+  config: { status: number; message?: string; data?: unknown; },
 ) => {
   return res.status(config.status).json({
     status: config.status,
     ...(config.message ? { message: config.message } : {}),
-    ...config.data,
+    ...(config.data || {}),
   });
 };
 
@@ -17,7 +17,7 @@ export const okResponse = <
   NextResponse extends NextApiResponse = NextApiResponse,
 >(
   res: NextResponse,
-  jsonPayload: any,
+  jsonPayload: unknown,
 ) => {
   res.status(200).json(jsonPayload);
   return jsonPayload;
@@ -27,7 +27,7 @@ export const createdResponse = <
   NextResponse extends NextApiResponse = NextApiResponse,
 >(
   res: NextResponse,
-  jsonPayload: any,
+  jsonPayload: unknown,
 ) => {
   res.status(201).json(jsonPayload);
   return jsonPayload;

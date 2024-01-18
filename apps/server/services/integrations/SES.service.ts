@@ -1,24 +1,15 @@
+import { SendEmailCommand, SESClient } from "@aws-sdk/client-ses";
+import picocolors from "picocolors";
 import { ComponentProps, createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
-import picocolors from "picocolors";
-import {
-  SESClient,
-  SESClientConfig,
-  SendEmailCommand,
-} from "@aws-sdk/client-ses";
 
 import { MagicLinkEmail, MemberInvitationEmail } from "@/emails";
 
-export const createSESService = (
-  sesConfig: SESClientConfig,
-  serviceConfig: ServiceConfig,
-) => {
-  const sesClient = new SESClient(sesConfig);
-
-  return SESService(sesClient, serviceConfig);
+export const createSESService = (client: SESClient, serviceConfig: S3ServiceConfig) => {
+  return SESService(client, serviceConfig);
 };
 
-export const SESService = (client: SESClient, serviceConfig: ServiceConfig) => {
+const SESService = (client: SESClient, serviceConfig: S3ServiceConfig) => {
   const charset = "UTF-8";
 
   const send = async (config: BaseSendConfig<EmailTemplate>) => {
@@ -37,16 +28,12 @@ export const SESService = (client: SESClient, serviceConfig: ServiceConfig) => {
 
       const data = await client.send(emailCommand);
 
-      const message = `Sent email ${
-        config.id
-      } to ${Destination.ToAddresses.join(", ")}`;
-      console.log(`${picocolors.green(`email`)} - ${message}`);
+      const message = `Sent email ${config.id} to ${Destination.ToAddresses.join(", ")}`;
+      console.log(`${picocolors.green("email")} - ${message}`);
 
       return { result: data, error: null };
     } catch (error) {
-      const message = `Failure to send email ${
-        config.id
-      } to ${Destination.ToAddresses.join(", ")}`;
+      const message = `Failure to send email ${config.id} to ${Destination.ToAddresses.join(", ")}`;
       console.log(`${picocolors.red("email")} - ${message}`);
       console.error(error);
 
@@ -62,9 +49,7 @@ export const SESService = (client: SESClient, serviceConfig: ServiceConfig) => {
 
   const parseEmailDestination = (config: BaseSendConfig<EmailTemplate>) => {
     const parseSignatures = (signatures: EmailSignature[] | EmailSignature) =>
-      (Array.isArray(signatures) ? signatures : [signatures]).map((signature) =>
-        parseEmailSignature(signature),
-      );
+      (Array.isArray(signatures) ? signatures : [signatures]).map((signature) => parseEmailSignature(signature));
 
     return {
       ToAddresses: parseSignatures(config.to),
@@ -75,10 +60,9 @@ export const SESService = (client: SESClient, serviceConfig: ServiceConfig) => {
 
   const parseEmailMessage = (config: BaseSendConfig<EmailTemplate>) => {
     const { content, model, subject } = config;
-    const Data =
-      typeof content === "function"
-        ? parseEmailTemplate(content, model)
-        : content;
+    const Data = typeof content === "function"
+      ? parseEmailTemplate(content, model)
+      : content;
 
     return {
       Subject: { Charset: charset, Data: subject },
@@ -97,7 +81,7 @@ export const SESService = (client: SESClient, serviceConfig: ServiceConfig) => {
   };
 
   const parseEmailSignature = (
-    recipient: string | { name: string; email: string },
+    recipient: string | { name: string; email: string; },
   ) => {
     if (typeof recipient === "string") {
       return recipient;
@@ -126,12 +110,13 @@ export const SESService = (client: SESClient, serviceConfig: ServiceConfig) => {
   };
 };
 
-type ServiceConfig = {
-  sender: { name: string; email: string };
+export type S3ServiceConfig = {
+  sender: { name: string; email: string; };
 };
 
+/** biome-ignore lint/suspicious/noExplicitAny: Can take any props */
 type EmailTemplate = (props: any) => JSX.Element;
-type EmailSignature = { name: string; email: string } | string;
+type EmailSignature = { name: string; email: string; } | string;
 
 type BaseSendConfig<T extends EmailTemplate> = {
   sender?: EmailSignature;

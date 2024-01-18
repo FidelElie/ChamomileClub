@@ -1,42 +1,63 @@
-import { checkEnvironmentVariable } from "@/library/utilities";
+import { z } from "@thechamomileclub/api";
 
-const APP_SECRET = checkEnvironmentVariable(
-  "APP_SECRET",
-  process.env.APP_SECRET,
-  () => {
-    if (process.env.NODE_ENV === "development") {
-      return "development";
-    }
-  },
-);
+const NODE_ENV = process.env.NODE_ENV;
 
-const AWS_SES_ACCESS_KEY = checkEnvironmentVariable(
-  "AWS_SES_ACCESS_KEY",
-  process.env.AWS_SES_ACCESS_KEY,
-);
+const environmentVariable = (length = 1) => z.string().min(length);
 
-const AWS_SES_SECRET_ACCESS_KEY = checkEnvironmentVariable(
-  "AWS_SES_SECRET_ACCESS_KEY",
-  process.env.AWS_SES_SECRET_ACCESS_KEY,
-);
+const EnvironmentVariableSchema = z.object({
+  // Server
+  APP_SECRET: z.string().catch(() => {
+    if (NODE_ENV === "production") { throw new Error("APP_SECRET is missing from config"); }
 
-const SENT_FROM_EMAIL = checkEnvironmentVariable(
-  "SENT_FROM_EMAIL",
-  process.env.SENT_FROM_EMAIL,
-);
+    return "super-secret-development-code";
+  }),
+  SENT_FROM_EMAIL: environmentVariable().email(),
+  SENT_FROM_NAME: environmentVariable(),
+  // Xata
+  XATA_API_KEY: environmentVariable(),
+  XATA_FALLBACK_BRANCH: environmentVariable().optional(),
+  // AWS SES
+  AWS_SES_ACCESS_KEY: environmentVariable(),
+  AWS_SES_SECRET_ACCESS_KEY: environmentVariable(),
+  AWS_SES_REGION: environmentVariable().optional(),
+  // AWS S3
+  AWS_S3_ACCESS_KEY: environmentVariable(),
+  AWS_S3_SECRET_ACCESS_KEY: environmentVariable(),
+});
 
-const SENT_FROM_NAME = checkEnvironmentVariable(
-  "SENT_FROM_NAME",
-  process.env.SENT_FROM_NAME,
-);
+type EnvironmentVariableSchema = z.infer<typeof EnvironmentVariableSchema>;
+
+declare global {
+  namespace NodeJS {
+    interface ProcessEnv extends EnvironmentVariableSchema {}
+  }
+}
+
+const ensuredEnvironment = EnvironmentVariableSchema.parse({
+  APP_SECRET: process.env.APP_SECRET,
+  SENT_FROM_EMAIL: process.env.SENT_FROM_EMAIL,
+  SENT_FROM_NAME: process.env.SENT_FROM_NAME,
+  XATA_API_KEY: process.env.XATA_API_KEY,
+  XATA_FALLBACK_BRANCH: process.env.XATA_FALLBACK_BRANCH,
+  AWS_SES_ACCESS_KEY: process.env.AWS_SES_ACCESS_KEY,
+  AWS_SES_SECRET_ACCESS_KEY: process.env.AWS_SES_SECRET_ACCESS_KEY,
+  AWS_S3_ACCESS_KEY: process.env.AWS_S3_ACCESS_KEY,
+  AWS_S3_ACCESS_SECRET_ACCESS_KEY: process.env.AWS_S3_SECRET_ACCESS_KEY,
+});
 
 export const AppConfig = {
-  secret: APP_SECRET,
-  emails: {
-    region: process.env.AWS_SES_REGION,
-    clientId: AWS_SES_ACCESS_KEY,
-    secretKey: AWS_SES_SECRET_ACCESS_KEY,
-    senderEmail: SENT_FROM_EMAIL,
-    senderName: SENT_FROM_NAME,
+  env: {
+    secret: ensuredEnvironment.APP_SECRET,
+    SES: {
+      region: ensuredEnvironment.AWS_SES_REGION,
+      clientId: ensuredEnvironment.AWS_SES_ACCESS_KEY,
+      secretKey: ensuredEnvironment.AWS_SES_SECRET_ACCESS_KEY,
+      senderEmail: ensuredEnvironment.SENT_FROM_EMAIL,
+      senderFrom: ensuredEnvironment.SENT_FROM_NAME,
+    },
+    S3: {
+      clientId: ensuredEnvironment.AWS_S3_ACCESS_KEY,
+      secretKey: ensuredEnvironment.AWS_S3_SECRET_ACCESS_KEY,
+    },
   },
 };

@@ -1,42 +1,37 @@
-import {
-  CreateEventsInterfaces,
-  EditEventInterfaces,
-  FetchEventsInterfaces,
-} from "@thechamomileclub/api";
+import { CreateEventsInterfaces, EditEventInterfaces, FetchEventsInterfaces } from "@thechamomileclub/api";
 
-import {
-  exposeSession,
-  requireAuthGuard,
-  validateRequestEntities,
-} from "@/library/middlewares";
+import { dependencyMap } from "@/library/configs";
+import { requireAuthGuard, validateRequestEntities } from "@/library/middlewares";
 import { ApiRequestWithAuth, Controller } from "@/library/server";
 
-import * as EventControllerService from "./events.controller.service";
+import { createEventsControllerService } from "./events.controller.service";
 
-const EventController = Controller<ApiRequestWithAuth>("/events");
+const EventsController = Controller<ApiRequestWithAuth>("/events");
 
-EventController.get(
+const EventsControllerService = createEventsControllerService(dependencyMap);
+
+EventsController.get(
   "/",
-  exposeSession,
+  dependencyMap.exposeSession,
   requireAuthGuard,
   validateRequestEntities(FetchEventsInterfaces),
-  EventControllerService.fetchEvents,
+  EventsControllerService.fetchEvents,
 );
 
-EventController.post(
+EventsController.post(
   "/",
-  exposeSession,
+  dependencyMap.exposeSession,
   requireAuthGuard,
   validateRequestEntities(CreateEventsInterfaces),
-  EventControllerService.createEvents,
+  EventsControllerService.createEvents,
 );
 
-EventController.patch(
+EventsController.patch(
   "/:eventId",
-  exposeSession,
+  dependencyMap.exposeSession,
   requireAuthGuard,
   validateRequestEntities(EditEventInterfaces),
-  EventControllerService.editEvent,
+  EventsControllerService.editEvent,
 );
 
-export default EventController;
+export default EventsController;

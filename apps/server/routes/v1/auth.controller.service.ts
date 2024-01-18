@@ -1,17 +1,16 @@
-import { NextApiResponse } from "next";
+import type { NextApiResponse } from "next";
 
-import { getXataClient } from "@thechamomileclub/database";
 import {
   InferDTOs,
   KeyEntity,
   SessionEntity,
-  UserEntity,
   StartAuthProcessInterfaces,
-  ValidateLoginCodeInterfaces,
   UpdateCurrentUserInterfaces,
+  UserEntity,
+  ValidateLoginCodeInterfaces,
 } from "@thechamomileclub/api";
 
-import { generateRandomString, signToken, verifyToken } from "@/services";
+import { dependencyMap } from "@/library/configs";
 import {
   ApiRequest,
   ApiRequestWithAuth,
@@ -21,121 +20,134 @@ import {
   unauthorisedResponse,
   unprocessableEntityResponse,
 } from "@/library/server";
+import { AuthService } from "@/services";
 
-const { db } = getXataClient();
+const AuthControllerService = (serviceConfig: AuthControllerServiceConfig) => {
+  const { xataClient: { db } } = serviceConfig;
 
-/** GET /auth: Get current authenticated user */
-export const getCurrentUser = (
-  req: ApiRequestWithAuth,
-  res: NextApiResponse,
-) => {
-  res.status(200).json({
-    session: req.auth?.session || null,
-    user: req.auth?.user || null,
-  });
+  return {
+    /** */
+    getCurrentUser: (
+      req: ApiRequestWithAuth,
+      res: NextApiResponse,
+    ) => {
+      res.status(200).json({
+        session: req.auth?.session || null,
+        user: req.auth?.user || null,
+      });
+    },
+    /** */
+    startAuthProcess: async (
+      req: ApiRequest<InferDTOs<typeof StartAuthProcessInterfaces>>,
+      res: NextApiResponse,
+    ) => {
+      const { email } = req.body;
+
+      const userWithEmail = await db.users.filter({ email }).getFirst();
+
+      if (!userWithEmail) {
+        return notFoundResponse(res, "User not found");
+      }
+
+      const userResult = UserEntity.safeParse(userWithEmail);
+
+      if (!userResult.success) {
+        return unprocessableEntityResponse(res, "User invalid");
+      }
+
+      const existingAccessKeys = await db.keys
+        .filter({ user: userWithEmail.id })
+        .getAll();
+
+      await db.keys.delete(existingAccessKeys.map((key) => key.id));
+
+      const accessKey = await db.keys.create(
+        {
+          code: AuthService.generateRandomString(6),
+          user: { id: userResult.data.id },
+          token: AuthService.signToken({ id: userResult.data.id, email: userResult.data.email }),
+        } satisfies Pick<KeyEntity, "code" | "user" | "token">,
+      );
+
+      const payload = {
+        keyId: accessKey.id,
+        forename: userResult.data.forename,
+      } satisfies InferDTOs<typeof StartAuthProcessInterfaces>["response"];
+
+      return createdResponse(res, payload);
+    },
+    /** */
+    validateLoginCode: async (
+      req: ApiRequest<InferDTOs<typeof ValidateLoginCodeInterfaces>>,
+      res: NextApiResponse,
+    ) => {
+      const { keyId, code } = req.body;
+
+      const correspondingKey = await db.keys.read(keyId);
+
+      if (!correspondingKey) {
+        return badRequestResponse(res, "Key not found");
+      }
+
+      const { token, code: keyCode } = KeyEntity.parse(correspondingKey);
+
+      if (!token) { return unauthorisedResponse(res); }
+
+      const { decoded, error } = AuthService.verifyToken<Pick<UserEntity, "id" | "email">>(
+        token,
+      );
+
+      if (error || keyCode !== code || !decoded) {
+        return unauthorisedResponse(res, "Invalid code");
+      }
+
+      const newSession = await db.sessions.create(
+        {
+          user: { id: decoded.id },
+        } satisfies Pick<SessionEntity, "user">,
+      );
+
+      const sessionToken = AuthService.signToken({ session: newSession.id });
+
+      await db.keys.delete(keyId);
+
+      const payload = {
+        token: sessionToken,
+      } satisfies InferDTOs<typeof ValidateLoginCodeInterfaces>["response"];
+
+      return createdResponse(res, payload);
+    },
+    /** */
+    updateCurrentUser: async (
+      req: ApiRequestWithAuth<InferDTOs<typeof UpdateCurrentUserInterfaces>>,
+      res: NextApiResponse,
+    ) => {
+      if (!req.auth) {
+        return unauthorisedResponse(res, "No user auth");
+      }
+
+      await db.users.update(req.auth.user.id, req.body);
+
+      return res.status(204).end();
+    },
+    /** */
+    logoutUser: async (
+      req: ApiRequestWithAuth,
+      res: NextApiResponse,
+    ) => {
+      if (!req.auth) {
+        return badRequestResponse(res, "No session found");
+      }
+
+      await db.sessions.update(req.auth.session, { deletedAt: new Date() });
+
+      return res.status(204).end();
+    },
+  };
 };
 
-/** POST /auth: Start Auth Process for creating login codes */
-export const startAuthProcess = async (
-  req: ApiRequest<InferDTOs<typeof StartAuthProcessInterfaces>>,
-  res: NextApiResponse,
-) => {
-  const { email } = req.body;
-
-  const userWithEmail = await db.users.filter({ email }).getFirst();
-
-  if (!userWithEmail) {
-    return notFoundResponse(res, "User not found");
-  }
-
-  const userResult = UserEntity.safeParse(userWithEmail);
-
-  if (!userResult.success) {
-    return unprocessableEntityResponse(res, "User invalid");
-  }
-
-  const existingAccessKeys = await db.keys
-    .filter({ user: userWithEmail.id })
-    .getAll();
-
-  await db.keys.delete(existingAccessKeys.map((key) => key.id));
-
-  const accessKey = await db.keys.create({
-    code: generateRandomString(6),
-    user: { id: userResult.data.id },
-    token: signToken({ id: userResult.data.id, email: userResult.data.email }),
-  } satisfies Pick<KeyEntity, "code" | "user" | "token">);
-
-  const payload = {
-    keyId: accessKey.id,
-    forename: userResult.data.forename,
-  } satisfies InferDTOs<typeof StartAuthProcessInterfaces>["response"];
-
-  return createdResponse(res, payload);
+export const createAuthControllerService = (serviceConfig: AuthControllerServiceConfig) => {
+  return AuthControllerService(serviceConfig);
 };
 
-/** PUT /auth: Validate login provided login and authenticate user */
-export const validateLoginCode = async (
-  req: ApiRequest<InferDTOs<typeof ValidateLoginCodeInterfaces>>,
-  res: NextApiResponse,
-) => {
-  const { keyId, code } = req.body;
-
-  const correspondingKey = await db.keys.read(keyId);
-
-  if (!correspondingKey) {
-    return badRequestResponse(res, "Key not found");
-  }
-
-  const { token, code: keyCode } = KeyEntity.parse(correspondingKey);
-
-  const { decoded, error } = verifyToken<Pick<UserEntity, "id" | "email">>(
-    token!,
-  );
-
-  if (error || keyCode !== code) {
-    return unauthorisedResponse(res, "Invalid code");
-  }
-
-  const newSession = await db.sessions.create({
-    user: { id: decoded!.id },
-  } satisfies Pick<SessionEntity, "user">);
-
-  const sessionToken = signToken({ session: newSession.id });
-
-  await db.keys.delete(keyId);
-
-  const payload = {
-    token: sessionToken,
-  } satisfies InferDTOs<typeof ValidateLoginCodeInterfaces>["response"];
-
-  return createdResponse(res, payload);
-};
-
-/** PATCH /auth: Update authenticated user information  */
-export const updateCurrentUser = async (
-  req: ApiRequestWithAuth<InferDTOs<typeof UpdateCurrentUserInterfaces>>,
-  res: NextApiResponse,
-) => {
-  if (!req.auth) {
-    return unauthorisedResponse(res, "No user auth");
-  }
-
-  await db.users.update(req.auth.user.id, req.body);
-
-  return res.status(204).end();
-};
-
-/** DELETE /auth Logout current authenticated user */
-export const logoutUser = async (
-  req: ApiRequestWithAuth,
-  res: NextApiResponse,
-) => {
-  if (!req.auth) {
-    return badRequestResponse(res, "No session found");
-  }
-
-  await db.sessions.update(req.auth.session, { deletedAt: new Date() });
-
-  return res.status(204).end();
-};
+type AuthControllerServiceConfig = Pick<typeof dependencyMap, "xataClient">;
