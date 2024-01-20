@@ -12,7 +12,7 @@ type ProgramConfig = {
   cache?: true;
 };
 
-type FolderIdentifiers = "node_modules" | ".nx" | "dist" | ".expo";
+type FolderIdentifiers = "node_modules" | ".turbo" | "dist" | ".expo";
 
 const parseProgram = (config: ProgramConfig, rootDir: string) => {
   const folderPathsToDelete = determineFolderPaths(config, rootDir);
@@ -34,7 +34,7 @@ const determineFolderPaths = (config: ProgramConfig, rootDir: string) => {
   return [
     all || build ? findFolders(rootDir, "dist") : [],
     all || cache
-      ? findFolders(rootDir, ".nx").concat(findFolders(rootDir, ".expo"))
+      ? findFolders(rootDir, ".turbo").concat(findFolders(rootDir, ".expo"))
       : [],
     all || node ? findFolders(rootDir, "node_modules") : [],
   ].flat();

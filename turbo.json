@@ -8,6 +8,8 @@
       ]
     },
     "types": {},
-    "dev": {}
+    "dev": {
+      "cache": false
+    }
   }
 }
