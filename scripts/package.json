@@ -10,6 +10,7 @@
     "husky": "ts-node ./code/husky.ts"
   },
   "devDependencies": {
-    "@types/node": "^20.10.2"
+    "@types/node": "^20.10.2",
+    "@types/rimraf": "^4.0.5"
   }
 }
