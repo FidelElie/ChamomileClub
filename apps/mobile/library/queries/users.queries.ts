@@ -8,68 +8,79 @@ import {
   useQuery,
 } from "@thechamomileclub/api";
 
-import { fetchClient } from "../client";
+import { RequestClient } from "../configs";
 
 export const useFetchUsers = (
   query: InferDTOs<typeof FetchUsersInterfaces>["query"],
-) =>
-  useQuery({
-    queryKey: ["users", query],
-    queryFn: async () => {
-      const queryParams = new URLSearchParams(query as unknown as URLSearchParams);
+) => {
+  useQuery(
+    {
+      queryKey: ["users", query],
+      queryFn: async () => {
+        const queryParams = new URLSearchParams(query as unknown as URLSearchParams);
 
-      const url = `/v1/users${queryParams.size ? `?${queryParams.toString()}` : ""}`;
+        const url = `/v1/users${queryParams.size ? `?${queryParams.toString()}` : ""}`;
 
-      const response = await fetchClient.fetch(url, { method: "GET" });
+        const response = await RequestClient.get(url);
 
-      return FetchUsersInterfaces.response.parse(response);
+        return FetchUsersInterfaces.response.parse(response.data);
+      },
     },
-  });
+  );
+};
 
-export const useCreateUsers = () =>
-  useMutation(async (context: InferDTOs<typeof CreateUsersInterfaces>) => {
-    const { body } = context;
+export const useCreateUsers = () => {
+  return useMutation(
+    {
+      mutationFn: async (context: InferDTOs<typeof CreateUsersInterfaces>) => {
+        const { body } = context;
 
-    const validatedBody = CreateUsersInterfaces.body.parse(body);
+        const validatedBody = CreateUsersInterfaces.body.parse(body);
 
-    const url = "/v1/users";
+        const url = "/v1/users";
 
-    const response = await fetchClient.fetch(url, {
-      method: "POST",
-      body: JSON.stringify(validatedBody),
-    });
+        const response = await RequestClient.post(url, validatedBody);
 
-    return CreateUsersInterfaces.response.parse(response);
-  });
+        return CreateUsersInterfaces.response.parse(response.data);
+      },
+    },
+  );
+};
+export const useEditUser = () => {
+  return useMutation(
+    {
+      mutationFn: async (context: InferDTOs<typeof EditUserInterfaces>) => {
+        const {
+          params: { userId },
+          body,
+        } = context;
 
-export const useEditUser = () =>
-  useMutation(async (context: InferDTOs<typeof EditUserInterfaces>) => {
-    const {
-      params: { userId },
-      body,
-    } = context;
+        const validatedBody = EditUserInterfaces.body.parse(body);
 
-    const validatedBody = EditUserInterfaces.body.parse(body);
+        const url = `/v1/users/${userId}`;
 
-    const url = `/v1/users/${userId}`;
+        const response = await RequestClient.patch(url, validatedBody);
 
-    const response = await fetchClient.fetch(url, {
-      method: "PATCH",
-      body: JSON.stringify(validatedBody),
-    });
+        return EditUserInterfaces.response.parse(response.data);
+      },
+    },
+  );
+};
 
-    return EditUserInterfaces.response.parse(response);
-  });
+export const useDeleteUser = () => {
+  return useMutation(
+    {
+      mutationFn: async (context: InferDTOs<typeof DeleteUserInterfaces>) => {
+        const {
+          params: { userId },
+        } = context;
 
-export const useDeleteUser = () =>
-  useMutation(async (context: InferDTOs<typeof DeleteUserInterfaces>) => {
-    const {
-      params: { userId },
-    } = context;
+        const url = `/v1/users/${userId}`;
 
-    const url = `/v1/users/${userId}`;
+        const response = await RequestClient.delete(url);
 
-    const response = await fetchClient.fetch(url, { method: "DELETE" });
-
-    return DeleteUserInterfaces.response.parse(response);
-  });
+        return DeleteUserInterfaces.response.parse(response.data);
+      },
+    },
+  );
+};

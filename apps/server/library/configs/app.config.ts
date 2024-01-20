@@ -42,7 +42,7 @@ const ensuredEnvironment = EnvironmentVariableSchema.parse({
   AWS_SES_ACCESS_KEY: process.env.AWS_SES_ACCESS_KEY,
   AWS_SES_SECRET_ACCESS_KEY: process.env.AWS_SES_SECRET_ACCESS_KEY,
   AWS_S3_ACCESS_KEY: process.env.AWS_S3_ACCESS_KEY,
-  AWS_S3_ACCESS_SECRET_ACCESS_KEY: process.env.AWS_S3_SECRET_ACCESS_KEY,
+  AWS_S3_SECRET_ACCESS_KEY: process.env.AWS_S3_SECRET_ACCESS_KEY,
 });
 
 export const AppConfig = {

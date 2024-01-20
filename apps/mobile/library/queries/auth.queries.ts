@@ -7,68 +7,77 @@ import {
   ValidateLoginCodeInterfaces,
 } from "@thechamomileclub/api";
 
-import { fetchClient } from "../client";
+import { RequestClient } from "../configs";
 
-export const useGetCurrentUser = () =>
-  useQuery(["auth"], async () => {
-    const response = await fetchClient.fetch("/v1/auth", { method: "GET" });
+export const useGetCurrentUser = () => {
+  return useQuery(
+    {
+      queryKey: ["auth"],
+      queryFn: async () => {
+        const response = await RequestClient.get("/v1/auth");
 
-    return GetCurrentUserInterfaces.response.parse(response);
-  });
-
-export const useStartAuthProcess = () =>
-  useMutation({
-    mutationFn: async (body: StartAuthProcessInterfaces["body"]) => {
-      const validatedBody = StartAuthProcessInterfaces.body.parse(body);
-
-      const response = await fetchClient.fetch("/v1/auth", {
-        method: "POST",
-        body: JSON.stringify(validatedBody),
-      });
-
-      return StartAuthProcessInterfaces.response.parse(response);
+        return GetCurrentUserInterfaces.response.parse(response.data);
+      },
     },
-  });
+  );
+};
+
+export const useStartAuthProcess = () => {
+  return useMutation(
+    {
+      mutationFn: async (body: StartAuthProcessInterfaces["body"]) => {
+        const validatedBody = StartAuthProcessInterfaces.body.parse(body);
+
+        const response = await RequestClient.post("/v1/auth", validatedBody);
+
+        return StartAuthProcessInterfaces.response.parse(response.data);
+      },
+    },
+  );
+};
 
 export const useValidateLoginCode = (config?: {
   onSuccess?: (data: { token: string; }) => void;
   onError?: (error: unknown) => void;
-}) =>
-  useMutation({
-    mutationFn: async (body: ValidateLoginCodeInterfaces["body"]) => {
-      const validatedBody = ValidateLoginCodeInterfaces.body.parse(body);
+}) => {
+  return useMutation(
+    {
+      mutationFn: async (body: ValidateLoginCodeInterfaces["body"]) => {
+        const validatedBody = ValidateLoginCodeInterfaces.body.parse(body);
 
-      const response = await fetchClient.fetch("/v1/auth", {
-        method: "PUT",
-        body: JSON.stringify(validatedBody),
-      });
+        const response = await RequestClient.put("/v1/auth", validatedBody);
 
-      return ValidateLoginCodeInterfaces.response.parse(response);
+        return ValidateLoginCodeInterfaces.response.parse(response.data);
+      },
+      ...(config || {}),
     },
-    ...(config || {}),
-  });
+  );
+};
 
 export const useUpdateCurrentUser = (config?: {
   onSuccess?: (data: string) => void;
   onError?: (error: unknown) => void;
   onMutate?: () => void;
-}) =>
-  useMutation({
-    mutationFn: async (body: UpdateCurrentUserInterfaces["body"]) => {
-      const validatedBody = UpdateCurrentUserInterfaces.body.parse(body);
+}) => {
+  return useMutation(
+    {
+      mutationFn: async (body: UpdateCurrentUserInterfaces["body"]) => {
+        const validatedBody = UpdateCurrentUserInterfaces.body.parse(body);
 
-      const response = await fetchClient.fetch("/v1/auth", {
-        method: "PATCH",
-        body: JSON.stringify(validatedBody),
-      });
+        const response = await RequestClient.patch("/v1/auth", validatedBody);
 
-      return UpdateCurrentUserInterfaces.response.parse(response);
+        return UpdateCurrentUserInterfaces.response.parse(response.data);
+      },
+      ...(config || {}),
     },
-    ...(config || {}),
-  });
+  );
+};
 
-export const useLogoutUser = (config?: { onSuccess?: () => void; }) =>
-  useMutation({
-    mutationFn: () => fetchClient.fetch("v1/auth", { method: "DELETE" }),
-    ...(config || {}),
-  });
+export const useLogoutUser = (config?: { onSuccess?: () => void; }) => {
+  return useMutation(
+    {
+      mutationFn: () => RequestClient.delete("v1/auth"),
+      ...(config || {}),
+    },
+  );
+};

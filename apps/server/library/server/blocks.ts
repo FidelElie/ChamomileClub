@@ -55,11 +55,10 @@ export const createServerRouter = <
   NextRequest extends ApiRequest = ApiRequest,
   NextResponse extends NextApiResponse = NextApiResponse,
 >(
-  options: RouterOptions<NextRequest, NextResponse>,
+  options?: RouterOptions<NextRequest, NextResponse>,
 ) => {
   const mergeOptions = Object.assign(
-    {},
-    { controllers: [], middlewares: [] },
+    { controllers: [], middlewares: [] } as RouterOptions<NextRequest, NextResponse>,
     options ?? {},
   );
 
@@ -71,8 +70,8 @@ export const createServerRouter = <
     // biome-ignore lint/suspicious/noExplicitAny: FIXME
     const routerTest = createRouter<any, NextResponse>();
 
-    for (const middleware of middlewares) {
-      routerTest.use(middleware);
+    for (const middleware of (middlewares || [])) {
+      middleware(req, res, () => {});
     }
 
     for (const controller of flattenedControllers) {
