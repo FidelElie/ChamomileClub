@@ -12,19 +12,24 @@ import { RequestClient } from "../configs";
 
 export const useFetchUsers = (
   query: InferDTOs<typeof FetchUsersInterfaces>["query"],
+  config?: { enabled?: boolean; },
 ) => {
-  useQuery(
+  return useQuery(
     {
       queryKey: ["users", query],
       queryFn: async () => {
+        console.log(query);
         const queryParams = new URLSearchParams(query as unknown as URLSearchParams);
 
         const url = `/v1/users${queryParams.size ? `?${queryParams.toString()}` : ""}`;
+
+        console.log(url);
 
         const response = await RequestClient.get(url);
 
         return FetchUsersInterfaces.response.parse(response.data);
       },
+      ...(config || {}),
     },
   );
 };

@@ -1,15 +1,12 @@
 import { z } from "zod";
 
-import {
-  UserRolesEnum,
-  UserEntity,
-  UserCreationFieldsEntity,
-} from "../entities";
+import { UserCreationFieldsEntity, UserEntity, UserRolesEnum } from "../entities";
 import { PaginationQuery } from "../library";
 
 export const FetchUsersInterfaces = {
   query: PaginationQuery.merge(
     z.object({
+      search: z.string().optional(),
       role: z.union([UserRolesEnum, z.array(UserRolesEnum)]).optional(),
     }),
   ),

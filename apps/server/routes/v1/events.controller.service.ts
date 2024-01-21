@@ -1,5 +1,3 @@
-import { NextApiResponse } from "next";
-
 import {
   CreateEventsInterfaces,
   EditEventInterfaces,
@@ -13,21 +11,19 @@ import {
 } from "@thechamomileclub/api";
 
 import { dependencyMap } from "@/library/configs";
-import type { ApiRequest, ApiRequestWithAuth } from "@/library/server";
+import type { ApiRequestWithAuth, Context } from "@/library/server";
 
 type FetchEventsDTOs = InferDTOs<typeof FetchEventsInterfaces>;
 type CreateEventsDTOs = InferDTOs<typeof CreateEventsInterfaces>;
 type EditEventDTOs = InferDTOs<typeof EditEventInterfaces>;
 
 const EventsControllerService = (serviceConfig: EventsControllerServiceConfig) => {
-  const { xataClient: { db }, userService } = serviceConfig;
+  const { xataClient: { db }, UserService } = serviceConfig;
 
   return {
-    fetchEvents: async (
-      req: ApiRequest<FetchEventsDTOs>,
-      res: NextApiResponse,
-    ) => {
-      const { start, end, userId, page, entries, status } = req.query;
+    fetchEvents: async (context: Context<FetchEventsDTOs>) => {
+      const { query } = context;
+      const { start, end, userId, page, entries, status } = query;
 
       const userEvents = await db.eventusers
         .filter({
@@ -76,22 +72,20 @@ const EventsControllerService = (serviceConfig: EventsControllerServiceConfig) =
         }),
       );
 
-      res
-        .status(200)
-        .json({ items: eventsWithMembers } satisfies FetchEventsDTOs["response"]);
+      return {
+        items: eventsWithMembers,
+      } satisfies FetchEventsDTOs["response"];
     },
-    createEvents: async (
-      req: ApiRequestWithAuth<CreateEventsDTOs>,
-      res: NextApiResponse,
-    ) => {
-      const { entries } = req.body;
+    createEvents: async (context: Context<CreateEventsDTOs>) => {
+      const { body } = context;
+      const { entries } = body;
 
       const createdEvents = await Promise.all(
         entries.map(async (entry) => {
           const { name, invites, members } = entry;
 
           const newMembers = invites.length
-            ? await userService.createAndInviteNewMembers(invites)
+            ? await UserService.createAndInviteNewMembers(invites)
             : [];
 
           const createdEvent = await db.events.create({
@@ -115,16 +109,12 @@ const EventsControllerService = (serviceConfig: EventsControllerServiceConfig) =
         }),
       );
 
-      res
-        .status(201)
-        .json({ items: createdEvents } satisfies CreateEventsDTOs["response"]);
+      return { items: createdEvents } satisfies CreateEventsDTOs["response"];
     },
-    editEvent: async (
-      req: ApiRequestWithAuth<EditEventDTOs>,
-      res: NextApiResponse,
-    ) => {
-      const { eventId } = req.params;
-      const { name, status } = req.body;
+    editEvent: async (context: Context<EditEventDTOs>) => {
+      const { params, body } = context;
+      const { eventId } = params;
+      const { name, status } = body;
 
       const updatedEvent = await db.events.update({
         id: eventId,
@@ -134,9 +124,7 @@ const EventsControllerService = (serviceConfig: EventsControllerServiceConfig) =
 
       const validatedEvent = EventEntity.parse(updatedEvent);
 
-      res
-        .status(200)
-        .json({ item: validatedEvent } satisfies EditEventDTOs["response"]);
+      return { item: validatedEvent } satisfies EditEventDTOs["response"];
     },
   };
 };
@@ -145,4 +133,4 @@ export const createEventsControllerService = (serviceConfig: EventsControllerSer
   return EventsControllerService(serviceConfig);
 };
 
-type EventsControllerServiceConfig = Pick<typeof dependencyMap, "xataClient" | "userService">;
+type EventsControllerServiceConfig = Pick<typeof dependencyMap, "xataClient" | "UserService">;

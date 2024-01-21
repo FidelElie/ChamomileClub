@@ -20,6 +20,7 @@
     "@react-navigation/native-stack": "^6.9.13",
     "@thechamomileclub/api": "*",
     "@thechamomileclub/ui": "*",
+    "dayjs": "^1.11.10",
     "expo": "~49.0.7",
     "expo-av": "~13.4.1",
     "expo-font": "~11.4.0",

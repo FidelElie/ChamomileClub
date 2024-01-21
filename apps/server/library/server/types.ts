@@ -3,12 +3,7 @@ import { NextApiRequest } from "next";
 
 import { UserEntity } from "@thechamomileclub/api";
 
-export type RequestEntities = {
-  body?: unknown;
-  params?: { [param: string]: string; };
-  query?: { [query: string]: unknown; };
-  headers?: IncomingHttpHeaders;
-};
+import { RequestEntities } from "./blocks";
 
 type DefaultEntities = {
   body: unknown;

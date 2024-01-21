@@ -1,10 +1,10 @@
 import nodePath from "path";
 
-import type { NextApiResponse } from "next";
+import type { NextApiRequest, NextApiResponse } from "next";
 import { createRouter } from "next-connect";
 
-import { httpResponse, notFoundResponse } from "./responses";
-import { ApiRequest } from "./types";
+import { HttpException, NotFoundException } from "../exceptions";
+import type { ApiRequest } from "../types";
 
 export const Controller = <
   NextRequest extends ApiRequest = ApiRequest,
@@ -70,9 +70,7 @@ export const createServerRouter = <
     // biome-ignore lint/suspicious/noExplicitAny: FIXME
     const routerTest = createRouter<any, NextResponse>();
 
-    for (const middleware of (middlewares || [])) {
-      middleware(req, res, () => {});
-    }
+    for (const middleware of (middlewares || [])) { middleware(req, res, () => {}); }
 
     for (const controller of flattenedControllers) {
       const { path, router } = controller;
@@ -85,19 +83,26 @@ export const createServerRouter = <
 };
 
 const handlerConfiguration = {
-  onNoMatch: (_: ApiRequest, res: NextApiResponse) => {
-    return notFoundResponse(res, "Route Not Found");
+  onNoMatch: (_: ApiRequest) => {
+    throw new NotFoundException("Route not found");
   },
   onError: (error: unknown, _: ApiRequest, res: NextApiResponse) => {
-    if (!(error instanceof Error)) {
-      console.log(error);
-      return httpResponse(res, { status: 500 });
-    }
+    const isStandardError = error instanceof Error;
+    const isHTTPException = error instanceof HttpException;
 
-    return httpResponse(res, {
-      status: ("status" in error && typeof error.status === "number") ? error.status : 500,
-      message: error.message,
-      data: process.env.NODE_ENV !== "production" ? { stack: error.stack } : {},
+    res.status(isHTTPException ? error.status : 500).json({
+      ...(isHTTPException
+        ? {
+          status: error.status,
+          message: error.message,
+          metadata: error.metadata,
+        }
+        : {}),
+      ...((process.env.NODE_ENV === "development" && isStandardError)
+        ? {
+          stack: error.stack,
+        }
+        : {}),
     });
   },
 };
@@ -128,3 +133,5 @@ export type RouterOptions<
   controllers: (CreatedController | CreatedController[])[];
   middlewares?: Middleware<NextRequest, NextResponse>[];
 };
+
+export * from "./parseContextHandler";

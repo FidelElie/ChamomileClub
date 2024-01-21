@@ -3,6 +3,8 @@ import { useState } from "react";
 
 import { Button, Copy, Flex, Show } from "@thechamomileclub/ui";
 
+import { useFetchUsers } from "@/library/queries";
+
 import { DisplayLayout } from "@/components/interfaces";
 
 import type { EditEventFields, EventFields } from "@/components/screens/auth/create-event/create-event.data";
@@ -41,19 +43,46 @@ const CreateEventScreen = () => {
   const [fields, setFields] = useState<EventFields>({
     name: "",
     description: "",
-    members: [],
+    members: [{
+      id: user.id,
+      forename: user.forename,
+      surname: user.surname,
+      email: user.email,
+      roles: user.roles,
+    }],
     invitations: [],
     startDate: null,
     poll: null,
   });
 
-  const editFields: EditEventFields = (data) => setFields((currentFields) => ({ ...currentFields, ...data }));
+  const foundersQuery = useFetchUsers({ role: "FOUNDER" });
+
+  const editFields: EditEventFields = (data) =>
+    setFields((currentFields) => ({
+      ...currentFields,
+      ...data,
+    }));
 
   const correspondingStageData = STAGE_DATA.find(
     (data) => data.stage === stage,
   );
 
+  const userIsFounder = (userId: string) => {
+    if (!foundersQuery.isSuccess) { return false; }
+
+    return foundersQuery.data.items.some(founder => founder.id === userId);
+  };
+
   const isFounder = user.roles.includes("FOUNDER") || false;
+
+  const isInvalidSubmission = () => {
+    switch (stage) {
+      case "DETAILS":
+        return !fields.startDate && !fields.poll?.name;
+      default:
+        return false;
+    }
+  };
 
   const handleStageNavigation = (navigationParams: StageNavigationParams) => {
     const { direction, stage: newStage } = navigationParams;
@@ -61,6 +90,7 @@ const CreateEventScreen = () => {
     if (
       newStage
       && STAGE_DATA.some((stageData) => stageData.stage === newStage)
+      && !isInvalidSubmission()
     ) {
       return setStage(newStage);
     }
@@ -90,27 +120,30 @@ const CreateEventScreen = () => {
 
   return (
     <Show if={correspondingStageData}>
-      {stageData => (
-        <DisplayLayout
-          title={`${!isFounder ? "Request" : "Create"} Event`}
-          subtitle={stageData.subtitle}
-          onBack={() => handleStageNavigation({ direction: -1 })}
-          safe
-        >
-          <Flex.Column className="flex-grow">
-            <stageData.Component
-              isFounder={isFounder}
-              fields={fields}
-              editFields={editFields}
-            />
-          </Flex.Column>
-          <Button.Secondary
-            onPressIn={() => handleStageNavigation({ direction: 1 })}
+      {stageData =>
+        foundersQuery.isSuccess && (
+          <DisplayLayout
+            title={`${!userIsFounder(user.id) ? "Request" : "Create"} Event`}
+            subtitle={stageData.subtitle}
+            onBack={() => handleStageNavigation({ direction: -1 })}
+            safe
           >
-            <Copy color="green">Continue</Copy>
-          </Button.Secondary>
-        </DisplayLayout>
-      )}
+            <Flex.Column className="flex-grow">
+              <stageData.Component
+                fields={fields}
+                editFields={editFields}
+                founders={foundersQuery.data.items}
+                isFounder={isFounder}
+              />
+            </Flex.Column>
+            <Button.Secondary
+              onPressIn={() => handleStageNavigation({ direction: 1 })}
+              disabled={isInvalidSubmission()}
+            >
+              <Copy color="green">Continue</Copy>
+            </Button.Secondary>
+          </DisplayLayout>
+        )}
     </Show>
   );
 };

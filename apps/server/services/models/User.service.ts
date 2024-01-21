@@ -27,6 +27,10 @@ export const UserService = (serviceConfig: UserServiceConfig) => {
   };
 };
 
+export const createUserService = (serviceConfig: UserServiceConfig) => {
+  return UserService(serviceConfig);
+};
+
 export type UserService = ReturnType<typeof UserService>;
 
 export type UserServiceConfig = {

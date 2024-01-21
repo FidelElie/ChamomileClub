@@ -6,7 +6,7 @@ import { getXataClient } from "@thechamomileclub/database";
 import { AppConfig } from "./app.config";
 
 import { createExposeSessionMiddleware } from "@/library/middlewares";
-import { createS3Service, createSESService, UserService } from "@/services";
+import { createS3Service, createSESService, createUserService } from "@/services";
 
 const SESService = createSESService(
   new SESClient({
@@ -30,13 +30,13 @@ const S3Service = createS3Service(
 
 const xataClient = getXataClient();
 
-const userService = UserService({ xataClient });
+const UserService = createUserService({ xataClient });
 
 const exposeSession = createExposeSessionMiddleware({ xataClient });
 
 export const dependencyMap = {
   xataClient,
-  userService,
+  UserService,
   S3Service,
   SESService,
   exposeSession,

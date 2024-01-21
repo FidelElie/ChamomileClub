@@ -1,14 +1,13 @@
+import { styled } from "nativewind";
 import { ComponentProps, forwardRef } from "react";
 import { TextInput } from "react-native";
-import { styled } from "nativewind";
 import { twMerge } from "tailwind-merge";
 
 const StyledTextInput = styled(TextInput);
 
 export const TextField = forwardRef<TextFieldRef, TextFieldProps>(
   (props, ref) => {
-    const { className, value, placeholder, inputClassName, ...textInputProps } =
-      props;
+    const { className, value, placeholder, inputClassName, ...textInputProps } = props;
 
     return (
       <StyledTextInput
@@ -17,6 +16,7 @@ export const TextField = forwardRef<TextFieldRef, TextFieldProps>(
           "font-body tracking-wide text-white",
           className,
         )}
+        textAlign="center"
         placeholderTextColor="rgba(255, 255, 255, 0.5)"
         value={value?.toUpperCase() || ""}
         placeholder={placeholder?.toUpperCase() || ""}

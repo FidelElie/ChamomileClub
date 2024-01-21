@@ -2,7 +2,7 @@ import { CreateEventsInterfaces, EditEventInterfaces, FetchEventsInterfaces } fr
 
 import { dependencyMap } from "@/library/configs";
 import { requireAuthGuard, validateRequestEntities } from "@/library/middlewares";
-import { ApiRequestWithAuth, Controller } from "@/library/server";
+import { ApiRequestWithAuth, Controller, parseContextHandler } from "@/library/server";
 
 import { createEventsControllerService } from "./events.controller.service";
 
@@ -15,7 +15,7 @@ EventsController.get(
   dependencyMap.exposeSession,
   requireAuthGuard,
   validateRequestEntities(FetchEventsInterfaces),
-  EventsControllerService.fetchEvents,
+  parseContextHandler(EventsControllerService.fetchEvents),
 );
 
 EventsController.post(
@@ -23,7 +23,7 @@ EventsController.post(
   dependencyMap.exposeSession,
   requireAuthGuard,
   validateRequestEntities(CreateEventsInterfaces),
-  EventsControllerService.createEvents,
+  parseContextHandler(EventsControllerService.createEvents),
 );
 
 EventsController.patch(
@@ -31,7 +31,7 @@ EventsController.patch(
   dependencyMap.exposeSession,
   requireAuthGuard,
   validateRequestEntities(EditEventInterfaces),
-  EventsControllerService.editEvent,
+  parseContextHandler(EventsControllerService.editEvent),
 );
 
 export default EventsController;

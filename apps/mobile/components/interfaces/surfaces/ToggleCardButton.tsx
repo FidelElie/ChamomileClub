@@ -1,30 +1,32 @@
+import { StyleProp } from "react-native";
 import { twJoin } from "tailwind-merge";
 
-import { Flex, Show, Heading, Copy, Button } from "@thechamomileclub/ui";
+import { Button, ButtonProps, Card, Copy, Flex, Heading, Show } from "@thechamomileclub/ui";
 
 export const ToggleCardButton = (props: ToggleCardButtonProps) => {
-  const { classes, title, subtitle, toggled, onToggle } = props;
+  const { classes, title, subtitle, toggled, onToggle, style } = props;
 
   return (
     <Button
-      className={twJoin(
-        "rounded-lg py-4 px-3 border",
-        !toggled ? "border border-white" : "bg-midnight border-midnight",
-        classes,
-      )}
+      className={twJoin("p-0", classes)}
       onPressIn={() => onToggle(toggled)}
+      style={style}
     >
-      <Flex.Row className="w-full">
-        <Flex className="w-6 h-6 justify-center items-center border rounded-full border-white mr-2.5">
-          <Show if={toggled}>
-            <Flex className="w-4 h-4 rounded-full bg-yellow" />
-          </Show>
-        </Flex>
-        <Flex.Column className="flex-grow">
-          <Heading>{title}</Heading>
-          <Copy size="xs">{subtitle}</Copy>
-        </Flex.Column>
-      </Flex.Row>
+      <Card theme={toggled ? "solid" : "outline"}>
+        <Flex.Row className="w-full">
+          <Flex className="w-6 h-6 justify-center items-center border rounded-full border-white mr-2.5">
+            <Show if={toggled}>
+              <Flex className="w-4 h-4 rounded-full bg-yellow" />
+            </Show>
+          </Flex>
+          <Flex.Column className="flex-grow">
+            <Heading>{title}</Heading>
+            <Show if={subtitle}>
+              <Copy size="xs">{subtitle}</Copy>
+            </Show>
+          </Flex.Column>
+        </Flex.Row>
+      </Card>
     </Button>
   );
 };
@@ -32,7 +34,8 @@ export const ToggleCardButton = (props: ToggleCardButtonProps) => {
 export interface ToggleCardButtonProps {
   classes?: string;
   title: string;
-  subtitle: string;
+  subtitle?: string;
   toggled: boolean;
   onToggle: (currentToggledState: boolean) => void;
+  style?: StyleProp<ButtonProps>;
 }

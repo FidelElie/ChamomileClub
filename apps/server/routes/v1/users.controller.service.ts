@@ -18,17 +18,26 @@ type EditUserDTOs = InferDTOs<typeof EditUserInterfaces>;
 type DeleteUserDTOs = InferDTOs<typeof DeleteUserInterfaces>;
 
 const UsersControllerService = (serviceConfig: UserControllerServiceConfig) => {
-  const { xataClient: { db }, userService } = serviceConfig;
+  const { xataClient: { db }, UserService } = serviceConfig;
 
   return {
     fetchUsers: async (
       req: ApiRequest<FetchUsersDTOs>,
       res: NextApiResponse,
     ) => {
-      const { role, page, entries } = req.query;
+      const { role, page, entries, search } = req.query;
 
       const users = await db.users
         .filter({
+          ...(search
+            ? {
+              $any: [
+                { forename: { $iContains: search } },
+                { surname: { $iContains: search } },
+                { email: { $iContains: search } },
+              ],
+            }
+            : {}),
           ...(role ? { roles: { $includes: role } } : {}),
         })
         .getPaginated({
@@ -56,7 +65,7 @@ const UsersControllerService = (serviceConfig: UserControllerServiceConfig) => {
     ) => {
       const { entries } = req.body;
 
-      const newMembers = await userService.createAndInviteNewMembers(entries);
+      const newMembers = await UserService.createAndInviteNewMembers(entries);
 
       res
         .status(201)
@@ -93,4 +102,4 @@ export const createUsersControllerService = (serviceConfig: UserControllerServic
   return UsersControllerService(serviceConfig);
 };
 
-type UserControllerServiceConfig = Pick<typeof dependencyMap, "xataClient" | "userService">;
+type UserControllerServiceConfig = Pick<typeof dependencyMap, "xataClient" | "UserService">;
