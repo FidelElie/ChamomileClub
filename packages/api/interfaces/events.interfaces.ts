@@ -1,11 +1,6 @@
 import { z } from "zod";
 
-import {
-  EventEntity,
-  EventStatusEnum,
-  UserCreationFieldsEntity,
-  UserEntity,
-} from "../entities";
+import { EventEntity, EventStatusEnum, UserCreationFieldsEntity, UserEntity } from "../entities";
 
 import { PaginationQuery } from "../library";
 

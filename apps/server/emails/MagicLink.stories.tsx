@@ -6,6 +6,4 @@ const MagicLinkMeta = {
 
 export default MagicLinkMeta;
 
-export const Base = () => (
-  <MagicLinkEmail name="User" link="https://hello.world.dev" />
-);
+export const Base = () => <MagicLinkEmail name="User" link="https://hello.world.dev" />;

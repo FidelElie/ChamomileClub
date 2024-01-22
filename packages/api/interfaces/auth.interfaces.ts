@@ -2,8 +2,8 @@ import { z } from "zod";
 
 import { UserEntity } from "../entities";
 import {
-  InferDTOs,
   BadRequestResponseDTO,
+  InferDTOs,
   NotFoundResponseDTO,
   UnauthorisedResponseDTO,
   UnprocessableEntityResponseDTO,

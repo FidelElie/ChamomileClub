@@ -1,28 +1,19 @@
-import { UserRolesEnum, UserRoles } from "@thechamomileclub/api";
+import { UserRoles, UserRolesEnum } from "@thechamomileclub/api";
 
-import {
-  EmailLayout,
-  Section,
-  Heading,
-  ButtonLink,
-  Link,
-  Copy,
-} from "./components";
+import { ButtonLink, Copy, EmailLayout, Heading, Link, Section } from "./components";
 
 export const MemberInvitationEmail = (props: MemberInvitationEmailProps) => {
   const { name, link, roles, active = false } = props;
 
   return (
     <EmailLayout
-      ps={
-        roles.includes(UserRoles.FOUNDER) && (
-          <Section>
-            <Copy marginTop={10} as="i">
-              P.S Stay unruleh my friends xxx
-            </Copy>
-          </Section>
-        )
-      }
+      ps={roles.includes(UserRoles.FOUNDER) && (
+        <Section>
+          <Copy marginTop={10} as="i">
+            P.S Stay unruleh my friends xxx
+          </Copy>
+        </Section>
+      )}
     >
       <Section>
         <Heading marginBottom={15}>Hi {name},</Heading>
@@ -35,8 +26,7 @@ export const MemberInvitationEmail = (props: MemberInvitationEmailProps) => {
           <Link href="https://www.thechamomileclub.com">
             The Chamomile Club
           </Link>{" "}
-          Please click below to{" "}
-          {!active ? "accept your invitation" : "login into your account."}
+          Please click below to {!active ? "accept your invitation" : "login into your account."}
         </Copy>
       </Section>
       <Section>

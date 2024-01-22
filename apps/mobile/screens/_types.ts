@@ -7,8 +7,7 @@ export type RootStackParamList = {
   HomeTabs: undefined;
 };
 
-export type RootStackNavigationProps =
-  NativeStackNavigationProp<RootStackParamList>;
+export type RootStackNavigationProps = NativeStackNavigationProp<RootStackParamList>;
 
 export type RootStackRouteProps<T extends keyof RootStackParamList> = RouteProp<
   RootStackParamList,

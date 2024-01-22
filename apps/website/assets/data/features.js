@@ -1,9 +1,4 @@
-import {
-  GreenChip,
-  BlueChip,
-  RedChip,
-  BlackChip,
-} from "@chamomileclub/casinojs";
+import { BlackChip, BlueChip, GreenChip, RedChip } from "@chamomileclub/casinojs";
 
 const features = [
   {
@@ -14,14 +9,12 @@ const features = [
   },
   {
     title: "A Package Deal",
-    description:
-      "With poker, comes food, drinks and laughter. Enjoy a great game among friends.",
+    description: "With poker, comes food, drinks and laughter. Enjoy a great game among friends.",
     Chip: BlueChip,
   },
   {
     title: "Community",
-    description:
-      "Be a part of an ever increasing group of like-minded individuals unified by our exclusive brand.",
+    description: "Be a part of an ever increasing group of like-minded individuals unified by our exclusive brand.",
     Chip: RedChip,
   },
   {

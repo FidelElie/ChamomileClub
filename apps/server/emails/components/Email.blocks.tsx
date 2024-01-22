@@ -4,7 +4,7 @@ export const Link = ({
   href,
   children,
   ...styles
-}: EmailComponent & { href: string }) => (
+}: EmailComponent & { href: string; }) => (
   <a
     href={href}
     style={{
@@ -22,7 +22,7 @@ export const ButtonLink = ({
   href,
   children,
   ...styles
-}: EmailComponent & { href: string }) => (
+}: EmailComponent & { href: string; }) => (
   <a
     href={href}
     style={{
@@ -62,7 +62,7 @@ export const Copy = ({
   children,
   as: Tag = "span",
   ...styles
-}: EmailComponent & { as?: "span" | "i" }) => (
+}: EmailComponent & { as?: "span" | "i"; }) => (
   <Tag
     style={{
       display: "inline-block",

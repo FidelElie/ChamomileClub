@@ -34,7 +34,7 @@ export const useTheme = () => useContext(ThemeContext);
 
 type Themes = (typeof SUPPORTED_THEMES)[number];
 
-type ThemeContextType = { theme: Themes; setTheme: (value: Themes) => void };
+type ThemeContextType = { theme: Themes; setTheme: (value: Themes) => void; };
 
 export interface ThemeProviderProps {
   children: ReactNode;

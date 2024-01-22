@@ -8,8 +8,7 @@ export type AuthStackParamList = {
   CreateEvent: undefined;
 };
 
-export type AuthStackNavigationProps =
-  NativeStackNavigationProp<AuthStackParamList>;
+export type AuthStackNavigationProps = NativeStackNavigationProp<AuthStackParamList>;
 
 export type AuthStackRouteProps = RouteProp<
   AuthStackParamList,

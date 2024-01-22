@@ -2,8 +2,8 @@ import Head from "next/head";
 import PropTypes from "prop-types";
 
 // ! Components
-import Navbar from "./Navbar";
 import Footer from "./Footer";
+import Navbar from "./Navbar";
 
 const AppLayout = (props) => {
   const { title, disableNavbar, disableFooter, children } = props;

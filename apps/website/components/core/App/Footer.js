@@ -22,8 +22,7 @@ const Footer = () => {
       </div>
       <div className="w-full flex items-center justify-between px-5 box-border ">
         <span className="text-sm text-white font-light">
-          &copy; Copyright 2021{" "}
-          <span className="font-heading text-lg ml-1">The Chamomile Club</span>
+          &copy; Copyright 2021 <span className="font-heading text-lg ml-1">The Chamomile Club</span>
         </span>
         <ThemeToggle />
       </div>

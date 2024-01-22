@@ -1,8 +1,8 @@
 // ! Assets
-import LoaderIcon from "../../../assets/images/loader.svg";
 import ArrowDownIcon from "../../../assets/images/arrow-down.svg";
+import LoaderIcon from "../../../assets/images/loader.svg";
 
-//! Library
+// ! Library
 import useMedia from "../../../lib/hooks/useMedia";
 import { joinClasses } from "../../../lib/utilities";
 

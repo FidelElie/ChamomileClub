@@ -1,4 +1,4 @@
-import { ReactNode, ComponentProps, forwardRef } from "react";
+import { ComponentProps, forwardRef, ReactNode } from "react";
 import { View } from "react-native";
 import { twMerge } from "tailwind-merge";
 

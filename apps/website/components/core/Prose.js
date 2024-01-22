@@ -8,9 +8,7 @@ const PageHeading = ({ children }) => (
   </h1>
 );
 
-const PageTagline = ({ children }) => (
-  <p className="text-white text-xl font-light">{children}</p>
-);
+const PageTagline = ({ children }) => <p className="text-white text-xl font-light">{children}</p>;
 
 const PageHeader = ({ title, tagline }) => (
   <div className="mb-8">
@@ -35,9 +33,7 @@ const SubSubTitle = ({ children, topMargin }) => (
   </h3>
 );
 
-const Paragraph = ({ children }) => (
-  <p className="text-gray-100 text-xl mb-2 font-light">{children}</p>
-);
+const Paragraph = ({ children }) => <p className="text-gray-100 text-xl mb-2 font-light">{children}</p>;
 
 const List = (props) => {
   const { id, items, ordered } = props;
@@ -70,12 +66,4 @@ List.defaultProps = {
   ordered: false,
 };
 
-export {
-  PageHeading,
-  PageTagline,
-  PageHeader,
-  SubTitle,
-  SubSubTitle,
-  List,
-  Paragraph,
-};
+export { List, PageHeader, PageHeading, PageTagline, Paragraph, SubSubTitle, SubTitle };

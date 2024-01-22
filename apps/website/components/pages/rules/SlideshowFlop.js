@@ -1,11 +1,6 @@
 import CardSlideshow from "../../misc/CardSlideshow";
 
-import {
-  ThreeSpades,
-  AceClubs,
-  FourSpades,
-  DiamondSuitBack,
-} from "@chamomileclub/casinojs";
+import { AceClubs, DiamondSuitBack, FourSpades, ThreeSpades } from "@chamomileclub/casinojs";
 
 const slides = [
   {
@@ -46,8 +41,6 @@ const slides = [
   },
 ];
 
-const SlideshowFlop = () => (
-  <CardSlideshow slideshowTitle="flop" slides={slides} />
-);
+const SlideshowFlop = () => <CardSlideshow slideshowTitle="flop" slides={slides} />;
 
 export default SlideshowFlop;

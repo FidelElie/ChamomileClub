@@ -17,8 +17,7 @@ const EmailForm = () => {
   const [email, setEmail] = useState("");
   const [requestState, setRequestState] = useState(initialRequestState);
 
-  const changeRequestState = (value) =>
-    setRequestState({ ...requestState, ...value });
+  const changeRequestState = (value) => setRequestState({ ...requestState, ...value });
 
   const submissionOccuring = Object.values(requestState)
     .map((state) => !!state)
@@ -73,9 +72,7 @@ const EmailForm = () => {
         >
           Subscribe
         </button>
-        {requestState.requested && (
-          <LoaderIcon className="w-6 h-6 animate-spin opacity-75 mr-3 text-white" />
-        )}
+        {requestState.requested && <LoaderIcon className="w-6 h-6 animate-spin opacity-75 mr-3 text-white" />}
         <div className="flex items-center text-white text-xl font-light relative">
           <span
             className={joinClasses("transition-opacity absolute", {

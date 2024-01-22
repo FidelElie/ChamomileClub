@@ -2,14 +2,7 @@
 import { useEffect, useState } from "react";
 
 // ! Library
-import {
-  RedDiceOne,
-  RedDiceTwo,
-  RedDiceThree,
-  RedDiceFour,
-  RedDiceFive,
-  RedDiceSix,
-} from "@chamomileclub/casinojs";
+import { RedDiceFive, RedDiceFour, RedDiceOne, RedDiceSix, RedDiceThree, RedDiceTwo } from "@chamomileclub/casinojs";
 
 const faces = [
   RedDiceOne,
@@ -53,8 +46,7 @@ const BlindCalculator = () => {
       />{" "}
       <p className="text-gray-100 text-xl font-light select-none">
         {" "}
-        the blind{" "}
-        {currentFace === 0
+        the blind {currentFace === 0
           ? "stays the same"
           : `is multiplied by ${currentFace + 1}`}
         .

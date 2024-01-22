@@ -1,6 +1,6 @@
+import { styled } from "nativewind";
 import { ComponentProps, forwardRef } from "react";
 import { Pressable, View } from "react-native";
-import { styled } from "nativewind";
 import { twMerge } from "tailwind-merge";
 
 const StyledPressable = styled(Pressable);

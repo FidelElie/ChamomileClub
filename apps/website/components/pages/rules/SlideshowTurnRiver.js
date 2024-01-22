@@ -1,12 +1,12 @@
 import CardSlideshow from "../../misc/CardSlideshow";
 
 import {
-  ThreeSpades,
   AceClubs,
+  DiamondSuitBack,
+  FiveDiamonds,
   FourSpades,
   KingDiamonds,
-  FiveDiamonds,
-  DiamondSuitBack,
+  ThreeSpades,
 } from "@chamomileclub/casinojs";
 
 const slides = [
@@ -24,8 +24,6 @@ const slides = [
   },
 ];
 
-const SlideshowTurnRiver = () => (
-  <CardSlideshow slideshowTitle="turn-river" slides={slides} />
-);
+const SlideshowTurnRiver = () => <CardSlideshow slideshowTitle="turn-river" slides={slides} />;
 
 export default SlideshowTurnRiver;

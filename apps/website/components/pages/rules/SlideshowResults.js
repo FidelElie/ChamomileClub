@@ -1,31 +1,29 @@
 import CardSlideshow from "../../misc/CardSlideshow";
 
 import {
-  AceSpades,
-  AceHearts,
   AceClubs,
-  TwoHearts,
-  ThreeClubs,
-  FourSpades,
-  ThreeSpades,
+  AceHearts,
+  AceSpades,
   FiveDiamonds,
+  FourSpades,
   KingDiamonds,
   KingHearts,
   TenSpades,
+  ThreeClubs,
+  ThreeSpades,
+  TwoHearts,
 } from "@chamomileclub/casinojs";
 
 const slides = [
   {
     Cards: [FiveDiamonds, KingDiamonds, FourSpades, AceClubs, ThreeSpades],
     title: "The Community Cards",
-    description:
-      "Let's have a closer look at the hands that each of the remaining players can make.",
+    description: "Let's have a closer look at the hands that each of the remaining players can make.",
   },
   {
     Cards: [AceSpades, AceHearts],
     title: "Steven: Hand",
-    description:
-      "As a quick reminder, these are the two cards Steven had in their hand.",
+    description: "As a quick reminder, these are the two cards Steven had in their hand.",
   },
   {
     Cards: [TwoHearts, ThreeClubs],
@@ -52,8 +50,6 @@ const slides = [
   },
 ];
 
-const SlideshowResults = () => (
-  <CardSlideshow slideshowTitle="results" slides={slides} />
-);
+const SlideshowResults = () => <CardSlideshow slideshowTitle="results" slides={slides} />;
 
 export default SlideshowResults;

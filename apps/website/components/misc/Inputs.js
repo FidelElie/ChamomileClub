@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
+import { useEffect, useState } from "react";
 import { joinClasses } from "../../lib/utilities";
 
 const Input = (props) => {

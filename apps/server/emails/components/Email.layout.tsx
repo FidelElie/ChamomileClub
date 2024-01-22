@@ -39,8 +39,7 @@ export const EmailLayout = ({ children, ps }: EmailLayoutProps) => {
                 {children}
                 <Section>
                   <Copy marginBottom={10} marginTop={10} color="#007F7A">
-                    If you have any questions or comments, please do not
-                    hesitate to reply to this email.
+                    If you have any questions or comments, please do not hesitate to reply to this email.
                   </Copy>
                 </Section>
                 <Section marginBottom={5}>
@@ -55,8 +54,7 @@ export const EmailLayout = ({ children, ps }: EmailLayoutProps) => {
           </Section>
           <Section padding={15} backgroundColor="#24383B" textAlign="center">
             <Copy fontSize={12} color="white">
-              &copy; The Chamamomile Club {new Date().getFullYear()} - All
-              Rights Reserved
+              &copy; The Chamamomile Club {new Date().getFullYear()} - All Rights Reserved
             </Copy>
           </Section>
         </tbody>

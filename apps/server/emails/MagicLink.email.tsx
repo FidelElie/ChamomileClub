@@ -1,11 +1,4 @@
-import {
-  EmailLayout,
-  ButtonLink,
-  Copy,
-  Heading,
-  Section,
-  Link,
-} from "./components";
+import { ButtonLink, Copy, EmailLayout, Heading, Link, Section } from "./components";
 
 export const MagicLinkEmail = (props: MagicLinkEmailProps) => {
   const { name, link } = props;
@@ -17,8 +10,7 @@ export const MagicLinkEmail = (props: MagicLinkEmailProps) => {
       </Section>
       <Section>
         <Copy marginBottom={20}>
-          Here is your link to access your{" "}
-          <Link href="https://www.thechamomileclub.com">Chamomile Club</Link>{" "}
+          Here is your link to access your <Link href="https://www.thechamomileclub.com">Chamomile Club</Link>{" "}
           account. Please click the button below to login:
         </Copy>
       </Section>

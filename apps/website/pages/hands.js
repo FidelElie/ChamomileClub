@@ -6,7 +6,7 @@ import { useTheme } from "../lib/providers/Theme.provider";
 
 // ! Components
 import AppLayout from "../components/core/App";
-import { PageHeader, SubTitle, Paragraph } from "../components/core/Prose";
+import { PageHeader, Paragraph, SubTitle } from "../components/core/Prose";
 
 export default function Hands() {
   const { theme } = useTheme();

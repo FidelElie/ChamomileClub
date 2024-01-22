@@ -2,20 +2,19 @@
 import PropTypes from "prop-types";
 
 // ! Assets
-import PlaceHolderIcon from "../../assets/images/user.svg";
 import LoaderIcon from "../../assets/images/loader.svg";
+import PlaceHolderIcon from "../../assets/images/user.svg";
 
 // ! Library
 import useMedia from "../../lib/hooks/useMedia";
 import { joinClasses } from "../../lib/utilities";
 
 // ! Components
-import { SubTitle, SubSubTitle, Paragraph } from "../core/Prose";
+import { Paragraph, SubSubTitle, SubTitle } from "../core/Prose";
 
 const ImageCard = (props) => {
   const { name, position, text, image } = props;
-  const { mediaRef, mediaLoading, mediaError, noMediaPresent } =
-    useMedia(image);
+  const { mediaRef, mediaLoading, mediaError, noMediaPresent } = useMedia(image);
 
   return (
     <div className="flex flex-col sm:flex-row sm:space-x-5" key={name}>

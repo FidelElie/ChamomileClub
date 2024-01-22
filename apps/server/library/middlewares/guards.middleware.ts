@@ -19,9 +19,7 @@ export const requireRolesGuard = (requiredRoles: UserRolesEnum[]) => {
       ...requiredRoles.map((role) => UserRolePriorities[role]),
     );
 
-    const userHasRequiredRole = roles.some((role) =>
-      requiredRoles.includes(role),
-    );
+    const userHasRequiredRole = roles.some((role) => requiredRoles.includes(role));
 
     const userHasHigherPriority = roles.some(
       (role) => UserRolePriorities[role] <= minimumPriority,

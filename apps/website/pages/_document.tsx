@@ -1,5 +1,5 @@
+import { Head, Html, Main, NextScript } from "next/document";
 import Script from "next/script";
-import { Html, Head, Main, NextScript } from "next/document";
 
 import { DARK_CLASS, THEME_STORAGE_KEY } from "../lib/providers/Theme.provider";
 

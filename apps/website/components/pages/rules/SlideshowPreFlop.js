@@ -1,13 +1,13 @@
 import CardSlideshow from "../../misc/CardSlideshow";
 
 import {
-  AceSpades,
   AceHearts,
-  TwoHearts,
-  ThreeClubs,
+  AceSpades,
+  DiamondSuitBack,
   KingHearts,
   TenSpades,
-  DiamondSuitBack,
+  ThreeClubs,
+  TwoHearts,
 } from "@chamomileclub/casinojs";
 
 const slides = [
@@ -26,8 +26,7 @@ const slides = [
   {
     Cards: [KingHearts, TenSpades],
     title: "Seagal - Hand",
-    description:
-      "Seagal has some high cards so they like there odds and stay in the round.",
+    description: "Seagal has some high cards so they like there odds and stay in the round.",
   },
   {
     Cards: [
@@ -42,8 +41,6 @@ const slides = [
   },
 ];
 
-const SlideshowPreFlop = () => (
-  <CardSlideshow slideshowTitle="pre-flop" slides={slides} />
-);
+const SlideshowPreFlop = () => <CardSlideshow slideshowTitle="pre-flop" slides={slides} />;
 
 export default SlideshowPreFlop;

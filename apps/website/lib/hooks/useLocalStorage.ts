@@ -30,7 +30,7 @@ const useLocalStorage = <T = JSONParsable>(
 };
 
 type JSONPrimitives = string | number | boolean | null;
-type JSONObject<T> = { [key: string]: T };
+type JSONObject<T> = { [key: string]: T; };
 type JSONArray<T> = T[];
 
 type JSONPrimitiveStructs =

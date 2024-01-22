@@ -53,8 +53,7 @@ const CardSlideshow = (props) => {
           className={joinClasses(
             "px-4 py-3 text-white bg-green-800 font-heading transition-opacity dark:bg-invertedLight",
             {
-              "opacity-25 cursor-default":
-                currentSlideIndex === slides.length - 1,
+              "opacity-25 cursor-default": currentSlideIndex === slides.length - 1,
             },
           )}
           onClick={nextSlide}

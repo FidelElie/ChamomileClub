@@ -1,5 +1,5 @@
-import morgan from "morgan";
 import cors from "cors";
+import morgan from "morgan";
 
 import { createServerRouter } from "@/library/server";
 

@@ -4,11 +4,9 @@ import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
 export type LandingStackParamList = {
   Landing: undefined;
   Login: undefined;
-  OTP: { keyId: string };
+  OTP: { keyId: string; };
 };
 
-export type LandingStackNavigationProps =
-  NativeStackNavigationProp<LandingStackParamList>;
+export type LandingStackNavigationProps = NativeStackNavigationProp<LandingStackParamList>;
 
-export type LandingStackRouteProps<T extends keyof LandingStackParamList> =
-  RouteProp<LandingStackParamList, T>;
+export type LandingStackRouteProps<T extends keyof LandingStackParamList> = RouteProp<LandingStackParamList, T>;

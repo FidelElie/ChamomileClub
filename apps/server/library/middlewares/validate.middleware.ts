@@ -2,7 +2,7 @@ import type { NextApiResponse } from "next";
 import { NextHandler } from "next-connect";
 
 import type { ZodType } from "@thechamomileclub/api";
-import { unprocessableEntityResponse, ApiRequest } from "../server";
+import { ApiRequest, unprocessableEntityResponse } from "../server";
 
 export type RequestEntities = {
   body?: ZodType;
@@ -46,10 +46,10 @@ export const validateRequestEntities = (entities: RequestEntities) => {
       : passThrough;
 
     if (
-      !body.success ||
-      !query.success ||
-      !params.success ||
-      !headers.success
+      !body.success
+      || !query.success
+      || !params.success
+      || !headers.success
     ) {
       return unprocessableEntityResponse(
         res,

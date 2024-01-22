@@ -2,9 +2,9 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import type { AuthStackParamList } from "./_types";
 
-import MainTabsLayout from "./main/_layout";
-import EditProfileScreen from "./edit-profile";
 import CreateEventScreen from "./create-event";
+import EditProfileScreen from "./edit-profile";
+import MainTabsLayout from "./main/_layout";
 
 const AuthStack = createNativeStackNavigator<AuthStackParamList>();
 

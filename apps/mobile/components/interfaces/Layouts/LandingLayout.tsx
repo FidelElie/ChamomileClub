@@ -1,7 +1,7 @@
-import { ReactNode, useRef } from "react";
-import { View, Image } from "react-native";
-import { Video, ResizeMode } from "expo-av";
+import { ResizeMode, Video } from "expo-av";
 import { StatusBar } from "expo-status-bar";
+import { ReactNode, useRef } from "react";
+import { Image, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { twMerge } from "tailwind-merge";
 
@@ -51,7 +51,7 @@ export const LandingLayout = (props: LandingLayoutProps) => {
   );
 };
 
-const LandingLogo = ({ className }: { className?: string }) => (
+const LandingLogo = ({ className }: { className?: string; }) => (
   <View className="justify-center items-center">
     <Image
       source={YellowAltLogo}

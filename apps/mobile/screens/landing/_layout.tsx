@@ -4,8 +4,8 @@ import { LandingStackParamList } from "./_types";
 
 import { LandingLayout } from "@/components/interfaces";
 
-import LoginScreen from "./login";
 import LandingScreen from "./landing";
+import LoginScreen from "./login";
 import OneTimePasswordScreen from "./otp";
 
 const LandingStack = createNativeStackNavigator<LandingStackParamList>();

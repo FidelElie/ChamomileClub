@@ -1,8 +1,8 @@
-import type { ReactNode } from "react";
-import { Image } from "react-native";
 import { ResizeMode } from "expo-av";
 import { StatusBar } from "expo-status-bar";
 import { AnimatePresence, MotiView } from "moti";
+import type { ReactNode } from "react";
+import { Image } from "react-native";
 
 import { Flex } from "@thechamomileclub/ui";
 
