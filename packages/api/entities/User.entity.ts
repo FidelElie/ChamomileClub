@@ -45,11 +45,8 @@ export const UserEntity = BaseEntity.merge(
 
 export type UserEntity = z.infer<typeof UserEntity>;
 
-export const UserCreationEntity = UserEntity.omit({ id: true });
-
-export type UserCreationEntity = z.infer<typeof UserCreationEntity>;
-
-export const UserCreationFieldsEntity = UserEntity.pick({
+export const UserCreationEntity = UserEntity.pick({
+  id: true,
   email: true,
   forename: true,
   surname: true,
@@ -57,4 +54,8 @@ export const UserCreationFieldsEntity = UserEntity.pick({
   roles: true,
 });
 
-export type UserCreationFieldsEntity = z.infer<typeof UserCreationFieldsEntity>;
+export type UserCreationEntity = z.infer<typeof UserCreationEntity>;
+
+export const UserInviteeCreationEntity = UserCreationEntity.omit({ id: true });
+
+export type UserInviteeCreationEntity = z.infer<typeof UserInviteeCreationEntity>;

@@ -3,7 +3,8 @@ import { useState } from "react";
 
 import { Button, Card, COLORS, Copy, Flex, Heading, TextField } from "@thechamomileclub/ui";
 
-import type { UserPickerSharedInterface } from "../UserPicker.data";
+import type { UserPickerSharedInterface } from "@/components/interfaces/inputs/UserPicker.data";
+import { UserInviteeCreationEntity } from "@thechamomileclub/api";
 
 export const PickerInviteDisplay = (props: UserPickerSharedInterface) => {
   const { setDisplay, onInvite, addRoles } = props;
@@ -17,6 +18,19 @@ export const PickerInviteDisplay = (props: UserPickerSharedInterface) => {
 
   const editFields = (data: Partial<typeof fields>) => {
     setFields(currentFields => ({ ...currentFields, ...data }));
+  };
+
+  const isInvalidSubmission = () => {
+    const validationResult = UserInviteeCreationEntity.safeParse(fields);
+
+    return !validationResult.success;
+  };
+
+  const handleSubmission = async () => {
+    // TODO Check against existing members and invitees
+    if (onInvite) {
+      onInvite({ ...fields, roles: fields.roles ? fields.roles : ["PROSPECT"] });
+    }
   };
 
   return (
@@ -53,9 +67,23 @@ export const PickerInviteDisplay = (props: UserPickerSharedInterface) => {
         value={fields.email}
         onChangeText={email => editFields({ email })}
       />
-      <Button theme="SECONDARY" className="my-3" onPressIn={() => setDisplay("SEARCH")}>
-        <Copy color="green">Back</Copy>
-      </Button>
+      <Flex.Row className="items-center">
+        <Button
+          theme="TERTIARY"
+          className="my-3 p-0 h-10 w-10 mr-2"
+          onPressIn={() => setDisplay("SEARCH")}
+        >
+          <AntDesign name="left" color={COLORS.white} size={20} />
+        </Button>
+        <Button
+          theme="TERTIARY"
+          className="flex-grow"
+          onPressIn={handleSubmission}
+          disabled={isInvalidSubmission()}
+        >
+          <Copy color="white">Invite new member</Copy>
+        </Button>
+      </Flex.Row>
     </Flex.Column>
   );
 };

@@ -18,14 +18,7 @@ export const useFetchUsers = (
     {
       queryKey: ["users", query],
       queryFn: async () => {
-        console.log(query);
-        const queryParams = new URLSearchParams(query as unknown as URLSearchParams);
-
-        const url = `/v1/users${queryParams.size ? `?${queryParams.toString()}` : ""}`;
-
-        console.log(url);
-
-        const response = await RequestClient.get(url);
+        const response = await RequestClient.get("/v1/users", { params: query });
 
         return FetchUsersInterfaces.response.parse(response.data);
       },

@@ -6,7 +6,7 @@ import { AppConfig } from "../../library/configs";
 import { useAsyncStorage } from "../../library/hooks";
 import { useGetCurrentUser, useLogoutUser } from "../../library/queries";
 
-import { SplashScreen } from "@/components/interfaces";
+import { SplashScreen } from "@/components/screens/SplashScreen";
 
 const initialContext: AuthContextType = {
   session: null,

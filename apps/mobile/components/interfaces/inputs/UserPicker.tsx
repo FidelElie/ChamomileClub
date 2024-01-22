@@ -2,8 +2,8 @@ import { useState } from "react";
 
 import { Flex, Show } from "@thechamomileclub/ui";
 
-import { PickerInviteDisplay } from "./_UserPicker/PickerInviteDisplay";
-import { PickerSearchDisplay } from "./_UserPicker/PickerSearchDisplay";
+import { PickerInviteDisplay } from "@/components/interfaces/inputs/_UserPicker/PickerInviteDisplay";
+import { PickerSearchDisplay } from "@/components/interfaces/inputs/_UserPicker/PickerSearchDisplay";
 
 import type { UserPickerDisplays, UserPickerSharedInterface } from "./UserPicker.data";
 

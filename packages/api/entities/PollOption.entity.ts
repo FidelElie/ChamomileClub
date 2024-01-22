@@ -14,3 +14,8 @@ export const PollOptionEntity = BaseEntity.merge(
 );
 
 export type PollOptionEntity = z.infer<typeof PollOptionEntity>;
+
+export const PollOptionCreationEntity = PollOptionEntity.pick({
+  name: true,
+  description: true,
+});

@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { UserCreationFieldsEntity, UserEntity, UserRolesEnum } from "../entities";
+import { UserCreationEntity, UserEntity, UserRolesEnum } from "../entities";
 import { PaginationQuery } from "../library";
 
 export const FetchUsersInterfaces = {
@@ -15,14 +15,14 @@ export const FetchUsersInterfaces = {
 
 export const CreateUsersInterfaces = {
   body: z.object({
-    entries: z.array(UserCreationFieldsEntity),
+    entries: z.array(UserCreationEntity),
   }),
   response: z.object({ items: z.array(UserEntity) }),
 };
 
 export const EditUserInterfaces = {
   params: z.object({ userId: z.string() }),
-  body: UserCreationFieldsEntity.partial(),
+  body: UserCreationEntity.partial(),
   response: z.object({ payload: UserEntity }),
 };
 

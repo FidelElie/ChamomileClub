@@ -1,13 +1,6 @@
-import { PollEntity, UserEntity } from "@thechamomileclub/api";
+import { CreateEventsInterfaces, InferDTOs, UserEntity } from "@thechamomileclub/api";
 
-export type EventFields = {
-  name: string;
-  description: string;
-  members: (EventAttendee & { id: string; roles: UserEntity["roles"]; })[];
-  invitations: (EventAttendee & { roles?: UserEntity["roles"]; })[];
-  startDate: null | Date;
-  poll: null | Pick<PollEntity, "name" | "votesPerUser" | "type" | "expiresAt">;
-};
+export type EventFields = InferDTOs<typeof CreateEventsInterfaces>["body"]["entries"][number];
 
 export type EventAttendee = Pick<UserEntity, "forename" | "surname" | "email">;
 

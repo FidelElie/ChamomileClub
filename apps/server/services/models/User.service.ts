@@ -1,12 +1,12 @@
-import { UserCreationEntity, UserCreationFieldsEntity, UserEntity, UserRoles, z } from "@thechamomileclub/api";
+import { UserEntity, UserInviteeCreationEntity, UserRoles, z } from "@thechamomileclub/api";
 import { XataClient } from "@thechamomileclub/database";
 
 export const UserService = (serviceConfig: UserServiceConfig) => {
   const { xataClient: { db } } = serviceConfig;
 
   return {
-    createAndInviteNewMembers: async (entries: UserCreationFieldsEntity[]) => {
-      const usersToCreate: UserCreationEntity[] = entries.map((entry) => ({
+    createAndInviteNewMembers: async (entries: UserInviteeCreationEntity[]) => {
+      const usersToCreate: UserInviteeCreationEntity[] = entries.map((entry) => ({
         forename: entry.forename,
         surname: entry.surname,
         email: entry.email,
@@ -18,7 +18,7 @@ export const UserService = (serviceConfig: UserServiceConfig) => {
         createdAt: new Date(),
       }));
 
-      const validatedEntries = z.array(UserCreationEntity).parse(usersToCreate);
+      const validatedEntries = z.array(UserEntity.omit({ id: true })).parse(usersToCreate);
 
       const newUsers = db.users.create(validatedEntries);
 

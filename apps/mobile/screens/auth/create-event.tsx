@@ -3,7 +3,7 @@ import { useState } from "react";
 
 import { Button, Copy, Flex, Show } from "@thechamomileclub/ui";
 
-import { useFetchUsers } from "@/library/queries";
+import { useCreateEvents, useFetchUsers } from "@/library/queries";
 
 import { DisplayLayout } from "@/components/interfaces";
 
@@ -50,11 +50,12 @@ const CreateEventScreen = () => {
       email: user.email,
       roles: user.roles,
     }],
-    invitations: [],
+    invites: [],
     startDate: null,
     poll: null,
   });
 
+  const createEvents = useCreateEvents();
   const foundersQuery = useFetchUsers({ role: "FOUNDER" });
 
   const editFields: EditEventFields = (data) =>
@@ -103,19 +104,17 @@ const CreateEventScreen = () => {
       return navigation.goBack();
     }
 
-    if (newIndex > STAGE_DATA.length - 1) {
-      handleEventCreation();
+    if (newIndex === STAGE_DATA.length) {
+      return handleEventCreation();
     }
 
     setStage(STAGE_DATA[newIndex].stage);
   };
 
   const handleEventCreation = async () => {
-    // try {
-    //   // con
-    // } catch (error: unknown) {
-    //   console.error(error);
-    // }
+    createEvents.mutate({
+      body: { entries: [fields] },
+    });
   };
 
   return (
@@ -140,7 +139,9 @@ const CreateEventScreen = () => {
               onPressIn={() => handleStageNavigation({ direction: 1 })}
               disabled={isInvalidSubmission()}
             >
-              <Copy color="green">Continue</Copy>
+              <Copy color="green">
+                {stageData.stage === "CONFIRMATION" ? "Submit" : "Continue"}
+              </Copy>
             </Button.Secondary>
           </DisplayLayout>
         )}

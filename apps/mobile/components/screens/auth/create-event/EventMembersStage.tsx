@@ -2,13 +2,14 @@ import { AntDesign } from "@expo/vector-icons";
 import { useState } from "react";
 import { ScrollView } from "react-native";
 
+import { UserCreationEntity, UserInviteeCreationEntity } from "@thechamomileclub/api";
 import { Button, Card, COLORS, Copy, Flex, For, Heading, Modal, Show, twJoin } from "@thechamomileclub/ui";
 
 import { useEnsureAuth } from "@/components/providers";
 
 import { UserPicker } from "@/components/interfaces";
 
-import type { CreateEventsInterface } from "./create-event.data";
+import type { CreateEventsInterface } from "@/components/screens/auth/create-event/create-event.data";
 
 export const EventMembersStage = (props: CreateEventsInterface) => {
   const { fields, editFields, isFounder, founders } = props;
@@ -60,26 +61,37 @@ export const EventMembersStage = (props: CreateEventsInterface) => {
     });
   };
 
-  const handleNewInvitee = () => {
+  const handleNewInvitee = (invitee: UserInviteeCreationEntity) => {
+    editFields({
+      invites: fields.invites.concat([invitee]),
+    });
+  };
+
+  const handleExistingMember = (selectedMember: UserCreationEntity) => {
+    editFields({
+      members: fields.members.some(member => member.id === selectedMember.id)
+        ? fields.members.filter(member => member.id !== selectedMember.id)
+        : fields.members.concat([selectedMember]),
+    });
   };
 
   return (
     <Flex.Column className="flex-grow">
+      <Flex.Row className="justify-end mb-3">
+        <Copy>
+          <Copy color="yellow">
+            {fields.members.length + fields.invites.length}
+          </Copy>{" "}
+          / Unlimited
+        </Copy>
+      </Flex.Row>
       <ScrollView>
-        <Flex.Row className="justify-end mb-3">
-          <Copy>
-            <Copy color="yellow">
-              {fields.members.length + fields.invitations.length}
-            </Copy>{" "}
-            / Unlimited
-          </Copy>
-        </Flex.Row>
         <For each={fields.members}>
           {(member, memberIndex) => (
             <Card
               key={member.id}
               className={twJoin(
-                (memberIndex !== fields.members.length - 1 || fields.invitations.length) && "mb-2.5",
+                (memberIndex !== fields.members.length - 1 || fields.invites.length) && "mb-2.5",
               )}
             >
               <Flex.Row className="justify-between items-center">
@@ -95,6 +107,7 @@ export const EventMembersStage = (props: CreateEventsInterface) => {
                           currentMember => currentMember.id !== member.id,
                         ),
                       })}
+                    className="pr-1"
                   >
                     <AntDesign name="closecircle" size={20} color={COLORS.white} />
                   </Button>
@@ -103,7 +116,7 @@ export const EventMembersStage = (props: CreateEventsInterface) => {
             </Card>
           )}
         </For>
-        <For each={fields.invitations}>
+        <For each={fields.invites}>
           {(invitee, inviteeIndex) => (
             <Card
               key={invitee.email}
@@ -112,17 +125,18 @@ export const EventMembersStage = (props: CreateEventsInterface) => {
               <Flex.Row className="justify-between items-center">
                 <Flex>
                   <Heading size="base">{invitee.forename} {invitee.surname}</Heading>
-                  <Show if={(invitee.roles?.length) ? invitee.roles : null}>
-                    {roles => <Copy color="yellow" className="-mt-1">{roles[0]}</Copy>}
-                  </Show>
+                  <Copy color="yellow" className="-mt-1">
+                    {invitee.roles ? invitee.roles[0] || "PROSPECT" : "PROSPECT"}
+                  </Copy>
                 </Flex>
                 <Button
                   onPressIn={() =>
                     editFields({
-                      invitations: fields.invitations.filter(
+                      invites: fields.invites.filter(
                         currentInvitee => currentInvitee.email !== invitee.email,
                       ),
                     })}
+                  className="pr-1"
                 >
                   <AntDesign name="closecircle" size={20} color={COLORS.white} />
                 </Button>
@@ -155,9 +169,14 @@ export const EventMembersStage = (props: CreateEventsInterface) => {
         <Flex className="bg-white h-px w-full my-5" />
         <UserPicker
           onInvite={handleNewInvitee}
+          onSelect={handleExistingMember}
+          currentEmails={[
+            ...fields.members.map(member => member.email),
+            ...fields.invites.map(invitee => invitee.email),
+          ]}
         />
-        <Button theme="TERTIARY" onPressIn={closeUserPicker}>
-          <Copy>Cancel</Copy>
+        <Button theme="SECONDARY" onPressIn={closeUserPicker}>
+          <Copy color="green">Close</Copy>
         </Button>
       </Modal>
     </Flex.Column>

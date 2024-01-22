@@ -28,3 +28,9 @@ export const PollEntity = BaseEntity.merge(
 );
 
 export type PollEntity = z.infer<typeof PollEntity>;
+
+export const PollCreationEntity = PollEntity.pick({
+  name: true,
+  type: true,
+  votesPerUser: true,
+});

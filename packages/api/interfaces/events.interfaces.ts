@@ -1,7 +1,15 @@
 import { z } from "zod";
 
-import { EventEntity, EventStatusEnum, UserCreationFieldsEntity, UserEntity } from "../entities";
+import {
+  EventEntity,
+  EventStatusEnum,
+  PollCreationEntity,
+  UserCreationEntity,
+  UserEntity,
+  UserInviteeCreationEntity,
+} from "../entities";
 
+import { PollOptionCreationEntity } from "../entities/PollOption.entity";
 import { PaginationQuery } from "../library";
 
 export const FetchEventsInterfaces = {
@@ -31,8 +39,13 @@ export const CreateEventsInterfaces = {
     entries: z.array(
       z.object({
         name: z.string(),
-        members: z.array(UserEntity),
-        invites: z.array(UserCreationFieldsEntity),
+        description: z.string(),
+        members: z.array(UserCreationEntity),
+        invites: z.array(UserInviteeCreationEntity),
+        startDate: z.coerce.date().nullable(),
+        poll: PollCreationEntity.merge(
+          z.object({ options: z.array(PollOptionCreationEntity) }),
+        ).nullable(),
       }),
     ),
   }),
