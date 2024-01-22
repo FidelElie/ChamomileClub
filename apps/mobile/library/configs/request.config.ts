@@ -29,7 +29,7 @@ RequestClient.interceptors.request.use(async (config) => {
       const parsedValue = JSON.parse(value);
 
       if (parsedValue !== null) {
-        config.headers["Authorization"] = "Bearer " + parsedValue;
+        config.headers.Authorization = `Bearer ${parsedValue}`;
       }
     }
 

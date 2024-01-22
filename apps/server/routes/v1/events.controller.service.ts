@@ -90,7 +90,7 @@ const EventsControllerService = (serviceConfig: EventsControllerServiceConfig) =
 
           const createdEvent = await db.events.create({
             name,
-            owner: req.auth?.user.id,
+            // FIXME owner: req.auth?.user.id,
             status: EventStatuses.PENDING,
           });
 

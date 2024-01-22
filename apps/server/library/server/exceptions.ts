@@ -2,9 +2,9 @@
 export class HttpException extends Error {
   message: string;
   status: number;
-  metadata: any;
+  metadata: Record<string, unknown>;
 
-  constructor(message: string, status: number, metadata: any) {
+  constructor(message: string, status: number, metadata: Record<string, unknown>) {
     super(message);
     this.message = message;
     this.status = status;

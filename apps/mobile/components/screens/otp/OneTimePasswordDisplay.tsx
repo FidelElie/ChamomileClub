@@ -12,6 +12,8 @@ export const OneTimePasswordDisplay = (props: OneTimePasswordDisplayProps) => {
 
   const submitDisabled = values.some((value) => !value) || !!isSubmitting;
 
+  const generatedKeys = new Array().fill(length).map((_, index) => `Key ${index}`);
+
   const onChangeCode = (index: number, text: string) => {
     if (text !== "" && !/[0-9]/.test(text)) {
       return;
@@ -58,17 +60,17 @@ export const OneTimePasswordDisplay = (props: OneTimePasswordDisplayProps) => {
   return (
     <View className={twMerge("justify-context space-y-4", className)}>
       <View className="flex-row justify-center space-x-2">
-        {values.map((value, valueIndex) => (
+        {generatedKeys.map((key, keyIndex) => (
           <TextField
-            key={`Field - ${valueIndex}`}
+            key={`Field - ${key}`}
             className="font-body w-10"
             ref={(element) => {
-              inputRefs.current[valueIndex] = element;
+              inputRefs.current[keyIndex] = element;
             }}
-            value={value}
+            value={values[keyIndex]}
             placeholder="-"
             textAlign="center"
-            onChangeText={(text) => onChangeCode(valueIndex, text)}
+            onChangeText={(text) => onChangeCode(keyIndex, text)}
             keyboardType="number-pad"
             // maxLength={1}
           />

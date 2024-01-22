@@ -10,38 +10,37 @@
     "packages/*"
   ],
   "scripts": {
-    "dev": "turbo run dev",
-    "test": "turbo run test",
-    "lint": "turbo run lint",
-    "types": "turbo run types",
+    "dev": "turbo dev",
+    "test": "turbo test",
+    "lint": "turbo lint",
+    "types": "turbo types",
     "format": "dprint fmt",
     "pre-commit": "lint-staged",
-    "prepare": "yarn @scripts husky",
-    "clean": "yarn @scripts clean",
-    "@website": "yarn workspace @thechamomileclub/website",
-    "@server": "yarn workspace @thechamomileclub/server",
-    "@mobile": "yarn workspace @thechamomileclub/mobile",
-    "@api": "yarn workspace @thechamomileclub/api",
-    "@database": "yarn workspace @thechamomileclub/database",
-    "@tailwind": "yarn workspace @thechamomileclub/tailwind",
-    "@ui": "yarn workspace @thechamomileclub/ui",
-    "@scripts": "yarn workspace @thechamomileclub/scripts"
+    "prepare": "bun @scripts husky",
+    "clean": "bun @scripts clean",
+    "@website": "bun run --cwd 'apps/website'",
+    "@server": "bun run --cwd 'apps/server'",
+    "@mobile": "bun run --cwd  'apps/mobile'",
+    "@api": "bun run --cwd 'packages/api'",
+    "@database": "bun run --cwd 'packages/database'",
+    "@tailwind": "bun run --cwd 'packages/tailwind'",
+    "@ui": "bun run --cwd 'packages/ui'",
+    "@scripts": "bun run --cwd 'scripts'"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.5.2",
-    "@types/rimraf": "^4.0.5",
-    "commander": "^11.0.0",
-    "concurrently": "^7.6.0",
     "dprint": "^0.45.0",
     "husky": "^8.0.3",
     "lint-staged": "^15.2.0",
-    "rimraf": "^5.0.1",
     "ts-node": "^10.9.1",
     "turbo": "^1.11.3"
   },
+  "trustedDependencies": [
+    "husky"
+  ],
   "lint-staged": {
     "**/*": [
-      "yarn format"
+      "bun format --allow-no-files"
     ]
   }
 }

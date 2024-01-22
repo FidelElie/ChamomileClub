@@ -22,11 +22,11 @@ export const useDebounce = <T>(value: T, delay: number) => {
         return () => {
           clearTimeout(handler);
         };
-      } else {
-        initialised.current = true;
       }
+
+      initialised.current = true;
     },
-    [value, delay], // Only re-call effect if value or delay changes
+    [value, delay, debouncedValue], // Only re-call effect if value or delay changes
   );
 
   return {

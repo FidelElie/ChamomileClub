@@ -3,6 +3,7 @@ import { NextApiResponse } from "next";
 
 import { ApiRequest } from "../types";
 
+// biome-ignore lint/suspicious/noExplicitAny: Will fix it in abit
 export const parseContextHandler = (handler: ContextHandler<any>) => {
   return async <
     NextRequest extends ApiRequest = ApiRequest,

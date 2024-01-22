@@ -9,6 +9,10 @@
     "clean": "ts-node ./code/clean.ts",
     "husky": "ts-node ./code/husky.ts"
   },
+  "dependencies": {
+    "commander": "^11.0.0",
+    "rimraf": "^5.0.1"
+  },
   "devDependencies": {
     "@types/node": "^20.10.2"
   }
