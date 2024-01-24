@@ -3,15 +3,13 @@ import { NextHandler } from "next-connect";
 
 import { UserRolePriorities, UserRolesEnum } from "@thechamomileclub/api";
 
-import { ApiRequestWithAuth, unauthorisedResponse } from "../server";
+import { ApiRequestWithAuth, ForbiddenException, UnauthorisedException } from "../server";
 
 export const requireRolesGuard = (requiredRoles: UserRolesEnum[]) => {
-  return (req: ApiRequestWithAuth, res: NextApiResponse, next: NextHandler) => {
+  return (req: ApiRequestWithAuth, _: NextApiResponse, next: NextHandler) => {
     const { auth } = req;
 
-    if (!auth?.session || !auth.user) {
-      return unauthorisedResponse(res);
-    }
+    if (!auth?.session || !auth.user) { throw new UnauthorisedException("Session not found"); }
 
     const { roles } = auth.user;
 
@@ -26,7 +24,7 @@ export const requireRolesGuard = (requiredRoles: UserRolesEnum[]) => {
     );
 
     if (!userHasRequiredRole && !userHasHigherPriority) {
-      return unauthorisedResponse(res);
+      throw new ForbiddenException("Session is forbidden");
     }
 
     next();
@@ -35,14 +33,12 @@ export const requireRolesGuard = (requiredRoles: UserRolesEnum[]) => {
 
 export const requireAuthGuard = (
   req: ApiRequestWithAuth,
-  res: NextApiResponse,
+  _: NextApiResponse,
   next: NextHandler,
 ) => {
   const { auth } = req;
 
-  if (!auth?.session || !auth.user) {
-    return unauthorisedResponse(res);
-  }
+  if (!auth?.session || !auth.user) { throw new UnauthorisedException("Session not found"); }
 
   next();
 };

@@ -22,7 +22,7 @@ EventsController.post(
   "/",
   dependencyMap.exposeSession,
   requireAuthGuard,
-  validateRequestEntities(CreateEventsInterfaces),
+  validateRequestEntities(CreateEventsInterfaces.request),
   parseContextHandler(EventsControllerService.createEvents),
 );
 

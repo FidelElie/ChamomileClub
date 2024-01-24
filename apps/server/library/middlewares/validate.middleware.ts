@@ -2,7 +2,7 @@ import type { NextApiResponse } from "next";
 import { NextHandler } from "next-connect";
 
 import type { ZodType } from "@thechamomileclub/api";
-import { ApiRequest, unprocessableEntityResponse } from "../server";
+import { ApiRequest, UnprocessableEntityException } from "../server";
 
 export type RequestEntities = {
   body?: ZodType;
@@ -51,10 +51,7 @@ export const validateRequestEntities = (entities: RequestEntities) => {
       || !params.success
       || !headers.success
     ) {
-      return unprocessableEntityResponse(
-        res,
-        "Body, query, params or headers are invalid",
-      );
+      throw new UnprocessableEntityException("Body, query, params or headers are invalid");
     }
 
     if (body.data) {

@@ -30,3 +30,11 @@ export const EventEntity = BaseEntity.merge(
 );
 
 export type EventEntity = z.infer<typeof EventEntity>;
+
+export const EventCreationEntity = EventEntity.pick({
+  name: true,
+  description: true,
+  startDate: true,
+});
+
+export type EventCreationEntity = z.infer<typeof EventCreationEntity>;

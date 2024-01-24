@@ -1,5 +1,3 @@
-import { NextApiResponse } from "next";
-
 import {
   CreateUsersInterfaces,
   DeleteUserInterfaces,
@@ -10,7 +8,7 @@ import {
 } from "@thechamomileclub/api";
 
 import { dependencyMap } from "@/library/configs";
-import type { ApiRequest } from "@/library/server";
+import type { Context } from "@/library/server";
 
 type FetchUsersDTOs = InferDTOs<typeof FetchUsersInterfaces>;
 type CreateUsersDTOs = InferDTOs<typeof CreateUsersInterfaces>;
@@ -21,11 +19,9 @@ const UsersControllerService = (serviceConfig: UserControllerServiceConfig) => {
   const { xataClient: { db }, UserService } = serviceConfig;
 
   return {
-    fetchUsers: async (
-      req: ApiRequest<FetchUsersDTOs>,
-      res: NextApiResponse,
-    ) => {
-      const { role, page, entries, search } = req.query;
+    /** */
+    fetchUsers: async (context: Context<FetchUsersDTOs>) => {
+      const { role, page, entries, search } = context.query;
 
       const users = await db.users
         .filter({
@@ -53,47 +49,31 @@ const UsersControllerService = (serviceConfig: UserControllerServiceConfig) => {
 
       const validatedUsers = users.records.map((user) => UserEntity.parse(user));
 
-      type FetchUsersDTOs = InferDTOs<typeof FetchUsersInterfaces>;
-
-      res
-        .status(200)
-        .json({ items: validatedUsers } satisfies FetchUsersDTOs["response"]);
+      return FetchUsersInterfaces.response.parse({ items: validatedUsers });
     },
-    createUsers: async (
-      req: ApiRequest<CreateUsersDTOs>,
-      res: NextApiResponse,
-    ) => {
-      const { entries } = req.body;
+    /** */
+    createUsers: async (context: Context<CreateUsersDTOs>) => {
+      const { entries } = context.body;
 
       const newMembers = await UserService.createAndInviteNewMembers(entries);
 
-      res
-        .status(201)
-        .json({ items: newMembers } satisfies CreateUsersDTOs["response"]);
+      return CreateUsersInterfaces.response.parse({ items: newMembers });
     },
-    editUser: async (
-      req: ApiRequest<EditUserDTOs>,
-      res: NextApiResponse,
-    ) => {
-      const { userId } = req.params;
+    /** */
+    editUser: async (context: Context<EditUserDTOs>) => {
+      const { userId } = context.params;
 
-      const updatedUser = await db.users.update({ id: userId, ...req.body });
+      const updatedUser = await db.users.update({ id: userId, ...context.body });
 
-      const validatedUser = UserEntity.parse(updatedUser);
-
-      res
-        .status(200)
-        .json({ payload: validatedUser } satisfies EditUserDTOs["response"]);
+      return EditUserInterfaces.response.parse({ payload: updatedUser });
     },
-    deleteUser: async (
-      req: ApiRequest<DeleteUserDTOs>,
-      res: NextApiResponse,
-    ) => {
-      const { userId } = req.params;
+    /** */
+    deleteUser: async (context: Context<DeleteUserDTOs>) => {
+      const { userId } = context.params;
 
       await db.users.delete(userId);
 
-      res.status(200).json({ userId } satisfies DeleteUserDTOs["response"]);
+      return DeleteUserInterfaces.response.parse({ userId });
     },
   };
 };

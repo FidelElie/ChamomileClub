@@ -1,6 +1,8 @@
-import { CreateEventsInterfaces, InferDTOs, UserEntity } from "@thechamomileclub/api";
+import type { CreateEventsInterfaces, InferDTOs, UserEntity } from "@thechamomileclub/api";
 
-export type EventFields = InferDTOs<typeof CreateEventsInterfaces>["body"]["entries"][number];
+export type EventFields = InferDTOs<
+  typeof CreateEventsInterfaces["request"]
+>["body"]["entries"][number];
 
 export type EventAttendee = Pick<UserEntity, "forename" | "surname" | "email">;
 

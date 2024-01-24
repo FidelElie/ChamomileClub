@@ -67,7 +67,7 @@ const configureTransports = () => {
   return [];
 };
 
-export const logger = createLogger({
+export const LoggingService = createLogger({
   level: isProduction ? "http" : "debug",
   format: combine(
     loggingTimestamp,

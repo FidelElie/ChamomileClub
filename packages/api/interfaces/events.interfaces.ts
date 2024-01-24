@@ -35,23 +35,27 @@ export const FetchEventsInterfaces = {
 };
 
 export const CreateEventsInterfaces = {
-  body: z.object({
-    entries: z.array(
-      z.object({
-        name: z.string(),
-        description: z.string(),
-        members: z.array(UserCreationEntity),
-        invites: z.array(UserInviteeCreationEntity),
-        startDate: z.coerce.date().nullable(),
-        poll: PollCreationEntity.merge(
-          z.object({ options: z.array(PollOptionCreationEntity) }),
-        ).nullable(),
-      }),
-    ),
-  }),
-  response: z.object({
-    items: z.array(EventEntity),
-  }),
+  request: {
+    body: z.object({
+      entries: z.array(
+        z.object({
+          name: z.string(),
+          description: z.string(),
+          members: z.array(UserCreationEntity),
+          invites: z.array(UserInviteeCreationEntity),
+          startDate: z.coerce.date().nullable(),
+          poll: PollCreationEntity.merge(
+            z.object({ options: z.array(PollOptionCreationEntity) }),
+          ).nullable(),
+        }),
+      ),
+    }),
+  },
+  responses: {
+    201: z.object({
+      items: z.array(EventEntity),
+    }),
+  },
 };
 
 export const EditEventInterfaces = {

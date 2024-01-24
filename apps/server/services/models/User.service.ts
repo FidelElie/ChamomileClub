@@ -6,6 +6,8 @@ export const UserService = (serviceConfig: UserServiceConfig) => {
 
   return {
     createAndInviteNewMembers: async (entries: UserInviteeCreationEntity[]) => {
+      if (!entries.length) { return []; }
+
       const usersToCreate: UserInviteeCreationEntity[] = entries.map((entry) => ({
         forename: entry.forename,
         surname: entry.surname,

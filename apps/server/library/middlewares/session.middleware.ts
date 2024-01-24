@@ -4,11 +4,11 @@ import { NextHandler } from "next-connect";
 import { SessionEntity, UserEntity, z } from "@thechamomileclub/api";
 import { XataClient } from "@thechamomileclub/database";
 
-import { AuthService } from "@/services";
+import type { createAuthService } from "@/services";
 import type { ApiRequestWithAuth } from "../server";
 
 export const createExposeSessionMiddleware = (config: ExposeSessionMiddlewareConfig) => {
-  const { xataClient: { db } } = config;
+  const { xataClient: { db }, AuthService } = config;
 
   return async (
     req: ApiRequestWithAuth,
@@ -55,4 +55,5 @@ export const createExposeSessionMiddleware = (config: ExposeSessionMiddlewareCon
 
 type ExposeSessionMiddlewareConfig = {
   xataClient: XataClient;
+  AuthService: ReturnType<typeof createAuthService>;
 };
