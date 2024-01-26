@@ -32,5 +32,8 @@ export type PollEntity = z.infer<typeof PollEntity>;
 export const PollCreationEntity = PollEntity.pick({
   name: true,
   type: true,
+  expiresAt: true,
   votesPerUser: true,
 });
+
+export type PollCreationEntity = z.infer<typeof PollCreationEntity>;

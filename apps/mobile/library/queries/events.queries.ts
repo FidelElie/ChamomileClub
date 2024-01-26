@@ -32,17 +32,17 @@ export const useCreateEvents = () => {
   return useMutation(
     {
       mutationFn: async (
-        config: Omit<InferDTOs<typeof CreateEventsInterfaces>, "response">,
+        config: Omit<InferDTOs<typeof CreateEventsInterfaces["request"]>, "response">,
       ) => {
         const { body } = config;
 
         const url = "/v1/events";
 
-        const validatedBody = CreateEventsInterfaces.body.parse(body);
+        const validatedBody = CreateEventsInterfaces.request.body.parse(body);
 
         const response = await RequestClient.post(url, validatedBody);
 
-        return CreateEventsInterfaces.response.parse(response);
+        return CreateEventsInterfaces.responses[201].parse(response);
       },
     },
   );

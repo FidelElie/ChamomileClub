@@ -19,3 +19,5 @@ export const PollOptionCreationEntity = PollOptionEntity.pick({
   name: true,
   description: true,
 });
+
+export type PollOptionCreationEntity = z.infer<typeof PollOptionCreationEntity>;
