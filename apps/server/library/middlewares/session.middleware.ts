@@ -40,6 +40,8 @@ export const createExposeSessionMiddleware = (config: ExposeSessionMiddlewareCon
       .select(["*", "user.*"])
       .getFirst();
 
+    if (!databaseSession) { return next(); }
+
     const sessionResult = sessionWithUserSchema.safeParse(databaseSession);
 
     if (!sessionResult.success) {

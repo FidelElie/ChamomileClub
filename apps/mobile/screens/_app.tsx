@@ -1,6 +1,7 @@
 import "react-native-reanimated";
 import "react-native-gesture-handler";
 
+import { useReactQueryDevTools } from "@dev-plugins/react-query";
 import NetInfo from "@react-native-community/netinfo";
 import { NavigationContainer } from "@react-navigation/native";
 import { useFonts } from "expo-font";
@@ -31,6 +32,7 @@ const fonts = {
 const queryClient = new QueryClient();
 
 export default function App() {
+  useReactQueryDevTools(queryClient as any);
   const [fontsLoaded, fontsError] = useFonts(fonts);
   const [hasNavigated, setHasNavigated] = useState(false);
 

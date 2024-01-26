@@ -12,7 +12,9 @@ export const OneTimePasswordDisplay = (props: OneTimePasswordDisplayProps) => {
 
   const submitDisabled = values.some((value) => !value) || !!isSubmitting;
 
-  const generatedKeys = new Array().fill(length).map((_, index) => `Key ${index}`);
+  const generatedKeys = new Array(length).fill(null).map((_, index) => `Key ${index}`);
+
+  console.log(generatedKeys);
 
   const onChangeCode = (index: number, text: string) => {
     if (text !== "" && !/[0-9]/.test(text)) {

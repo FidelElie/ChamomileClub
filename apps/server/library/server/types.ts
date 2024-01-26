@@ -25,7 +25,7 @@ export type ApiRequest<Entities extends RequestEntities = DefaultEntities> =
 export type ApiRequestWithAuth<
   Entities extends RequestEntities = DefaultEntities,
 > = ApiRequest<Entities> & {
-  auth: { session: string; user: UserEntity; } | null;
+  auth?: { session: string; user: UserEntity; };
 };
 
 export type Context<
