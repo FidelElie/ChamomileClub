@@ -1,0 +1,10 @@
+{
+  "name": "@thechamomileclub/common",
+  "description": "Holds all safe shared content for the repo",
+  "main": "index.ts",
+  "types": "index.ts",
+  "scripts": {
+    "lint": "biome lint .",
+    "types": "tsc --noEmit"
+  }
+}

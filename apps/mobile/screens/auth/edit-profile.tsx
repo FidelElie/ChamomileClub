@@ -4,8 +4,8 @@ import { useRef, useState } from "react";
 import { ScrollView } from "react-native";
 
 import { useQueryClient } from "@thechamomileclub/api";
-
-import { Button, COLORS, Copy, Flex, Heading, Show, TextField } from "@thechamomileclub/ui";
+import { COLORS } from "@thechamomileclub/common";
+import { Button, Copy, Flex, Heading, Show, TextField } from "@thechamomileclub/ui";
 
 import { useUpdateCurrentUser } from "@/library/queries";
 

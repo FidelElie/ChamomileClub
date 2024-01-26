@@ -28,6 +28,8 @@ module.exports = {
     tsconfigPaths: true,
   },
   plugins: [
+    "expo-font",
+    "expo-secure-store",
     [
       "expo-image-picker",
       {

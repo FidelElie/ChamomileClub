@@ -11,9 +11,6 @@
     "lint": "biome lint .",
     "types": "tsc --noEmit"
   },
-  "devDependencies": {
-    "typescript": "^4.9.5"
-  },
   "dependencies": {
     "@tanstack/react-query": "^4.33.0",
     "@tanstack/react-query-devtools": "^4.24.10",

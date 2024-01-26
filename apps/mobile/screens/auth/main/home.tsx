@@ -5,7 +5,8 @@ import { Skeleton } from "moti/skeleton";
 import { useRef } from "react";
 import { Image, ScrollView } from "react-native";
 
-import { COLORS, Copy, Flex, Heading, Show } from "@thechamomileclub/ui";
+import { COLORS } from "@thechamomileclub/common";
+import { Copy, Flex, Heading, Show } from "@thechamomileclub/ui";
 
 import { YellowAltLogo } from "@/assets";
 

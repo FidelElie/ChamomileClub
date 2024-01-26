@@ -7,7 +7,7 @@ import { MagicLinkEmail, MemberInvitationEmail } from "@/emails";
 
 const DEFAULT_SERVICE_CONFIG = { charset: "UTF-8" };
 
-const SESService = (serviceConfig: S3ServiceConfig) => {
+const SESService = (serviceConfig: SESServiceConfig) => {
   const {
     client,
     suppress,
@@ -136,9 +136,9 @@ const SESService = (serviceConfig: S3ServiceConfig) => {
   };
 };
 
-export const createSESService = (serviceConfig: S3ServiceConfig) => SESService(serviceConfig);
+export const createSESService = (serviceConfig: SESServiceConfig) => SESService(serviceConfig);
 
-export type S3ServiceConfig = {
+export type SESServiceConfig = {
   client: SESClient;
   charset?: string;
   sender: { name: string; email: string; };

@@ -2,7 +2,8 @@ import { AntDesign } from "@expo/vector-icons";
 import dayjs from "dayjs";
 import { useState } from "react";
 
-import { Button, COLORS, DateTimeField, Flex, Heading, Show, TextField } from "@thechamomileclub/ui";
+import { COLORS } from "@thechamomileclub/common";
+import { Button, DateTimeField, Flex, Heading, Show, TextField } from "@thechamomileclub/ui";
 
 import type { CreateEventsInterface } from "./create-event.data";
 // import { ToggleCardButton } from "@/components/interfaces";

@@ -4,11 +4,6 @@
   "author": "Fidel Elie",
   "license": "MIT",
   "private": true,
-  "workspaces": [
-    "scripts",
-    "apps/*",
-    "packages/*"
-  ],
   "scripts": {
     "dev": "turbo dev",
     "test": "turbo test",
@@ -16,16 +11,17 @@
     "types": "turbo types",
     "format": "dprint fmt",
     "pre-commit": "lint-staged",
-    "prepare": "bun @scripts husky",
-    "clean": "bun @scripts clean",
-    "@website": "bun run --cwd 'apps/website'",
-    "@server": "bun run --cwd 'apps/server'",
-    "@mobile": "bun run --cwd  'apps/mobile'",
-    "@api": "bun run --cwd 'packages/api'",
-    "@database": "bun run --cwd 'packages/database'",
-    "@tailwind": "bun run --cwd 'packages/tailwind'",
-    "@ui": "bun run --cwd 'packages/ui'",
-    "@scripts": "bun run --cwd 'scripts'"
+    "prepare": "pnpm @scripts husky",
+    "clean": "pnpm @scripts clean",
+    "@website": "pnpm --filter @thechamomileclub/website",
+    "@server": "pnpm --filter @thechamomileclub/server",
+    "@mobile": "pnpm --filter  @thechamomileclub/mobile",
+    "@api": "pnpm --filter @thechamomileclub/api",
+    "@database": "pnpm --filter @thechamomileclub/database",
+    "@tailwind": "pnpm --filter @thechamomileclub/tailwind",
+    "@ui": "pnpm --filter @thechamomileclub/ui",
+    "@scripts": "pnpm --filter @thechamomileclub/scripts",
+    "@common": "pnpm --filter @thechamomileclub/common"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.5.2",
@@ -33,14 +29,15 @@
     "husky": "^8.0.3",
     "lint-staged": "^15.2.0",
     "ts-node": "^10.9.1",
-    "turbo": "^1.11.3"
+    "turbo": "^1.11.3",
+    "typescript": "^5.3.3"
   },
   "trustedDependencies": [
     "husky"
   ],
   "lint-staged": {
     "**/*": [
-      "bun format --allow-no-files"
+      "pnpm format --allow-no-files"
     ]
   }
 }

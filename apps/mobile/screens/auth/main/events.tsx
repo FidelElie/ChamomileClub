@@ -2,7 +2,8 @@ import { Skeleton } from "moti/skeleton";
 import { useState } from "react";
 import { ScrollView } from "react-native";
 
-import { COLORS, Copy, Flex, Show, TextField } from "@thechamomileclub/ui";
+import { COLORS } from "@thechamomileclub/common";
+import { Copy, Flex, Show, TextField } from "@thechamomileclub/ui";
 
 import { useFetchEvents } from "@/library/queries";
 

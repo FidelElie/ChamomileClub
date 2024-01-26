@@ -3,7 +3,7 @@ import { DateTimeField, Flex } from "@thechamomileclub/ui";
 import { PollPickerSharedInterface } from "../PollPicker.data";
 
 export const EventDateOption = (props: PollPickerSharedInterface) => {
-  const {} = props;
+  // const { editFields } = props;
 
   return (
     <Flex.Row>

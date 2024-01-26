@@ -3,7 +3,8 @@ import { useState } from "react";
 import { ScrollView } from "react-native";
 
 import { UserCreationEntity, UserInviteeCreationEntity } from "@thechamomileclub/api";
-import { Button, Card, COLORS, Copy, Flex, For, Heading, Modal, Show, twJoin } from "@thechamomileclub/ui";
+import { COLORS } from "@thechamomileclub/common";
+import { Button, Card, Copy, Flex, For, Heading, Modal, Show, twJoin } from "@thechamomileclub/ui";
 
 import { useEnsureAuth } from "@/components/providers";
 

@@ -2,7 +2,8 @@ import { AntDesign } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { StyleSheet } from "react-native";
 
-import { COLORS, Flex, Show } from "@thechamomileclub/ui";
+import { COLORS } from "@thechamomileclub/common";
+import { Flex, Show } from "@thechamomileclub/ui";
 
 import type { MainTabParamList } from "./_types";
 

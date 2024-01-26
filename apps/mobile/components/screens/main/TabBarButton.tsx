@@ -2,7 +2,8 @@ import { AntDesign } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { StyleSheet } from "react-native";
 
-import { Button, ButtonProps, COLORS, Flex } from "@thechamomileclub/ui";
+import { COLORS } from "@thechamomileclub/common";
+import { Button, ButtonProps, Flex } from "@thechamomileclub/ui";
 
 import type { AuthStackNavigationProps } from "screens/auth/_types";
 

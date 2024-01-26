@@ -3,7 +3,8 @@ import { useNavigation } from "@react-navigation/native";
 import { ComponentProps, useState } from "react";
 import { ScrollView } from "react-native";
 
-import { Button, COLORS, Copy, Flex, Heading, twJoin } from "@thechamomileclub/ui";
+import { COLORS } from "@thechamomileclub/common";
+import { Button, Copy, Flex, Heading, twJoin } from "@thechamomileclub/ui";
 
 import { AuthStackNavigationProps } from "../_types";
 

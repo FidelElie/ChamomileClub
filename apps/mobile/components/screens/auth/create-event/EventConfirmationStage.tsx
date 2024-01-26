@@ -2,7 +2,8 @@ import { AntDesign } from "@expo/vector-icons";
 import dayjs from "dayjs";
 import { ScrollView } from "react-native";
 
-import { Button, Card, COLORS, Copy, Flex, For, Heading, Show } from "@thechamomileclub/ui";
+import { COLORS } from "@thechamomileclub/common";
+import { Button, Card, Copy, Flex, For, Heading, Show } from "@thechamomileclub/ui";
 
 import type { CreateEventsInterface } from "@/components/screens/auth/create-event/create-event.data";
 

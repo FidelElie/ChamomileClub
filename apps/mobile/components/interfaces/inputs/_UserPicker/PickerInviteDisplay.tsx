@@ -1,7 +1,8 @@
 import { AntDesign } from "@expo/vector-icons";
 import { useState } from "react";
 
-import { Button, Card, COLORS, Copy, Flex, Heading, TextField } from "@thechamomileclub/ui";
+import { COLORS } from "@thechamomileclub/common";
+import { Button, Card, Copy, Flex, Heading, TextField } from "@thechamomileclub/ui";
 
 import type { UserPickerSharedInterface } from "@/components/interfaces/inputs/UserPicker.data";
 import { UserInviteeCreationEntity } from "@thechamomileclub/api";
@@ -42,7 +43,9 @@ export const PickerInviteDisplay = (props: UserPickerSharedInterface) => {
           </Button>
           <Flex.Column>
             <Heading size="base" numberOfLines={1}>
-              {(fields.forename || fields.surname) ? `${fields.forename} ${fields.surname}` : "Full name"}
+              {(fields.forename || fields.surname)
+                ? `${fields.forename} ${fields.surname}`
+                : "Full name"}
             </Heading>
             <Copy color="yellow" className="-mt-1">{fields.email || "Email"}</Copy>
           </Flex.Column>

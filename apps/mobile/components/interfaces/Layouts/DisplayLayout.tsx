@@ -1,7 +1,8 @@
 import { AntDesign } from "@expo/vector-icons";
 import type { ReactNode } from "react";
 
-import { Button, COLORS, Copy, Flex, Heading, twJoin } from "@thechamomileclub/ui";
+import { COLORS } from "@thechamomileclub/common";
+import { Button, Copy, Flex, Heading, twJoin } from "@thechamomileclub/ui";
 
 export const DisplayLayout = (props: DisplayLayoutProps) => {
   const { title, subtitle, safe, onBack, children } = props;

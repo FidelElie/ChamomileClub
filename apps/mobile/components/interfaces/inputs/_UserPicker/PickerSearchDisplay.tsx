@@ -3,7 +3,8 @@ import { useState } from "react";
 import { ScrollView } from "react-native";
 
 import { UserEntity } from "@thechamomileclub/api";
-import { Button, Card, COLORS, Copy, Flex, For, Heading, Show, TextField } from "@thechamomileclub/ui";
+import { COLORS } from "@thechamomileclub/common";
+import { Button, Card, Copy, Flex, For, Heading, Show, TextField } from "@thechamomileclub/ui";
 
 import { useDebounce } from "@/library/hooks";
 import { useFetchUsers } from "@/library/queries";

@@ -2,7 +2,8 @@ import { AntDesign } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 
 import { UserEntity } from "@thechamomileclub/api";
-import { Button, COLORS, Copy, Flex, Heading, Show } from "@thechamomileclub/ui";
+import { COLORS } from "@thechamomileclub/common";
+import { Button, Copy, Flex, Heading, Show } from "@thechamomileclub/ui";
 
 import { AuthStackNavigationProps } from "screens/auth/_types";
 

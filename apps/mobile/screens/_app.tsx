@@ -1,3 +1,6 @@
+import "react-native-reanimated";
+import "react-native-gesture-handler";
+
 import NetInfo from "@react-native-community/netinfo";
 import { NavigationContainer } from "@react-navigation/native";
 import { useFonts } from "expo-font";
@@ -5,7 +8,12 @@ import * as SplashScreen from "expo-splash-screen";
 import { useEffect, useState } from "react";
 import { AppState } from "react-native";
 
-import { focusManager, onlineManager, QueryClient, QueryClientProvider } from "@thechamomileclub/api";
+import {
+  focusManager,
+  onlineManager,
+  QueryClient,
+  QueryClientProvider,
+} from "@thechamomileclub/api";
 
 import { NotCourierSansFont, PollerOneFont } from "@/assets";
 
