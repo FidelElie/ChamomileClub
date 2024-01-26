@@ -6,27 +6,33 @@ import { getXataClient } from "@thechamomileclub/database";
 import { AppConfig } from "./app.config";
 
 import { createExposeSessionMiddleware } from "@/library/middlewares";
-import { createAuthService, createS3Service, createSESService, createUserService, LoggingService } from "@/services";
+import {
+  createAuthService,
+  createS3Service,
+  createSESService,
+  createUserService,
+  LoggingService,
+} from "@/services";
 
-const SESService = createSESService(
-  new SESClient({
+const SESService = createSESService({
+  client: new SESClient({
     region: AppConfig.env.SES.region,
     credentials: {
       accessKeyId: AppConfig.env.SES.clientId,
       secretAccessKey: AppConfig.env.SES.secretKey,
     },
   }),
-  { sender: { email: AppConfig.env.SES.senderEmail, name: AppConfig.env.SES.senderFrom } },
-);
+  sender: { email: AppConfig.env.SES.senderEmail, name: AppConfig.env.SES.senderFrom },
+});
 
-const S3Service = createS3Service(
-  new S3Client({
+const S3Service = createS3Service({
+  client: new S3Client({
     credentials: {
       accessKeyId: AppConfig.env.S3.clientId,
       secretAccessKey: AppConfig.env.S3.secretKey,
     },
   }),
-);
+});
 
 const xataClient = getXataClient();
 
